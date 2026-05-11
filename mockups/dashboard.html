@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://unpkg.com" crossorigin />
 <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Noto+Sans+Gurmukhi:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 <script src="https://cdn.tailwindcss.com"></script>
@@ -136,10 +136,10 @@
   }
 
   html, body { background: var(--bg); color: var(--text);
-                font-family: 'Inter', 'Noto Sans Arabic', 'Noto Sans Gurmukhi', system-ui, sans-serif;
+                font-family: 'Inter', 'Noto Naskh Arabic', 'Noto Sans Arabic', system-ui, sans-serif;
                 font-feature-settings: 'cv11', 'ss01', 'ss03'; }
   [lang="ur"], [dir="rtl"] { font-family: 'Noto Sans Arabic', 'Inter', system-ui, sans-serif; }
-  [lang="pa"] { font-family: 'Noto Sans Gurmukhi', 'Inter', system-ui, sans-serif; }
+  [lang="pnb"], [lang="pa-Arab"] { font-family: 'Noto Naskh Arabic', 'Noto Sans Arabic', 'Inter', system-ui, sans-serif; }
   .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
   .num  { font-variant-numeric: tabular-nums; font-feature-settings: 'tnum'; }
 
@@ -888,7 +888,7 @@
           <div class="space-y-2 text-sm">
             <label class="flex items-center gap-2" style="color:var(--text-2)"><input type="checkbox" checked/> English</label>
             <label class="flex items-center gap-2" style="color:var(--text-2)" dir="auto"><input type="checkbox" checked/> Urdu (اردو)</label>
-            <label class="flex items-center gap-2" style="color:var(--text-2)"><input type="checkbox" checked/> Punjabi (ਪੰਜਾਬੀ)</label>
+            <label class="flex items-center gap-2" style="color:var(--text-2)" dir="auto"><input type="checkbox" checked/> Punjabi (پنجابی) <span class="text-xs" style="color:var(--text-3)">— Shahmukhi script</span></label>
             <label class="flex items-center gap-2" style="color:var(--text-2)" dir="auto"><input type="checkbox"/> Sindhi (سنڌي)</label>
             <label class="flex items-center gap-2" style="color:var(--text-2)" dir="auto"><input type="checkbox"/> Pashto (پښتو)</label>
           </div>
@@ -1266,8 +1266,8 @@ function openDispatch(emis) {
       <div class="text-sm leading-relaxed" lang="ur" dir="rtl" style="color:var(--text)">والدین محترم — کل درجہ حرارت ${temp} ڈگری تک پہنچے گا۔ بچوں کے ساتھ پانی کی اضافی بوتل، ٹوپی اور ہلکا کاٹن لباس بھیجیں۔ صبح کی اسمبلی منسوخ ہے۔ چھٹی کا وقت 11:30 صبح۔</div>
     </div>
     <div class="rounded-lg p-4" style="background:var(--bg); border:1px solid var(--border)">
-      <div class="flex items-center gap-2 mb-2"><span class="chip" translate="no">PA</span><span class="text-xs" style="color:var(--text-3)">ਪੰਜਾਬੀ</span></div>
-      <div class="text-sm leading-relaxed" lang="pa" style="color:var(--text)">ਪਿਆਰੇ ਮਾਪੇ — ਕੱਲ੍ਹ ਤਾਪਮਾਨ ${temp}°C ਤੱਕ ਪਹੁੰਚੇਗਾ। ਆਪਣੇ ਬੱਚੇ ਨੂੰ ਵਾਧੂ ਪਾਣੀ, ਟੋਪੀ ਅਤੇ ਹਲਕਾ ਕਾਟਨ ਪਹਿਨਾਓ। ਸਵੇਰ ਦੀ ਅਸੈਂਬਲੀ ਰੱਦ। ਛੁੱਟੀ 11:30 ਸਵੇਰ।</div>
+      <div class="flex items-center gap-2 mb-2"><span class="chip" translate="no">PA</span><span class="text-xs" style="color:var(--text-3)" dir="rtl">پنجابی (شاہ مکھی)</span></div>
+      <div class="text-sm leading-relaxed" lang="pnb" dir="rtl" style="color:var(--text)">محترم والدین، کل تاپمان ${temp}°C تک پہنچے گا۔ آپنے بچے نوں ودھیرا پانی، ٹوپی تے ہلکا کاٹن کپڑا نال بھیجو۔ صبح دی اسمبلی منسوخ ہے۔ چھٹی دا ویلا 11:30 ویلے تک اگانہ کر دتا گیا اے۔</div>
     </div>
 
     <div>
