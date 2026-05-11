@@ -1077,16 +1077,27 @@ function defaultDetail() {
 
       <!-- Cluster mini -->
       <div>
-        <div class="tag mb-2">By cluster</div>
-        <table class="w-full text-sm">
-          <thead><tr style="color:var(--text-3); font-size: 11px"><th class="text-left font-medium py-1">Cluster</th><th class="text-right font-medium">Schools</th><th class="text-right font-medium">Students</th><th class="text-right font-medium">Heat</th></tr></thead>
-          <tbody class="mono num">
-            <tr><td class="py-1.5" style="color:var(--text)">C-1</td><td class="text-right" style="color:var(--text-2)">13</td><td class="text-right" style="color:var(--text-2)">3,047</td><td class="text-right" style="color:var(--amber); font-weight:500">71</td></tr>
-            <tr><td class="py-1.5" style="color:var(--text)">C-2</td><td class="text-right" style="color:var(--text-2)">12</td><td class="text-right" style="color:var(--text-2)">2,941</td><td class="text-right" style="color:var(--amber); font-weight:500">68</td></tr>
-            <tr><td class="py-1.5" style="color:var(--text)">C-3</td><td class="text-right" style="color:var(--text-2)">11</td><td class="text-right" style="color:var(--text-2)">2,612</td><td class="text-right" style="color:var(--text-2)">59</td></tr>
-            <tr><td class="py-1.5" style="color:var(--text)">C-4</td><td class="text-right" style="color:var(--text-2)">14</td><td class="text-right" style="color:var(--text-2)">3,434</td><td class="text-right" style="color:var(--text-2)">63</td></tr>
-          </tbody>
-        </table>
+        <div class="tag mb-2">By cluster · click row to filter map · ✉ to broadcast</div>
+        <div class="space-y-1">
+          ${[
+            { name: 'C-1', schools: 13, students: 3047, heat: 71, hot: true },
+            { name: 'C-2', schools: 12, students: 2941, heat: 68, hot: true },
+            { name: 'C-3', schools: 11, students: 2612, heat: 59, hot: false },
+            { name: 'C-4', schools: 14, students: 3434, heat: 63, hot: false },
+          ].map(c => `
+            <div class="rounded-md flex items-center gap-2 px-2 py-1.5 cluster-row" style="border: 1px solid transparent; cursor: pointer"
+                 onmouseover="this.style.background='var(--surface-hover)'; this.style.borderColor='var(--border)'"
+                 onmouseout="this.style.background=''; this.style.borderColor='transparent'"
+                 onclick="filterToCluster('${c.name}')">
+              <div class="text-sm font-medium" style="color:var(--text); width: 36px">${c.name}</div>
+              <div class="text-xs mono num flex-1" style="color:var(--text-3)">${c.schools} schools · ${c.students.toLocaleString()} students</div>
+              <div class="mono num text-sm" style="color: ${c.hot ? 'var(--amber)' : 'var(--text-2)'}; font-weight: ${c.hot ? '500' : '400'}; width: 30px; text-align: right">${c.heat}</div>
+              <button class="btn btn-sm" onclick="event.stopPropagation(); openClusterBroadcast('${c.name}', ${c.schools}, ${c.students})" title="Broadcast advisory to all ${c.schools} schools in ${c.name}" aria-label="Broadcast advisory to ${c.name}" style="padding: 3px 7px">
+                <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 4h12v8H2z"/><path d="M2 4l6 5 6-5"/></svg>
+              </button>
+            </div>
+          `).join('')}
+        </div>
       </div>
 
       <div class="text-[11px] pt-2" style="color:var(--muted)">
@@ -1300,6 +1311,59 @@ function openSchoolDay(emis) {
   document.getElementById('modal-bg').classList.add('open');
 }
 window.openSchoolDay = openSchoolDay;
+
+function filterToCluster(name) {
+  // Set the dropdown + repaint markers, then fit map to that cluster's schools
+  const sel = document.getElementById('f-cluster');
+  sel.value = name;
+  paintMarkers();
+  const schools = SCHOOLS.filter(s => s.cluster === name);
+  if (schools.length) map.fitBounds(schools.map(s => [s.lat, s.lon]), { padding: [60, 60] });
+}
+window.filterToCluster = filterToCluster;
+
+function openClusterBroadcast(name, schools, students) {
+  DISPATCH_TARGET = { _cluster: name, school_name: name, emis_code: 'cluster-' + name, students: students };
+  document.getElementById('modal-title').textContent = `Broadcast advisory · Cluster ${name}`;
+  const heat = 42;  // mock
+  document.getElementById('modal-body').innerHTML = `
+    <div class="text-xs" style="color:var(--text-3)">
+      Drafting one message to be dispatched to <strong style="color:var(--text)">all ${schools} schools</strong> in cluster ${name}
+      (${students.toLocaleString()} children). Per-school context (school name, pickup time) is auto-substituted at send.
+    </div>
+
+    <div class="rounded-lg p-4" style="background:var(--bg); border:1px solid var(--border)">
+      <div class="flex items-center gap-2 mb-2"><span class="chip" translate="no">EN</span><span class="text-xs" style="color:var(--text-3)">est. reach ${(students * 0.94).toFixed(0)} parents · 94%</span></div>
+      <div class="text-sm leading-relaxed" style="color:var(--text)">Dear parents — tomorrow temperatures will reach ${heat}°C across our schools. Please send your child with extra water, a hat, and light cotton clothing. Outdoor assembly is cancelled. Pickup time advanced by 1 hour. Reply STOP to opt out.</div>
+    </div>
+    <div class="rounded-lg p-4" style="background:var(--bg); border:1px solid var(--border)">
+      <div class="flex items-center gap-2 mb-2"><span class="chip" translate="no">UR</span><span class="text-xs" style="color:var(--text-3)">اردو</span></div>
+      <div class="text-sm leading-relaxed" lang="ur" dir="rtl" style="color:var(--text)">والدین محترم — کل ہمارے سکولوں میں درجہ حرارت ${heat} ڈگری تک پہنچے گا۔ بچوں کے ساتھ پانی کی اضافی بوتل، ٹوپی اور ہلکا کاٹن لباس بھیجیں۔ صبح کی اسمبلی منسوخ ہے۔ چھٹی کا وقت ایک گھنٹہ پہلے۔</div>
+    </div>
+    <div class="rounded-lg p-4" style="background:var(--bg); border:1px solid var(--border)">
+      <div class="flex items-center gap-2 mb-2"><span class="chip" translate="no">PA</span><span class="text-xs" style="color:var(--text-3)" dir="rtl">پنجابی (شاہ مکھی)</span></div>
+      <div class="text-sm leading-relaxed" lang="pnb" dir="rtl" style="color:var(--text)">محترم والدین، کل سادے سکولاں وچ تاپمان ${heat}°C تک پہنچے گا۔ آپنے بچے نوں ودھیرا پانی، ٹوپی تے ہلکا کاٹن کپڑا نال بھیجو۔ صبح دی اسمبلی منسوخ ہے۔ چھٹی دا ویلا اک گھنٹہ پہلاں۔</div>
+    </div>
+
+    <div class="rounded-lg p-3" style="background: var(--brand-50); border: 1px solid var(--brand-100)">
+      <div class="text-xs flex items-center gap-2" style="color:var(--text-2)">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="var(--brand)" aria-hidden="true"><path d="M8 0l1.8 4.2L14 6l-4.2 1.8L8 12 6.2 7.8 2 6l4.2-1.8L8 0z"/></svg>
+        <span><strong style="color:var(--text)">${schools} schools</strong> · <strong style="color:var(--text)">${(students * 0.94 / schools).toFixed(0)}</strong> avg parent reach per school · est. dispatch time <strong style="color:var(--text)">14s</strong></span>
+      </div>
+    </div>
+
+    <div>
+      <div class="tag mb-2">Channels</div>
+      <div class="flex gap-4 text-sm">
+        <label class="flex items-center gap-2" style="color:var(--text)"><input type="checkbox" checked/> SMS</label>
+        <label class="flex items-center gap-2" style="color:var(--text)"><input type="checkbox" checked/> WhatsApp</label>
+        <label class="flex items-center gap-2" style="color:var(--text)"><input type="checkbox"/> School PA</label>
+      </div>
+    </div>
+  `;
+  document.getElementById('modal-bg').classList.add('open');
+}
+window.openClusterBroadcast = openClusterBroadcast;
 
 function closeModal() { document.getElementById('modal-bg').classList.remove('open'); }
 window.closeModal = closeModal;
