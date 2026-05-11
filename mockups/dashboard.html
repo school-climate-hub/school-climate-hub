@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>School Climate Hub — Gujranwala-50 Dashboard</title>
+<title>School Climate Hub — operator console</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 <script src="https://cdn.tailwindcss.com"></script>
@@ -14,22 +14,43 @@
     --bg: #0b0f14;
     --panel: #11161d;
     --panel2: #161c25;
+    --panel3: #1a212c;
     --border: #232b36;
+    --border-soft: #1a2029;
     --text: #e6ebf2;
     --muted: #8a96a8;
+    --muted2: #5a6473;
     --accent: #f59e0b;
+    --red: #ef4444;
+    --amber: #f59e0b;
+    --green: #10b981;
     --heat: #ef4444;
     --aq: #a855f7;
     --flood: #3b82f6;
-    --good: #10b981;
   }
   html, body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; }
-  body { font-feature-settings: 'cv11', 'ss01'; }
   .panel { background: var(--panel); border: 1px solid var(--border); }
   .panel2 { background: var(--panel2); border: 1px solid var(--border); }
+  .panel3 { background: var(--panel3); border: 1px solid var(--border); }
   .muted { color: var(--muted); }
   .accent { color: var(--accent); }
-  #map { height: 100%; background: #0e131a; border-radius: 0; }
+
+  /* Sidebar */
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 6px;
+              font-size: 13px; color: var(--muted); cursor: pointer; transition: background .1s; }
+  .nav-item:hover { background: var(--panel2); color: var(--text); }
+  .nav-item.active { background: var(--panel2); color: var(--text); }
+  .nav-item.active::before { content: ""; position: absolute; left: 0; width: 3px; height: 20px;
+                              background: var(--accent); border-radius: 0 2px 2px 0; }
+  .nav-item { position: relative; }
+  .nav-icon { width: 16px; height: 16px; opacity: .8; }
+  .nav-badge { margin-left: auto; background: var(--red); color: white; font-size: 10px;
+               padding: 1px 6px; border-radius: 999px; font-weight: 600; }
+  .nav-section { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+                 color: var(--muted2); padding: 14px 12px 6px; }
+
+  /* Map */
+  #map { height: 100%; background: #0e131a; }
   .leaflet-container { background: #0e131a; font-family: inherit; }
   .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(0.85) contrast(1.05); }
   .leaflet-popup-content-wrapper { background: var(--panel2); color: var(--text); border: 1px solid var(--border); border-radius: 6px; }
@@ -44,159 +65,810 @@
     cursor: pointer; transition: transform .12s ease;
   }
   .marker:hover { transform: scale(1.35); }
-  .marker.selected { transform: scale(1.5); border-color: #fff; box-shadow: 0 0 0 3px rgba(245,158,11,0.5); }
+
+  /* Generic */
   .bar { height: 6px; border-radius: 3px; background: #1a212c; overflow: hidden; }
   .bar > div { height: 100%; border-radius: 3px; }
   .chip { display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 500;
           background: #1a212c; color: var(--muted); border: 1px solid var(--border); }
-  .chip.live { color: var(--good); }
-  .chip.live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--good); box-shadow: 0 0 8px var(--good); }
+  .chip.live { color: var(--green); }
+  .chip.live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); }
+  .chip.red { color: var(--red); border-color: rgba(239,68,68,.4); background: rgba(239,68,68,.08); }
+  .chip.amber { color: var(--amber); border-color: rgba(245,158,11,.4); background: rgba(245,158,11,.08); }
+  .chip.green { color: var(--green); border-color: rgba(16,185,129,.4); background: rgba(16,185,129,.08); }
+
+  .rag { display: inline-flex; align-items: center; justify-content: center; min-width: 38px; padding: 3px 8px;
+         border-radius: 4px; font-family: ui-monospace, monospace; font-size: 12px; font-weight: 600; }
+  .rag.red   { background: rgba(239,68,68,.12);  color: #fca5a5; border: 1px solid rgba(239,68,68,.35); }
+  .rag.amber { background: rgba(245,158,11,.12); color: #fcd34d; border: 1px solid rgba(245,158,11,.35); }
+  .rag.green { background: rgba(16,185,129,.12); color: #6ee7b7; border: 1px solid rgba(16,185,129,.35); }
+
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .dot.red { background: var(--red); box-shadow: 0 0 8px rgba(239,68,68,.6); }
+  .dot.amber { background: var(--amber); }
+  .dot.green { background: var(--green); }
+
   .kpi { padding: 14px 16px; }
   .kpi .label { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
-  .kpi .value { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin-top: 2px; line-height: 1.05; }
+  .kpi .value { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin-top: 2px; line-height: 1.05; }
   .kpi .sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
   .tag { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+
   .seg { display: inline-flex; background: #0e131a; border: 1px solid var(--border); border-radius: 6px; padding: 2px; }
   .seg button { padding: 4px 10px; font-size: 12px; color: var(--muted); border-radius: 4px; }
   .seg button.active { background: var(--panel2); color: var(--text); }
-  select.f { background: #0e131a; border: 1px solid var(--border); color: var(--text); padding: 5px 10px; border-radius: 6px; font-size: 12px; }
+  select.f, input.f { background: #0e131a; border: 1px solid var(--border); color: var(--text);
+                       padding: 5px 10px; border-radius: 6px; font-size: 12px; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 6px;
+         font-size: 12px; font-weight: 500; border: 1px solid var(--border); background: var(--panel2);
+         color: var(--text); cursor: pointer; transition: background .1s; }
+  .btn:hover { background: var(--panel3); }
+  .btn.primary { background: var(--accent); color: #1a1410; border-color: var(--accent); font-weight: 600; }
+  .btn.primary:hover { background: #fbbf24; }
+  .btn.ghost { background: transparent; }
+  .btn.danger { background: rgba(239,68,68,.12); border-color: rgba(239,68,68,.4); color: #fca5a5; }
+  .btn-sm { padding: 4px 10px; font-size: 11px; }
+
   details summary::-webkit-details-marker { display: none; }
   details summary { cursor: pointer; list-style: none; }
   details[open] summary .chev { transform: rotate(180deg); }
   .chev { transition: transform .15s ease; display: inline-block; }
-  .scroll::-webkit-scrollbar { width: 8px; }
+
+  .scroll::-webkit-scrollbar { width: 8px; height: 8px; }
   .scroll::-webkit-scrollbar-thumb { background: #232b36; border-radius: 4px; }
   .scroll::-webkit-scrollbar-track { background: transparent; }
-  .gridline { background-image: linear-gradient(to right, var(--border) 1px, transparent 1px),
-                                 linear-gradient(to bottom, var(--border) 1px, transparent 1px);
-              background-size: 40px 40px;
-              background-position: -1px -1px; }
+
+  table.rag-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; }
+  table.rag-table th { text-align: left; font-weight: 500; color: var(--muted); font-size: 11px;
+                       text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 12px;
+                       border-bottom: 1px solid var(--border); position: sticky; top: 0;
+                       background: var(--panel); cursor: pointer; user-select: none; }
+  table.rag-table th:hover { color: var(--text); }
+  table.rag-table td { padding: 10px 12px; border-bottom: 1px solid var(--border-soft); }
+  table.rag-table tbody tr { cursor: pointer; }
+  table.rag-table tbody tr:hover { background: var(--panel2); }
+
+  /* Modal */
+  .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.55); backdrop-filter: blur(3px);
+              display: none; align-items: center; justify-content: center; z-index: 1000; }
+  .modal-bg.open { display: flex; }
+  .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+           width: 560px; max-width: 92vw; max-height: 86vh; overflow-y: auto; }
+
+  /* Hazard card */
+  .hazard-card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+                  border-left: 3px solid transparent; padding: 14px 16px; }
+  .hazard-card.red   { border-left-color: var(--red); }
+  .hazard-card.amber { border-left-color: var(--amber); }
+
+  /* Workflow stepper */
+  .step { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); }
+  .step .num { width: 18px; height: 18px; border-radius: 50%; background: var(--panel3);
+                display: inline-flex; align-items: center; justify-content: center; font-size: 10px; }
+  .step.done .num { background: var(--green); color: black; }
+  .step.active .num { background: var(--accent); color: black; }
+  .step .bar { flex: 1; height: 1px; background: var(--border); }
+
+  /* View transitions */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* Code preview */
+  .code { font-family: ui-monospace, monospace; font-size: 11px; background: #0a0e13;
+          border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px;
+          color: #c9d4e3; overflow-x: auto; white-space: pre; }
+
+  .anim-pulse { animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
 </style>
 </head>
 <body class="min-h-screen">
 
-<!-- HEADER -->
-<header class="border-b border-[color:var(--border)] bg-[color:var(--panel)]">
-  <div class="px-6 py-3 flex items-center justify-between gap-6">
-    <div class="flex items-center gap-3">
-      <div class="w-8 h-8 rounded-md bg-gradient-to-br from-amber-400 to-rose-500 flex items-center justify-center font-bold text-black">S</div>
-      <div>
-        <div class="flex items-center gap-2">
-          <h1 class="text-base font-semibold tracking-tight">School Climate Hub</h1>
-          <span class="chip">Prototype · May 2026</span>
-          <span class="chip live">Live</span>
+<!-- LAYOUT: sidebar + main -->
+<div class="flex h-screen">
+
+  <!-- ============== SIDEBAR ============== -->
+  <aside class="w-60 panel border-r border-[color:var(--border)] flex flex-col shrink-0">
+    <div class="px-4 py-4 border-b border-[color:var(--border)]">
+      <div class="flex items-center gap-2">
+        <div class="w-7 h-7 rounded-md bg-gradient-to-br from-amber-400 to-rose-500 flex items-center justify-center font-bold text-black text-sm">S</div>
+        <div>
+          <div class="text-sm font-semibold leading-tight">School Climate Hub</div>
+          <div class="text-[10px] muted">Prototype · v0.1</div>
         </div>
-        <div class="text-xs muted mt-0.5">Gujranwala · Punjab · Pakistan &nbsp;·&nbsp; 50 schools · 12,034 students · PSSP + PSRP (PDLC)</div>
       </div>
     </div>
-    <nav class="flex items-center gap-4 text-sm muted">
-      <a href="#" class="hover:text-white">Dashboard</a>
-      <a href="#" class="hover:text-white">Open Dataset</a>
-      <a href="#" class="hover:text-white">Advisory</a>
-      <a href="#" class="hover:text-white">Docs</a>
-      <a href="#" class="px-3 py-1.5 rounded-md panel2 hover:bg-[color:var(--border)] text-xs">GitHub →</a>
+
+    <nav class="flex-1 px-3 py-3 space-y-0.5">
+      <div class="nav-item" data-view="overview">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 8l6-6 6 6v6a1 1 0 0 1-1 1h-3v-4H6v4H3a1 1 0 0 1-1-1V8z"/></svg>
+        Overview
+      </div>
+      <div class="nav-item" data-view="hazards">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l7 13H1L8 1zm0 4v5m0 2v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
+        Hazard Watch
+        <span class="nav-badge anim-pulse">4</span>
+      </div>
+      <div class="nav-item" data-view="schools">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="3" width="12" height="2"/><rect x="2" y="7" width="12" height="2"/><rect x="2" y="11" width="12" height="2"/></svg>
+        Schools <span class="muted ml-1 text-[11px]">(50)</span>
+      </div>
+      <div class="nav-item" data-view="advisory">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12v8H2z"/><path d="M2 4l6 5 6-5"/></svg>
+        Advisory
+      </div>
+      <div class="nav-item" data-view="data">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><ellipse cx="8" cy="3.5" rx="6" ry="2"/><path d="M2 3.5v9c0 1.1 2.7 2 6 2s6-.9 6-2v-9" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M2 8c0 1.1 2.7 2 6 2s6-.9 6-2" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        Open Data
+      </div>
+
+      <div class="nav-section">Configuration</div>
+      <div class="nav-item" data-view="settings">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2.5"/><path d="M8 1v2M8 13v2M3 8H1M15 8h-2M4.5 4.5l-1.4-1.4M12.9 12.9l-1.4-1.4M4.5 11.5l-1.4 1.4M12.9 3.1l-1.4 1.4"/></svg>
+        Settings
+      </div>
+      <div class="nav-item" data-view="docs">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 2h7l3 3v9H3z"/><path d="M10 2v3h3M5 8h6M5 11h6"/></svg>
+        Docs & API
+      </div>
     </nav>
-  </div>
-</header>
 
-<!-- KPI STRIP -->
-<section class="px-6 py-4 grid grid-cols-4 gap-3 border-b border-[color:var(--border)]">
-  <div class="panel rounded-lg kpi">
-    <div class="label">Child-burden days, 2025</div>
-    <div class="value">566,598<span class="text-base muted ml-1">/yr</span></div>
-    <div class="sub">student-enrolment × hazard-exposure days</div>
-  </div>
-  <div class="panel rounded-lg kpi">
-    <div class="label">Schools at high heat risk</div>
-    <div class="value">23<span class="text-base muted ml-1">/ 50</span></div>
-    <div class="sub">≥40 high-heat days/yr (10-yr avg)</div>
-  </div>
-  <div class="panel rounded-lg kpi">
-    <div class="label">Today's advisory</div>
-    <div class="value text-amber-400">HEAT</div>
-    <div class="sub">PMD heatwave alert · 4 schools in red zone</div>
-  </div>
-  <div class="panel rounded-lg kpi">
-    <div class="label">Data freshness</div>
-    <div class="value">2h<span class="text-base muted ml-1">ago</span></div>
-    <div class="sub">last ingest run · 5 sources OK</div>
-  </div>
-</section>
+    <div class="px-4 py-3 border-t border-[color:var(--border)] text-[10px] muted">
+      <div class="flex items-center gap-2 mb-1">
+        <span class="chip live">Live</span>
+        <span>5/5 sources OK</span>
+      </div>
+      <div>Last ingest: 2h ago</div>
+      <div class="mt-1">Apache-2.0 · <a class="hover:text-white" href="#">github</a></div>
+    </div>
+  </aside>
 
-<!-- FILTER BAR -->
-<section class="px-6 py-2.5 flex items-center justify-between gap-4 border-b border-[color:var(--border)] bg-[color:var(--panel)]">
-  <div class="flex items-center gap-2">
-    <span class="tag mr-1">Filter</span>
-    <select class="f" id="f-cluster">
-      <option value="">All clusters</option><option>C-1</option><option>C-2</option><option>C-3</option><option>C-4</option>
-    </select>
-    <select class="f" id="f-tehsil">
-      <option value="">All tehsils</option><option>Gujranwala</option><option>Kamoki</option><option>Noshera Virkan</option><option>Wazirabad</option>
-    </select>
-    <select class="f" id="f-hazard">
-      <option value="heat">Hazard: Heat</option><option value="aq">Hazard: Air Quality</option><option value="flood">Hazard: Flood</option>
-    </select>
-    <span class="text-xs muted ml-2" id="result-count">50 schools shown</span>
-  </div>
-  <div class="flex items-center gap-2">
-    <div class="seg">
-      <button class="active">Map</button>
-      <button>List</button>
-      <button>Cluster</button>
+  <!-- ============== MAIN ============== -->
+  <main class="flex-1 flex flex-col overflow-hidden">
+
+    <!-- Top bar -->
+    <header class="px-6 py-3 flex items-center justify-between border-b border-[color:var(--border)] bg-[color:var(--panel)] shrink-0">
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 id="view-title" class="text-base font-semibold tracking-tight">Overview</h1>
+          <span class="chip" id="view-sub">Pilot dashboard — Gujranwala-50</span>
+        </div>
+        <div class="text-xs muted mt-0.5" id="view-narrative">High-level estate view. Click any school for detail.</div>
+      </div>
+      <div class="flex items-center gap-3">
+        <input class="f" placeholder="Search school / EMIS…" style="width:240px"/>
+        <div class="text-xs muted">Zeeshan Ahmed · PDLC Ops</div>
+        <div class="w-7 h-7 rounded-full bg-amber-400 text-black flex items-center justify-center font-bold text-xs">Z</div>
+      </div>
+    </header>
+
+    <!-- ============== VIEW: OVERVIEW ============== -->
+    <section class="view active flex-1 overflow-hidden flex flex-col" id="v-overview">
+
+      <!-- Active alerts banner -->
+      <div class="mx-6 mt-4 mb-2 panel rounded-lg border-l-4 border-amber-500 px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="dot red anim-pulse"></span>
+          <div>
+            <div class="text-sm font-medium"><span class="text-amber-400">4 schools</span> in red zone today · <span class="muted">PMD heatwave alert active</span></div>
+            <div class="text-xs muted mt-0.5">Forecast 41–43°C across Gujranwala for next 3 days · 925 children at high-heat schools</div>
+          </div>
+        </div>
+        <button class="btn primary" onclick="goView('hazards')">Open Hazard Watch →</button>
+      </div>
+
+      <!-- KPI strip -->
+      <section class="px-6 py-3 grid grid-cols-4 gap-3">
+        <div class="panel rounded-lg kpi">
+          <div class="label">Child-burden days · 2025</div>
+          <div class="value">566,598</div>
+          <div class="sub">student-days × hazard exposure</div>
+        </div>
+        <div class="panel rounded-lg kpi">
+          <div class="label">High heat risk schools</div>
+          <div class="value">23<span class="text-base muted ml-1">/ 50</span></div>
+          <div class="sub">≥40 high-heat days/yr (10-yr avg)</div>
+        </div>
+        <div class="panel rounded-lg kpi">
+          <div class="label">Today's status</div>
+          <div class="value text-red-400">HEAT</div>
+          <div class="sub">4 red · 12 amber · 34 green</div>
+        </div>
+        <div class="panel rounded-lg kpi">
+          <div class="label">Advisories this month</div>
+          <div class="value">312</div>
+          <div class="sub">88% acknowledged within 4h</div>
+        </div>
+      </section>
+
+      <!-- Map + detail -->
+      <section class="grid flex-1 overflow-hidden" style="grid-template-columns: 1fr 380px;">
+        <div class="relative">
+          <div class="absolute top-3 left-3 z-[400] flex gap-2">
+            <select class="f" id="f-hazard">
+              <option value="heat">View: Heat</option>
+              <option value="aq">View: Air Quality</option>
+              <option value="flood">View: Flood</option>
+              <option value="overall">View: Overall</option>
+            </select>
+            <select class="f" id="f-cluster">
+              <option value="">All clusters</option><option>C-1</option><option>C-2</option><option>C-3</option><option>C-4</option>
+            </select>
+          </div>
+          <div id="map" class="h-full"></div>
+        </div>
+
+        <aside class="bg-[color:var(--panel)] border-l border-[color:var(--border)] overflow-y-auto scroll" id="detail-panel">
+          <!-- populated by JS; default = cluster overview -->
+        </aside>
+      </section>
+    </section>
+
+    <!-- ============== VIEW: HAZARD WATCH ============== -->
+    <section class="view flex-1 overflow-y-auto scroll" id="v-hazards">
+      <div class="px-6 py-4 space-y-4">
+
+        <!-- Workflow stepper -->
+        <div class="panel rounded-lg p-4">
+          <div class="tag mb-2">How an alert flows</div>
+          <div class="flex items-center gap-2">
+            <div class="step done"><span class="num">1</span> Detect</div>
+            <div class="bar"></div>
+            <div class="step done"><span class="num">2</span> Recommend</div>
+            <div class="bar"></div>
+            <div class="step active"><span class="num">3</span> Approve</div>
+            <div class="bar"></div>
+            <div class="step"><span class="num">4</span> Dispatch</div>
+            <div class="bar"></div>
+            <div class="step"><span class="num">5</span> Acknowledge</div>
+            <div class="bar"></div>
+            <div class="step"><span class="num">6</span> Log</div>
+          </div>
+          <div class="text-xs muted mt-3">
+            Climate data crosses a threshold → system auto-drafts an advisory and recommends school-day actions →
+            <span class="text-white">operator (you) reviews and approves</span> → messages dispatch via SMS/WhatsApp →
+            school confirms action taken → audit trail recorded for compliance and future ML.
+          </div>
+        </div>
+
+        <!-- Counts -->
+        <div class="grid grid-cols-3 gap-3">
+          <div class="panel rounded-lg p-3 flex items-center gap-3">
+            <span class="dot red anim-pulse"></span>
+            <div>
+              <div class="text-2xl font-bold leading-none">4</div>
+              <div class="text-xs muted mt-0.5">Red — action required now</div>
+            </div>
+          </div>
+          <div class="panel rounded-lg p-3 flex items-center gap-3">
+            <span class="dot amber"></span>
+            <div>
+              <div class="text-2xl font-bold leading-none">12</div>
+              <div class="text-xs muted mt-0.5">Amber — monitor</div>
+            </div>
+          </div>
+          <div class="panel rounded-lg p-3 flex items-center gap-3">
+            <span class="dot green"></span>
+            <div>
+              <div class="text-2xl font-bold leading-none">34</div>
+              <div class="text-xs muted mt-0.5">Green — routine</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active alert list -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <div class="tag">Active alerts · sorted by severity × students affected</div>
+            <div class="flex gap-2">
+              <select class="f"><option>All hazards</option><option>Heat</option><option>Air Quality</option><option>Flood</option></select>
+              <select class="f"><option>All clusters</option><option>C-1</option><option>C-2</option><option>C-3</option><option>C-4</option></select>
+            </div>
+          </div>
+          <div class="space-y-3" id="hazard-list">
+            <!-- populated by JS -->
+          </div>
+        </div>
+
+        <!-- Today's recommended actions glossary -->
+        <details class="panel rounded-lg p-4" open>
+          <summary class="flex justify-between items-center">
+            <span class="text-sm font-medium">What actions can the operator take?</span>
+            <span class="chev muted">▾</span>
+          </summary>
+          <div class="grid grid-cols-2 gap-3 mt-3 text-xs">
+            <div class="panel2 rounded p-3">
+              <div class="font-medium text-sm mb-1">📨 Send parent advisory</div>
+              <div class="muted">Auto-drafted EN / UR / PA text dispatched via SMS, WhatsApp, school PA. Operator edits + approves before send. Template library covers heatwave, smog, flood watch, cold snap, routine.</div>
+            </div>
+            <div class="panel2 rounded p-3">
+              <div class="font-medium text-sm mb-1">🕐 Modify school day</div>
+              <div class="muted">Early dismissal, advanced pickup time, no outdoor activity, double water rations, indoor PE only, cancel assembly. Marks school day as adjusted in the log.</div>
+            </div>
+            <div class="panel2 rounded p-3">
+              <div class="font-medium text-sm mb-1">🏥 Notify health responders</div>
+              <div class="muted">BHU / nearest clinic flagged that a child-impact event is active at school location. Heat-stroke / asthma kits requested if not on site.</div>
+            </div>
+            <div class="panel2 rounded p-3">
+              <div class="font-medium text-sm mb-1">🚫 Recommend closure</div>
+              <div class="muted">Drafts a closure recommendation for district admin sign-off. <span class="text-white">System never closes a school autonomously</span> — that's a government call.</div>
+            </div>
+            <div class="panel2 rounded p-3">
+              <div class="font-medium text-sm mb-1">⏱ Defer 24h</div>
+              <div class="muted">Acknowledge but defer action one day (forecast may improve). Alert reappears in tomorrow's queue if conditions persist.</div>
+            </div>
+            <div class="panel2 rounded p-3">
+              <div class="font-medium text-sm mb-1">📋 Mark as monitoring</div>
+              <div class="muted">No advisory yet — operator is watching the situation. Audit-logged so reviewers know the alert wasn't simply ignored.</div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- ============== VIEW: SCHOOLS RAG MATRIX ============== -->
+    <section class="view flex-1 overflow-hidden flex flex-col" id="v-schools">
+      <div class="px-6 py-3 flex items-center justify-between border-b border-[color:var(--border)]">
+        <div class="text-xs muted">
+          <span class="text-white font-medium">RAG matrix</span> · every school × every hazard at a glance.
+          Click a school for full detail. Sort by any column.
+        </div>
+        <div class="flex gap-2">
+          <input class="f" placeholder="Filter…" id="schools-filter"/>
+          <button class="btn btn-sm">⤓ Export CSV</button>
+        </div>
+      </div>
+      <div class="flex-1 overflow-y-auto scroll">
+        <table class="rag-table" id="rag-table">
+          <thead>
+            <tr>
+              <th data-sort="school_name">School</th>
+              <th data-sort="cluster">Cluster</th>
+              <th data-sort="students">Students</th>
+              <th data-sort="heat">Heat</th>
+              <th data-sort="aq">Air Q</th>
+              <th data-sort="flood">Flood</th>
+              <th data-sort="overall">Overall</th>
+              <th data-sort="burden">Burden/yr</th>
+              <th>Today</th>
+            </tr>
+          </thead>
+          <tbody id="rag-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============== VIEW: ADVISORY ============== -->
+    <section class="view flex-1 overflow-y-auto scroll" id="v-advisory">
+      <div class="px-6 py-4 grid grid-cols-3 gap-4">
+        <div class="col-span-2 space-y-4">
+          <div class="panel rounded-lg p-4">
+            <div class="flex items-center justify-between mb-2">
+              <div class="tag">Outbox · last 24 hours</div>
+              <div class="flex gap-2 text-xs muted">
+                <span><span class="dot green inline-block mr-1"></span>Sent 287</span>
+                <span><span class="dot amber inline-block mr-1"></span>Queued 21</span>
+                <span><span class="dot red inline-block mr-1"></span>Failed 4</span>
+              </div>
+            </div>
+            <table class="w-full text-sm">
+              <thead class="text-xs muted">
+                <tr class="border-b border-[color:var(--border)]">
+                  <th class="text-left py-2 font-normal">Time</th>
+                  <th class="text-left font-normal">School</th>
+                  <th class="text-left font-normal">Hazard</th>
+                  <th class="text-left font-normal">Channels</th>
+                  <th class="text-left font-normal">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b border-[color:var(--border-soft)]"><td class="py-2 font-mono text-xs">14:22</td><td>GPS Kot Bhano Shah</td><td><span class="chip red">Heat</span></td><td class="text-xs">SMS · WhatsApp</td><td><span class="chip green">Acknowledged</span></td></tr>
+                <tr class="border-b border-[color:var(--border-soft)]"><td class="py-2 font-mono text-xs">14:21</td><td>GGPS Iftikhar Colony</td><td><span class="chip red">Heat</span></td><td class="text-xs">SMS · WhatsApp</td><td><span class="chip green">Acknowledged</span></td></tr>
+                <tr class="border-b border-[color:var(--border-soft)]"><td class="py-2 font-mono text-xs">14:19</td><td>GPS Eminabad</td><td><span class="chip amber">Smog</span></td><td class="text-xs">WhatsApp</td><td><span class="chip amber">Dispatched</span></td></tr>
+                <tr class="border-b border-[color:var(--border-soft)]"><td class="py-2 font-mono text-xs">14:17</td><td>GGPS Wahndo</td><td><span class="chip red">Heat</span></td><td class="text-xs">SMS</td><td><span class="chip">Draft</span></td></tr>
+                <tr class="border-b border-[color:var(--border-soft)]"><td class="py-2 font-mono text-xs">09:02</td><td>All Cluster C-1</td><td><span class="chip">Daily</span></td><td class="text-xs">SMS · WhatsApp · PA</td><td><span class="chip green">Acknowledged</span></td></tr>
+                <tr><td class="py-2 font-mono text-xs muted">08:15</td><td class="muted">All 50 schools</td><td><span class="chip">Routine</span></td><td class="text-xs muted">WhatsApp</td><td><span class="chip green">Acknowledged</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel rounded-lg p-4">
+            <div class="tag mb-3">Template library · multilingual</div>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="panel2 rounded p-3">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-medium text-sm">Heatwave alert</span>
+                  <span class="chip red">Heat</span>
+                </div>
+                <div class="muted text-xs leading-relaxed">"Tomorrow temperatures will reach {{TEMP}}°C. Please send your child with extra water, a hat, and light cotton clothing. Outdoor assembly cancelled. Pickup advanced to {{TIME}}."</div>
+                <div class="mt-2 flex gap-1"><span class="chip">EN</span><span class="chip">UR</span><span class="chip">PA</span></div>
+              </div>
+              <div class="panel2 rounded p-3">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-medium text-sm">Smog advisory</span>
+                  <span class="chip amber">AQ</span>
+                </div>
+                <div class="muted text-xs leading-relaxed">"Air quality is unhealthy today (AQI {{AQI}}). Outdoor PE cancelled. Children with asthma should carry inhalers. Masks recommended for travel."</div>
+                <div class="mt-2 flex gap-1"><span class="chip">EN</span><span class="chip">UR</span><span class="chip">PA</span></div>
+              </div>
+              <div class="panel2 rounded p-3">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-medium text-sm">Flood watch</span>
+                  <span class="chip" style="color:#93c5fd; border-color:rgba(59,130,246,.4); background:rgba(59,130,246,.08)">Flood</span>
+                </div>
+                <div class="muted text-xs leading-relaxed">"Heavy rainfall expected. School commute may be disrupted. If water enters streets, please keep your child home and we will arrange catch-up classes."</div>
+                <div class="mt-2 flex gap-1"><span class="chip">EN</span><span class="chip">UR</span><span class="chip">PA</span></div>
+              </div>
+              <div class="panel2 rounded p-3">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-medium text-sm">Cold snap</span>
+                  <span class="chip" style="color:#93c5fd">Cold</span>
+                </div>
+                <div class="muted text-xs leading-relaxed">"Temperatures will drop to {{TEMP}}°C overnight. Please send warm clothing. Morning assembly moved indoors."</div>
+                <div class="mt-2 flex gap-1"><span class="chip">EN</span><span class="chip">UR</span><span class="chip">PA</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div class="panel rounded-lg p-4">
+            <div class="tag mb-2">Reach (last 30 days)</div>
+            <div class="space-y-3 mt-3">
+              <div>
+                <div class="flex justify-between text-sm"><span>WhatsApp</span><span class="font-mono">8,734</span></div>
+                <div class="bar mt-1"><div style="width:88%; background:#10b981"></div></div>
+              </div>
+              <div>
+                <div class="flex justify-between text-sm"><span>SMS</span><span class="font-mono">6,210</span></div>
+                <div class="bar mt-1"><div style="width:62%; background:#a855f7"></div></div>
+              </div>
+              <div>
+                <div class="flex justify-between text-sm"><span>School PA</span><span class="font-mono">50 schools</span></div>
+                <div class="bar mt-1"><div style="width:100%; background:#3b82f6"></div></div>
+              </div>
+            </div>
+            <div class="text-xs muted mt-3 leading-relaxed">88% of advisories acknowledged within 4 hours. Median latency from threshold-breach to first dispatch: <span class="text-white">14 minutes</span>.</div>
+          </div>
+
+          <div class="panel rounded-lg p-4">
+            <div class="tag mb-2">Privacy</div>
+            <div class="text-xs muted leading-relaxed">
+              The advisory engine never stores parent PII. Operator-side gateway holds contacts;
+              this system holds only school IDs, hazard scores, and dispatch logs.
+              Parents can opt out per channel; opt-outs are honoured immediately.
+            </div>
+          </div>
+
+          <div class="panel rounded-lg p-4">
+            <div class="tag mb-2">Open-source note</div>
+            <div class="text-xs muted leading-relaxed">
+              The template library and content engine ship as open source. Operators plug in
+              their own SMS / WhatsApp Business / e-bell gateway. We don't lock partners into our messaging stack.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== VIEW: OPEN DATA ============== -->
+    <section class="view flex-1 overflow-y-auto scroll" id="v-data">
+      <div class="px-6 py-4 space-y-4">
+
+        <div class="panel rounded-lg p-5 border-l-4 border-amber-500">
+          <div class="flex items-start justify-between gap-6">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <h2 class="text-lg font-semibold">Open School-Climate Data Layer</h2>
+                <span class="chip">CC BY 4.0</span>
+                <span class="chip live">Daily refresh</span>
+              </div>
+              <p class="text-sm muted leading-relaxed max-w-2xl">
+                A clean, school-level, EMIS-keyed climate exposure dataset. Built so other school operators,
+                researchers, ministries, and aid agencies can layer their own analytics on top —
+                without each having to wire up ERA5, MODIS, Sentinel-5P, and CAMS themselves.
+              </p>
+            </div>
+            <div class="flex flex-col gap-2 shrink-0">
+              <button class="btn primary">⤓ Download full dataset (.zip)</button>
+              <button class="btn btn-sm">View on GitHub</button>
+            </div>
+          </div>
+          <div class="grid grid-cols-4 gap-3 mt-4 pt-4 border-t border-[color:var(--border)]">
+            <div><div class="tag">Schools</div><div class="text-xl font-bold mt-1">50</div></div>
+            <div><div class="tag">Date range</div><div class="text-xl font-bold mt-1">2015→</div></div>
+            <div><div class="tag">Daily rows</div><div class="text-xl font-bold mt-1">~3.6M</div></div>
+            <div><div class="tag">License</div><div class="text-xl font-bold mt-1">CC BY 4.0</div></div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div class="panel rounded-lg p-4">
+            <div class="flex items-center justify-between mb-2">
+              <div class="text-sm font-medium">schools.csv</div>
+              <button class="btn btn-sm">⤓ 8 KB</button>
+            </div>
+            <div class="text-xs muted mb-2">School roster — primary reference table.</div>
+            <div class="code">emis_code,school_name,country,admin1,admin2,operator,...
+34110214,GPS Kot Bhano Shah,PAK,Punjab,Gujranwala,PDLC,...
+34110621,GGPS Iftikhar Colony,PAK,Punjab,Gujranwala,PDLC,...</div>
+          </div>
+          <div class="panel rounded-lg p-4">
+            <div class="flex items-center justify-between mb-2">
+              <div class="text-sm font-medium">exposure_daily.parquet</div>
+              <button class="btn btn-sm">⤓ 42 MB</button>
+            </div>
+            <div class="text-xs muted mb-2">Daily long-format climate metrics, partitioned by year.</div>
+            <div class="code">emis_code | date       | source     | metric    | value
+34110214  | 2025-06-12 | era5       | t2m_max   | 44.2
+34110214  | 2025-06-12 | modis_lst  | lst_day   | 47.8
+34110214  | 2025-06-12 | sentinel5p | no2_col   | 1.4e-4</div>
+          </div>
+          <div class="panel rounded-lg p-4">
+            <div class="flex items-center justify-between mb-2">
+              <div class="text-sm font-medium">exposure_school_year.parquet</div>
+              <button class="btn btn-sm">⤓ 1.1 MB</button>
+            </div>
+            <div class="text-xs muted mb-2">Pre-aggregated annual summaries — fast for dashboards.</div>
+            <div class="code">emis_code | year | metric            | agg   | value
+34110214  | 2025 | heat_stress_days  | count | 47
+34110214  | 2025 | smog_days         | count | 31</div>
+          </div>
+          <div class="panel rounded-lg p-4">
+            <div class="flex items-center justify-between mb-2">
+              <div class="text-sm font-medium">vulnerability_scores.csv</div>
+              <button class="btn btn-sm">⤓ 6 KB</button>
+            </div>
+            <div class="text-xs muted mb-2">Latest 0–100 scores per school per hazard.</div>
+            <div class="code">emis_code,heat,aq,flood,overall,burden_yr
+34110214,92,71,34,85,11186
+34110621,87,68,28,76,13640</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-4">
+          <div class="panel rounded-lg p-4">
+            <div class="tag mb-1">Mirrors</div>
+            <div class="text-sm">HDX · Zenodo (DOI) · GitHub Releases</div>
+            <div class="text-xs muted mt-1">Permanent academic citation via Zenodo.</div>
+          </div>
+          <div class="panel rounded-lg p-4">
+            <div class="tag mb-1">Citation</div>
+            <div class="text-xs font-mono leading-relaxed">School Climate Hub (2026). PDLC Gujranwala-50 climate exposure dataset v0.1. doi:10.5281/zenodo.xxxxxxx</div>
+          </div>
+          <div class="panel rounded-lg p-4">
+            <div class="tag mb-1">Build it yourself</div>
+            <div class="text-xs muted">All ingestion code is Apache-2.0 in the repo. Drop in your own school roster (EMIS + coords + enrolment), run <span class="code inline">make ingest</span>, get the same outputs.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== VIEW: SETTINGS ============== -->
+    <section class="view flex-1 overflow-y-auto scroll" id="v-settings">
+      <div class="px-6 py-4 grid grid-cols-2 gap-4 max-w-5xl">
+        <div class="panel rounded-lg p-4">
+          <div class="tag mb-3">Hazard thresholds</div>
+          <div class="space-y-3 text-sm">
+            <div class="flex items-center justify-between"><span>Heat — amber</span><input class="f w-20" value="≥38°C"/></div>
+            <div class="flex items-center justify-between"><span>Heat — red</span><input class="f w-20" value="≥42°C"/></div>
+            <div class="flex items-center justify-between"><span>AQI — amber</span><input class="f w-20" value="≥150"/></div>
+            <div class="flex items-center justify-between"><span>AQI — red</span><input class="f w-20" value="≥200"/></div>
+            <div class="flex items-center justify-between"><span>Rainfall — amber</span><input class="f w-20" value="≥50 mm"/></div>
+            <div class="flex items-center justify-between"><span>Rainfall — red</span><input class="f w-20" value="≥100 mm"/></div>
+          </div>
+        </div>
+        <div class="panel rounded-lg p-4">
+          <div class="tag mb-3">Languages</div>
+          <div class="space-y-2 text-sm">
+            <label class="flex items-center gap-2"><input type="checkbox" checked/> English</label>
+            <label class="flex items-center gap-2"><input type="checkbox" checked/> Urdu (اردو)</label>
+            <label class="flex items-center gap-2"><input type="checkbox" checked/> Punjabi (ਪੰਜਾਬੀ)</label>
+            <label class="flex items-center gap-2"><input type="checkbox"/> Sindhi (سنڌي)</label>
+            <label class="flex items-center gap-2"><input type="checkbox"/> Pashto (پښتو)</label>
+          </div>
+          <div class="tag mt-5 mb-2">Approval policy</div>
+          <div class="text-xs muted">Currently: <span class="text-white">all advisories require operator approval</span> before dispatch.
+            Auto-dispatch can be enabled per hazard once trust is established.</div>
+        </div>
+        <div class="panel rounded-lg p-4 col-span-2">
+          <div class="tag mb-3">Messaging gateway</div>
+          <div class="grid grid-cols-3 gap-3 text-sm">
+            <div class="panel2 rounded p-3"><div class="font-medium">SMS</div><div class="text-xs muted mt-1">JazzCash · Zong endpoint</div><div class="text-xs mt-2"><span class="dot green inline-block mr-1"></span>Connected</div></div>
+            <div class="panel2 rounded p-3"><div class="font-medium">WhatsApp Business</div><div class="text-xs muted mt-1">Meta Cloud API</div><div class="text-xs mt-2"><span class="dot green inline-block mr-1"></span>Connected</div></div>
+            <div class="panel2 rounded p-3"><div class="font-medium">School PA / Bell</div><div class="text-xs muted mt-1">Stub — webhook out</div><div class="text-xs mt-2"><span class="dot amber inline-block mr-1"></span>Stubbed</div></div>
+          </div>
+          <div class="text-xs muted mt-3">The hub never holds parent contacts itself — that's the operator's gateway. We hold school IDs and dispatch logs only.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== VIEW: DOCS ============== -->
+    <section class="view flex-1 overflow-y-auto scroll" id="v-docs">
+      <div class="px-6 py-4 max-w-3xl space-y-4">
+        <div class="panel rounded-lg p-5">
+          <h2 class="text-lg font-semibold mb-1">How the hub works — one paragraph</h2>
+          <p class="text-sm muted leading-relaxed">
+            Every day, five open climate data sources are pulled for each school's coordinates and stored in
+            a single open data layer (CC BY 4.0). A scoring engine compares each school's current readings
+            to its 10-year baseline and outputs heat / air-quality / flood vulnerability scores plus a
+            child-burden estimate. When a score crosses a threshold the system drafts a multilingual parent
+            advisory and surfaces it for operator approval in Hazard Watch. The operator dispatches via
+            their existing SMS / WhatsApp / PA gateway; the school confirms what action was taken; the
+            event is logged for audit and future ML.
+          </p>
+        </div>
+
+        <div class="panel rounded-lg p-5">
+          <h3 class="text-base font-semibold mb-2">Public API</h3>
+          <div class="space-y-2 text-xs font-mono">
+            <div><span class="chip green">GET</span> /api/schools</div>
+            <div><span class="chip green">GET</span> /api/schools/{emis_code}</div>
+            <div><span class="chip green">GET</span> /api/schools/{emis_code}/exposure?from=YYYY-MM-DD&to=YYYY-MM-DD</div>
+            <div><span class="chip green">GET</span> /api/scores</div>
+            <div><span class="chip green">GET</span> /api/scores/{emis_code}</div>
+            <div><span class="chip green">GET</span> /api/hazards/today</div>
+            <div><span class="chip green">GET</span> /api/dataset.zip <span class="muted">(full open dataset)</span></div>
+          </div>
+          <div class="text-xs muted mt-3">No auth on read endpoints — the data is public. Write endpoints (advisory dispatch, action log) are operator-only.</div>
+        </div>
+
+        <div class="panel rounded-lg p-5">
+          <h3 class="text-base font-semibold mb-2">Architecture</h3>
+          <p class="text-sm muted mb-2">Python ingestion → DuckDB warehouse → FastAPI → Next.js dashboard. See <a class="text-amber-400 hover:underline" href="../docs/architecture.md">architecture.md</a> in the repo.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ============== APPROVAL MODAL ============== -->
+<div class="modal-bg" id="modal-bg" onclick="if(event.target===this) closeModal()">
+  <div class="modal">
+    <div class="px-5 py-4 border-b border-[color:var(--border)] flex items-center justify-between">
+      <div>
+        <div class="tag">Step 3 of 6 · Approve & dispatch</div>
+        <h3 class="text-base font-semibold mt-1" id="modal-title">Advisory draft</h3>
+      </div>
+      <button class="btn ghost" onclick="closeModal()">✕</button>
+    </div>
+    <div class="px-5 py-4 space-y-4" id="modal-body">
+      <!-- populated by JS -->
+    </div>
+    <div class="px-5 py-3 border-t border-[color:var(--border)] flex items-center justify-between bg-[color:var(--panel2)]">
+      <div class="text-xs muted">Audit-logged · operator ID retained</div>
+      <div class="flex gap-2">
+        <button class="btn" onclick="closeModal()">Cancel</button>
+        <button class="btn" onclick="closeModal()">Edit text</button>
+        <button class="btn primary" onclick="dispatchAdvisory()">Approve & dispatch</button>
+      </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- BODY: map + detail -->
-<section class="grid" style="grid-template-columns: 1fr 380px; height: calc(100vh - 220px); min-height: 580px;">
-  <div id="map" class="border-r border-[color:var(--border)]"></div>
+<!-- ============== JS ============== -->
+<script>
+// -------- mock state ----------
+let SCHOOLS = [];
+let HAZARD = 'heat';
+let MARKERS = {};
+let CURRENT_VIEW = 'overview';
+let DISPATCH_TARGET = null;
 
-  <aside class="bg-[color:var(--panel)] overflow-y-auto scroll">
-    <!-- Default state: cluster overview -->
-    <div id="default-detail" class="p-5 space-y-5">
+const VIEW_META = {
+  overview: { title: 'Overview', sub: 'Pilot dashboard — Gujranwala-50',
+              narr: 'High-level estate view. Click any school for detail.' },
+  hazards:  { title: 'Hazard Watch', sub: 'Operator decision queue',
+              narr: 'Active alerts requiring review. This is the daily operator workflow.' },
+  schools:  { title: 'Schools', sub: 'RAG matrix · 50 schools × 4 hazards',
+              narr: 'Every school × every hazard. Sortable, filterable, exportable.' },
+  advisory: { title: 'Advisory', sub: 'Outbox + template library',
+              narr: 'Sent advisories, draft queue, template gallery, channel reach.' },
+  data:     { title: 'Open Data Layer', sub: 'CC BY 4.0 · daily refresh',
+              narr: 'The headline open-source artefact — anyone can download and build on it.' },
+  settings: { title: 'Settings', sub: 'Thresholds · channels · privacy',
+              narr: 'Operator config. Thresholds, languages, gateway connections, approval policy.' },
+  docs:     { title: 'Docs & API', sub: 'Public endpoints + architecture',
+              narr: 'How the hub works, what endpoints exist, where to read the source.' },
+};
+
+// Deterministic mock score
+function mockScore(school, hazard) {
+  const seed = (school.lat * 1e3 + school.lon * 1e3 + school.emis_code) % 100;
+  const x = Math.abs(Math.sin(seed)) * 100;
+  if (hazard === 'heat')    return Math.round(40 + (x % 60));
+  if (hazard === 'aq')      return Math.round(35 + ((x * 1.3) % 65));
+  if (hazard === 'flood')   return Math.round((x * 0.4) % 70);
+  if (hazard === 'overall') {
+    return Math.round((mockScore(school,'heat')*0.5 + mockScore(school,'aq')*0.4 + mockScore(school,'flood')*0.1));
+  }
+}
+function ragClass(s) {
+  if (s >= 80) return 'red';
+  if (s >= 65) return 'amber';
+  return 'green';
+}
+function ragColor(s) {
+  if (s >= 80) return '#ef4444';
+  if (s >= 65) return '#f59e0b';
+  if (s >= 45) return '#eab308';
+  return '#10b981';
+}
+function burden(s) {
+  const h = mockScore(s,'heat'), a = mockScore(s,'aq'), f = mockScore(s,'flood');
+  return Math.round(s.students * (h*0.5 + a*0.4 + f*0.1));
+}
+
+// -------- routing --------
+function goView(name) {
+  CURRENT_VIEW = name;
+  location.hash = name;
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('v-' + name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.view === name));
+  const m = VIEW_META[name];
+  document.getElementById('view-title').textContent = m.title;
+  document.getElementById('view-sub').textContent = m.sub;
+  document.getElementById('view-narrative').textContent = m.narr;
+
+  if (name === 'overview' && map) setTimeout(() => map.invalidateSize(), 50);
+  if (name === 'schools') renderRagTable();
+  if (name === 'hazards') renderHazardList();
+}
+
+// -------- map (overview) --------
+const map = L.map('map', { zoomControl: true, attributionControl: true }).setView([32.13, 74.15], 11);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '© OpenStreetMap' }).addTo(map);
+
+function makeIcon(color) {
+  return L.divIcon({ className: '', iconSize: [14, 14], iconAnchor: [7, 7],
+                      html: `<div class="marker" style="background:${color}"></div>` });
+}
+function paintMarkers() {
+  Object.values(MARKERS).forEach(m => map.removeLayer(m));
+  MARKERS = {};
+  const cluster = document.getElementById('f-cluster').value;
+  SCHOOLS.forEach(s => {
+    if (cluster && s.cluster !== cluster) return;
+    const score = mockScore(s, HAZARD);
+    const m = L.marker([s.lat, s.lon], { icon: makeIcon(ragColor(score)) })
+               .bindPopup(`<div style="font-size:12px"><strong>${s.school_name}</strong><br/>EMIS ${s.emis_code} · ${s.cluster} · ${s.students} students<br/><span style="color:#8a96a8">${HAZARD.toUpperCase()} ${score}/100</span></div>`)
+               .on('click', () => showSchool(s));
+    m.addTo(map);
+    MARKERS[s.emis_code] = m;
+  });
+}
+
+// -------- detail panel (overview) --------
+function defaultDetail() {
+  document.getElementById('detail-panel').innerHTML = `
+    <div class="p-5 space-y-5">
       <div>
         <div class="tag">Pilot overview</div>
         <h2 class="text-lg font-semibold mt-1">All clusters · Gujranwala</h2>
-        <p class="muted text-sm mt-1">Click any school marker for detail.</p>
+        <p class="muted text-sm mt-1">Click any school marker for detail, or jump to <a class="text-amber-400 hover:underline" onclick="goView('schools')">RAG matrix →</a></p>
       </div>
-
       <div class="space-y-3">
-        <div class="flex justify-between items-baseline">
-          <span class="text-sm">High heat risk</span>
-          <span class="font-mono text-sm">23 schools · 6,144 children</span>
-        </div>
-        <div class="bar"><div style="width:46%; background:var(--heat)"></div></div>
-
-        <div class="flex justify-between items-baseline mt-3">
-          <span class="text-sm">Severe air-quality risk</span>
-          <span class="font-mono text-sm">31 schools · 7,830 children</span>
-        </div>
-        <div class="bar"><div style="width:62%; background:var(--aq)"></div></div>
-
-        <div class="flex justify-between items-baseline mt-3">
-          <span class="text-sm">Flood-exposed (50-yr)</span>
-          <span class="font-mono text-sm">7 schools · 1,562 children</span>
-        </div>
-        <div class="bar"><div style="width:14%; background:var(--flood)"></div></div>
+        <div class="flex justify-between items-baseline"><span class="text-sm">High heat risk</span><span class="font-mono text-sm">23 schools · 6,144 children</span></div>
+        <div class="bar"><div style="width:46%; background:#ef4444"></div></div>
+        <div class="flex justify-between items-baseline mt-3"><span class="text-sm">Severe air-quality risk</span><span class="font-mono text-sm">31 schools · 7,830 children</span></div>
+        <div class="bar"><div style="width:62%; background:#a855f7"></div></div>
+        <div class="flex justify-between items-baseline mt-3"><span class="text-sm">Flood-exposed (50-yr)</span><span class="font-mono text-sm">7 schools · 1,562 children</span></div>
+        <div class="bar"><div style="width:14%; background:#3b82f6"></div></div>
       </div>
-
       <div class="panel2 rounded-lg p-3">
         <div class="tag">Headline</div>
         <p class="text-sm mt-1 leading-relaxed">
-          Across the 50 schools, students collectively experience an estimated
+          Across 50 schools, students experience an estimated
           <span class="accent font-semibold">566,598 child-hazard-days per year</span> —
-          equivalent to every enrolled child losing
-          <span class="accent font-semibold">47 school-quality days annually</span>
-          to climate stressors.
+          equivalent to every enrolled child losing <span class="accent font-semibold">47 school-quality days</span> annually.
         </p>
       </div>
-
       <div>
         <div class="tag mb-2">Cluster breakdown</div>
         <table class="w-full text-sm">
-          <thead class="muted text-xs">
-            <tr><th class="text-left font-normal py-1">Cluster</th><th class="text-right font-normal">Schools</th><th class="text-right font-normal">Students</th><th class="text-right font-normal">Heat idx</th></tr>
-          </thead>
+          <thead class="muted text-xs"><tr><th class="text-left font-normal py-1">Cluster</th><th class="text-right font-normal">Schools</th><th class="text-right font-normal">Students</th><th class="text-right font-normal">Heat idx</th></tr></thead>
           <tbody class="font-mono">
             <tr><td class="py-1.5">C-1</td><td class="text-right">13</td><td class="text-right">3,047</td><td class="text-right text-amber-400">71</td></tr>
             <tr><td class="py-1.5">C-2</td><td class="text-right">12</td><td class="text-right">2,941</td><td class="text-right text-amber-400">68</td></tr>
@@ -205,187 +877,258 @@
           </tbody>
         </table>
       </div>
-
-      <details class="panel2 rounded-lg p-3" open>
-        <summary class="flex justify-between items-center">
-          <span class="text-sm font-medium">Today's parent advisory <span class="chip ml-2">EN · UR · PA</span></span>
-          <span class="chev muted">▾</span>
-        </summary>
-        <div class="text-sm mt-3 space-y-2 muted">
-          <p><span class="text-white">Heatwave alert</span> — PMD forecasts 41–43°C across Gujranwala for the next 3 days. School-day adjustments recommended.</p>
-          <p class="text-xs">Sample (EN): "Dear parents — temperatures will reach 42°C tomorrow. Please send your child with extra water, a hat, and light cotton clothing. Outdoor assembly is cancelled. Pickup time advanced to 11:30am."</p>
-          <p class="text-xs">آپ کے بچے کی صحت — کل درجہ حرارت 42 ڈگری تک پہنچے گا۔ پانی کی اضافی بوتل اور ٹوپی ساتھ بھیجیں۔ صبح کی اسمبلی منسوخ ہے۔</p>
-        </div>
-      </details>
-    </div>
-
-    <!-- School detail (populated on click) -->
-    <div id="school-detail" class="p-5 space-y-5 hidden"></div>
-  </aside>
-</section>
-
-<!-- FOOTER -->
-<footer class="px-6 py-3 text-xs muted flex justify-between border-t border-[color:var(--border)]">
-  <div>Open dataset · <a href="../LICENSE" class="hover:text-white">Apache-2.0</a> code · <a href="https://creativecommons.org/licenses/by/4.0/" class="hover:text-white">CC BY 4.0</a> data</div>
-  <div>Built with PDLC for UNICEF Venture Fund 2026 · <span class="muted">v0.1-mockup</span></div>
-</footer>
-
-<script>
-// ---------- mockup logic ----------
-// Deterministic-but-varied mock vulnerability scores derived from lat/lon
-function mockScore(school, hazard) {
-  const seed = (school.lat * 1e3 + school.lon * 1e3 + school.emis_code) % 100;
-  const x = Math.abs(Math.sin(seed)) * 100;
-  if (hazard === 'heat')  return Math.round(40 + (x % 60));
-  if (hazard === 'aq')    return Math.round(35 + ((x * 1.3) % 65));
-  if (hazard === 'flood') return Math.round((x * 0.4) % 70);
-}
-
-function hazardColor(score) {
-  if (score >= 80) return '#ef4444';
-  if (score >= 65) return '#f59e0b';
-  if (score >= 45) return '#eab308';
-  return '#10b981';
-}
-
-const map = L.map('map', { zoomControl: true, attributionControl: true }).setView([32.13, 74.15], 11);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  maxZoom: 18, attribution: '© OpenStreetMap contributors'
-}).addTo(map);
-
-let SCHOOLS = [];
-let HAZARD = 'heat';
-let MARKERS = {};
-let SELECTED = null;
-
-function makeIcon(color) {
-  return L.divIcon({
-    className: '',
-    iconSize: [14, 14],
-    iconAnchor: [7, 7],
-    html: `<div class="marker" style="background:${color}"></div>`
-  });
-}
-
-function paintMarkers() {
-  Object.values(MARKERS).forEach(m => map.removeLayer(m));
-  MARKERS = {};
-  const cluster = document.getElementById('f-cluster').value;
-  const tehsil  = document.getElementById('f-tehsil').value;
-  let shown = 0;
-  SCHOOLS.forEach(s => {
-    if (cluster && s.cluster !== cluster) return;
-    if (tehsil && s.tehsil !== tehsil) return;
-    const score = mockScore(s, HAZARD);
-    const m = L.marker([s.lat, s.lon], { icon: makeIcon(hazardColor(score)) })
-               .bindPopup(`<div style="font-size:12px"><strong>${s.school_name}</strong><br/>EMIS ${s.emis_code} · ${s.cluster} · ${s.students} students</div>`)
-               .on('click', () => showSchool(s));
-    m.addTo(map);
-    MARKERS[s.emis_code] = m;
-    shown++;
-  });
-  document.getElementById('result-count').textContent = `${shown} schools shown`;
-}
-
-function bar(value, color) {
-  return `<div class="bar"><div style="width:${value}%; background:${color}"></div></div>`;
+    </div>`;
 }
 
 function showSchool(s) {
-  SELECTED = s.emis_code;
-  document.getElementById('default-detail').classList.add('hidden');
-  const el = document.getElementById('school-detail');
-  el.classList.remove('hidden');
   const heat = mockScore(s, 'heat'), aq = mockScore(s, 'aq'), flood = mockScore(s, 'flood');
-  const overall = Math.round((heat + aq + flood) / 3);
-  const burden = Math.round(s.students * (heat * 0.5 + aq * 0.4 + flood * 0.1));
-  el.innerHTML = `
+  const overall = mockScore(s, 'overall'), b = burden(s);
+  document.getElementById('detail-panel').innerHTML = `
+    <div class="p-5 space-y-5">
+      <div>
+        <div class="flex items-center justify-between">
+          <div class="tag">School detail</div>
+          <button onclick="defaultDetail()" class="text-xs muted hover:text-white">← back</button>
+        </div>
+        <h2 class="text-lg font-semibold mt-1 leading-tight">${s.school_name}</h2>
+        <div class="muted text-xs mt-1 font-mono">EMIS ${s.emis_code} · ${s.cluster} · ${s.tehsil}</div>
+        <div class="muted text-xs mt-0.5">${s.project} · ${s.students} students</div>
+      </div>
+      <div class="space-y-3">
+        ${rowBar('Heat', heat, '#ef4444')}
+        ${rowBar('Air quality', aq, '#a855f7')}
+        ${rowBar('Flood', flood, '#3b82f6')}
+      </div>
+      <div class="panel2 rounded-lg p-3 space-y-1">
+        <div class="flex justify-between"><span class="muted text-xs">Overall score</span><span class="font-mono">${overall}/100</span></div>
+        <div class="flex justify-between"><span class="muted text-xs">Child-burden days/yr</span><span class="font-mono accent">${b.toLocaleString()}</span></div>
+        <div class="flex justify-between"><span class="muted text-xs">RAG status</span><span class="rag ${ragClass(overall)}">${ragClass(overall).toUpperCase()}</span></div>
+      </div>
+      <div>
+        <div class="tag mb-2">Exposure days (2025)</div>
+        <table class="w-full text-sm font-mono">
+          <tr><td class="py-1">Days &gt; 40°C</td><td class="text-right">${Math.round(heat*0.55)}</td></tr>
+          <tr><td class="py-1">Smog days (AQI&gt;200)</td><td class="text-right">${Math.round(aq*0.45)}</td></tr>
+          <tr><td class="py-1">Flood-prob days</td><td class="text-right">${Math.round(flood*0.07)}</td></tr>
+          <tr><td class="py-1">Heavy rain days</td><td class="text-right">${Math.round(aq*0.12)}</td></tr>
+        </table>
+      </div>
+      ${overall >= 80 ? `
+      <div class="panel2 rounded-lg p-3 border-l-2 border-red-500">
+        <div class="tag" style="color:#fca5a5">Active alert</div>
+        <p class="text-sm mt-1">This school is in the red zone today. Open the <a class="text-amber-400 hover:underline" onclick="goView('hazards')">Hazard Watch</a> to take action.</p>
+      </div>` : ''}
+      <div class="text-xs muted">
+        <span class="font-mono">lat ${s.lat.toFixed(4)}, lon ${s.lon.toFixed(4)}</span><br/>
+        ERA5 · MODIS LST · Sentinel-5P · CAMS · GloFAS
+      </div>
+    </div>`;
+}
+window.showSchool = showSchool;
+window.defaultDetail = defaultDetail;
+
+function rowBar(label, v, color) {
+  return `<div>
+    <div class="flex justify-between items-baseline text-sm"><span>${label}</span><span class="font-mono">${v}<span class="muted">/100</span></span></div>
+    <div class="bar mt-1"><div style="width:${v}%; background:${color}"></div></div>
+  </div>`;
+}
+
+// -------- RAG matrix --------
+let RAG_SORT = { col: 'overall', dir: 'desc' };
+function renderRagTable() {
+  const filter = (document.getElementById('schools-filter').value || '').toLowerCase();
+  let rows = SCHOOLS.map(s => ({
+    s, cluster: s.cluster, students: s.students,
+    heat: mockScore(s,'heat'), aq: mockScore(s,'aq'),
+    flood: mockScore(s,'flood'), overall: mockScore(s,'overall'),
+    burden: burden(s), school_name: s.school_name,
+  }));
+  if (filter) rows = rows.filter(r => r.school_name.toLowerCase().includes(filter) || String(r.s.emis_code).includes(filter));
+  rows.sort((a,b) => {
+    const c = RAG_SORT.col;
+    if (typeof a[c] === 'string') return RAG_SORT.dir === 'asc' ? a[c].localeCompare(b[c]) : b[c].localeCompare(a[c]);
+    return RAG_SORT.dir === 'asc' ? a[c] - b[c] : b[c] - a[c];
+  });
+  document.getElementById('rag-tbody').innerHTML = rows.map(r => `
+    <tr onclick="goView('overview'); showSchool(SCHOOLS.find(x=>x.emis_code===${r.s.emis_code})); map.setView([${r.s.lat},${r.s.lon}], 14);">
+      <td><div class="font-medium">${r.school_name}</div><div class="text-xs muted font-mono">EMIS ${r.s.emis_code}</div></td>
+      <td><span class="chip">${r.cluster}</span></td>
+      <td class="font-mono">${r.students}</td>
+      <td><span class="rag ${ragClass(r.heat)}">${r.heat}</span></td>
+      <td><span class="rag ${ragClass(r.aq)}">${r.aq}</span></td>
+      <td><span class="rag ${ragClass(r.flood)}">${r.flood}</span></td>
+      <td><span class="rag ${ragClass(r.overall)}">${r.overall}</span></td>
+      <td class="font-mono accent">${r.burden.toLocaleString()}</td>
+      <td>${r.overall >= 80 ? '<span class="dot red anim-pulse"></span>' : r.overall >= 65 ? '<span class="dot amber"></span>' : '<span class="dot green"></span>'}</td>
+    </tr>`).join('');
+}
+
+// -------- Hazard list --------
+function renderHazardList() {
+  // Pick the top 4 red schools by overall score
+  const ranked = SCHOOLS.map(s => ({ s, overall: mockScore(s,'overall'), heat: mockScore(s,'heat') }))
+                        .filter(r => r.overall >= 80)
+                        .sort((a,b) => b.heat * b.s.students - a.heat * a.s.students)
+                        .slice(0, 4);
+  document.getElementById('hazard-list').innerHTML = ranked.map((r,i) => {
+    const tempForecast = (40 + (r.heat / 10)).toFixed(1);
+    const recAction = r.heat >= 90 ? 'Early dismissal 11:30 + parent heat advisory + double water rations'
+                      : 'Parent heat advisory + cancel outdoor PE';
+    return `
+    <div class="hazard-card red" id="hcard-${r.s.emis_code}">
+      <div class="flex items-start justify-between gap-4">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <span class="rag red">RED</span>
+            <span class="chip red">Heat</span>
+            <span class="font-medium">${r.s.school_name}</span>
+            <span class="text-xs muted font-mono">EMIS ${r.s.emis_code} · ${r.s.cluster} · ${r.s.students} students</span>
+          </div>
+          <div class="text-sm muted mt-2">
+            Score <span class="text-white font-mono">${r.heat}/100</span> ·
+            Forecast <span class="text-amber-400">${tempForecast}°C tomorrow</span> ·
+            10-yr avg <span class="text-white font-mono">${Math.round(r.heat*0.55)} days/yr</span> > 40°C
+          </div>
+          <div class="text-sm mt-2">
+            <span class="muted">Recommended action:</span> ${recAction}
+          </div>
+        </div>
+        <div class="text-xs muted text-right shrink-0">
+          <div>Detected 14:08</div>
+          <div class="mt-1"><span class="chip amber" id="status-${r.s.emis_code}">Pending review</span></div>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-2 mt-3 pt-3 border-t border-[color:var(--border)]">
+        <button class="btn primary btn-sm" onclick="openDispatch(${r.s.emis_code})">📨 Send advisory · EN/UR/PA</button>
+        <button class="btn btn-sm" onclick="openSchoolDay(${r.s.emis_code})">🕐 Modify school day</button>
+        <button class="btn btn-sm">🏥 Notify health responders</button>
+        <button class="btn btn-sm">📋 Mark monitoring</button>
+        <button class="btn btn-sm">⏱ Defer 24h</button>
+        <button class="btn btn-sm danger">🚫 Recommend closure</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// -------- Dispatch modal --------
+function openDispatch(emis) {
+  const s = SCHOOLS.find(x => x.emis_code === emis);
+  DISPATCH_TARGET = s;
+  document.getElementById('modal-title').textContent = `Heat advisory · ${s.school_name}`;
+  const heat = mockScore(s, 'heat');
+  const temp = (40 + heat/10).toFixed(0);
+  document.getElementById('modal-body').innerHTML = `
+    <div class="text-xs muted">Auto-drafted from <span class="text-white">Heatwave alert</span> template + ${s.school_name} context. Review and edit before dispatch.</div>
+
+    <div class="panel2 rounded p-3">
+      <div class="flex items-center gap-2 mb-1"><span class="chip">EN</span><span class="text-xs muted">to ${s.students} parents · est. reach 94%</span></div>
+      <div class="text-sm leading-relaxed">Dear parents — temperatures will reach ${temp}°C tomorrow.
+      Please send your child with extra water, a hat, and light cotton clothing.
+      Outdoor assembly is cancelled. Pickup time advanced to 11:30am.
+      Reply STOP to opt out.</div>
+    </div>
+    <div class="panel2 rounded p-3">
+      <div class="flex items-center gap-2 mb-1"><span class="chip">UR</span><span class="text-xs muted">اردو</span></div>
+      <div class="text-sm leading-relaxed" dir="rtl">والدین محترم — کل درجہ حرارت ${temp} ڈگری تک پہنچے گا۔ بچوں کے ساتھ پانی کی اضافی بوتل، ٹوپی اور ہلکا کاٹن لباس بھیجیں۔ صبح کی اسمبلی منسوخ ہے۔ چھٹی کا وقت 11:30 صبح۔</div>
+    </div>
+    <div class="panel2 rounded p-3">
+      <div class="flex items-center gap-2 mb-1"><span class="chip">PA</span><span class="text-xs muted">ਪੰਜਾਬੀ</span></div>
+      <div class="text-sm leading-relaxed">ਪਿਆਰੇ ਮਾਪੇ — ਕੱਲ੍ਹ ਤਾਪਮਾਨ ${temp}°C ਤੱਕ ਪਹੁੰਚੇਗਾ। ਆਪਣੇ ਬੱਚੇ ਨੂੰ ਵਾਧੂ ਪਾਣੀ, ਟੋਪੀ ਅਤੇ ਹਲਕਾ ਕਾਟਨ ਪਹਿਨਾਓ। ਸਵੇਰ ਦੀ ਅਸੈਂਬਲੀ ਰੱਦ। ਛੁੱਟੀ 11:30 ਸਵੇਰ।</div>
+    </div>
+
     <div>
-      <div class="flex items-center justify-between">
-        <div class="tag">School detail</div>
-        <button onclick="resetDetail()" class="text-xs muted hover:text-white">← back</button>
+      <div class="tag mb-2">Channels</div>
+      <div class="flex gap-3 text-sm">
+        <label class="flex items-center gap-2"><input type="checkbox" checked/> SMS</label>
+        <label class="flex items-center gap-2"><input type="checkbox" checked/> WhatsApp</label>
+        <label class="flex items-center gap-2"><input type="checkbox"/> School PA</label>
       </div>
-      <h2 class="text-lg font-semibold mt-1 leading-tight">${s.school_name}</h2>
-      <div class="muted text-xs mt-1 font-mono">EMIS ${s.emis_code} · ${s.cluster} · ${s.tehsil}</div>
-      <div class="muted text-xs mt-0.5">${s.project} · ${s.students} students</div>
-    </div>
-
-    <div class="space-y-3">
-      <div class="flex justify-between items-baseline text-sm">
-        <span>Heat vulnerability</span>
-        <span class="font-mono">${heat}<span class="muted">/100</span></span>
-      </div>
-      ${bar(heat, '#ef4444')}
-      <div class="flex justify-between items-baseline text-sm mt-3">
-        <span>Air-quality vulnerability</span>
-        <span class="font-mono">${aq}<span class="muted">/100</span></span>
-      </div>
-      ${bar(aq, '#a855f7')}
-      <div class="flex justify-between items-baseline text-sm mt-3">
-        <span>Flood vulnerability</span>
-        <span class="font-mono">${flood}<span class="muted">/100</span></span>
-      </div>
-      ${bar(flood, '#3b82f6')}
-    </div>
-
-    <div class="panel2 rounded-lg p-3 space-y-1">
-      <div class="flex justify-between"><span class="muted text-xs">Overall score</span><span class="font-mono">${overall}/100</span></div>
-      <div class="flex justify-between"><span class="muted text-xs">Child-burden days/yr</span><span class="font-mono accent">${burden.toLocaleString()}</span></div>
-      <div class="flex justify-between"><span class="muted text-xs">National percentile</span><span class="font-mono">${Math.max(60, overall)}</span></div>
-    </div>
-
-    <div>
-      <div class="tag mb-2">Exposure days (2025)</div>
-      <table class="w-full text-sm font-mono">
-        <tr><td class="py-1">Days &gt; 40°C</td><td class="text-right">${Math.round(heat * 0.55)}</td></tr>
-        <tr><td class="py-1">Smog days (AQI&gt;200)</td><td class="text-right">${Math.round(aq * 0.45)}</td></tr>
-        <tr><td class="py-1">Flood-prob days</td><td class="text-right">${Math.round(flood * 0.07)}</td></tr>
-        <tr><td class="py-1">Heavy rain days</td><td class="text-right">${Math.round(aq * 0.12)}</td></tr>
-      </table>
-    </div>
-
-    <details class="panel2 rounded-lg p-3">
-      <summary class="flex justify-between items-center">
-        <span class="text-sm font-medium">Today's advisory</span>
-        <span class="chev muted">▾</span>
-      </summary>
-      <div class="text-xs mt-2 space-y-2 muted">
-        <p>${heat >= 70
-          ? `<span class="text-amber-400">Heat alert.</span> Forecast 41–43°C. Recommend early dismissal, double water rations, no outdoor activity.`
-          : `Routine. No active alerts for this school today.`}</p>
-        <p class="text-[11px]">Generated for ${s.students} parents · EN / UR / PA · queued to messaging gateway</p>
-      </div>
-    </details>
-
-    <div class="text-xs muted">
-      <span class="font-mono">lat ${s.lat.toFixed(4)}, lon ${s.lon.toFixed(4)}</span><br/>
-      Data sources: ERA5 · MODIS LST · Sentinel-5P · CAMS · GloFAS
     </div>
   `;
+  document.getElementById('modal-bg').classList.add('open');
 }
+window.openDispatch = openDispatch;
 
-function resetDetail() {
-  SELECTED = null;
-  document.getElementById('school-detail').classList.add('hidden');
-  document.getElementById('default-detail').classList.remove('hidden');
+function openSchoolDay(emis) {
+  const s = SCHOOLS.find(x => x.emis_code === emis);
+  DISPATCH_TARGET = s;
+  document.getElementById('modal-title').textContent = `Modify school day · ${s.school_name}`;
+  document.getElementById('modal-body').innerHTML = `
+    <div class="text-xs muted">Adjustments will be logged against this school for ${s.students} students. School principal is notified to confirm action taken.</div>
+    <div class="space-y-2 mt-3 text-sm">
+      <label class="flex items-center gap-2"><input type="checkbox" checked/> Cancel morning assembly</label>
+      <label class="flex items-center gap-2"><input type="checkbox" checked/> No outdoor PE / play</label>
+      <label class="flex items-center gap-2"><input type="checkbox" checked/> Early dismissal — advance pickup to <input class="f w-24 ml-1" value="11:30am"/></label>
+      <label class="flex items-center gap-2"><input type="checkbox"/> Double water rations</label>
+      <label class="flex items-center gap-2"><input type="checkbox"/> Cooling-centre activation (assembly hall)</label>
+      <label class="flex items-center gap-2"><input type="checkbox"/> Notify health worker (BHU Eminabad)</label>
+    </div>
+    <div class="panel2 rounded p-3 mt-3 text-xs muted">
+      Principal acknowledgement requested via WhatsApp. Closure decisions remain with district admin — this records adjustment intent and acknowledgement only.
+    </div>
+  `;
+  document.getElementById('modal-bg').classList.add('open');
 }
-window.resetDetail = resetDetail;
+window.openSchoolDay = openSchoolDay;
 
-// Load schools + wire filters
-fetch('schools.json')
-  .then(r => r.json())
-  .then(rows => {
-    SCHOOLS = rows;
-    paintMarkers();
-    map.fitBounds(rows.map(s => [s.lat, s.lon]), { padding: [40, 40] });
-  });
+function closeModal() { document.getElementById('modal-bg').classList.remove('open'); }
+window.closeModal = closeModal;
 
-['f-cluster','f-tehsil','f-hazard'].forEach(id => {
-  document.getElementById(id).addEventListener('change', e => {
-    if (id === 'f-hazard') HAZARD = e.target.value;
-    paintMarkers();
+function dispatchAdvisory() {
+  if (DISPATCH_TARGET) {
+    const el = document.getElementById('status-' + DISPATCH_TARGET.emis_code);
+    if (el) {
+      el.classList.remove('amber');
+      el.classList.add('green');
+      el.textContent = 'Dispatched · awaiting ack';
+      setTimeout(() => {
+        el.textContent = 'Acknowledged';
+      }, 1800);
+    }
+    const card = document.getElementById('hcard-' + DISPATCH_TARGET.emis_code);
+    if (card) card.style.opacity = '0.6';
+  }
+  closeModal();
+}
+window.dispatchAdvisory = dispatchAdvisory;
+
+// -------- wire up --------
+document.querySelectorAll('.nav-item').forEach(el => {
+  el.addEventListener('click', () => goView(el.dataset.view));
+});
+
+document.getElementById('f-hazard').addEventListener('change', e => { HAZARD = e.target.value; paintMarkers(); });
+document.getElementById('f-cluster').addEventListener('change', () => paintMarkers());
+
+// RAG sort
+document.querySelectorAll('#rag-table th[data-sort]').forEach(th => {
+  th.addEventListener('click', () => {
+    const col = th.dataset.sort;
+    if (RAG_SORT.col === col) RAG_SORT.dir = RAG_SORT.dir === 'asc' ? 'desc' : 'asc';
+    else { RAG_SORT.col = col; RAG_SORT.dir = 'desc'; }
+    renderRagTable();
   });
 });
+document.getElementById('schools-filter').addEventListener('input', renderRagTable);
+
+// Initial load
+fetch('schools.json').then(r => r.json()).then(rows => {
+  SCHOOLS = rows;
+  paintMarkers();
+  map.fitBounds(rows.map(s => [s.lat, s.lon]), { padding: [40, 40] });
+  defaultDetail();
+
+  // Route from hash
+  const initial = (location.hash || '#overview').slice(1);
+  goView(VIEW_META[initial] ? initial : 'overview');
+});
+
+window.addEventListener('hashchange', () => {
+  const h = (location.hash || '#overview').slice(1);
+  if (VIEW_META[h] && h !== CURRENT_VIEW) goView(h);
+});
+window.goView = goView;
 </script>
 </body>
 </html>
