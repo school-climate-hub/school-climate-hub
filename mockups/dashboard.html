@@ -1,9 +1,15 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" style="color-scheme: dark">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#0b0f14" />
 <title>School Climate Hub — operator console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://unpkg.com" crossorigin />
+<link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Noto+Sans+Gurmukhi:wght@400;500;600;700&display=swap" />
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 <script src="https://cdn.tailwindcss.com"></script>
@@ -28,21 +34,44 @@
     --aq: #a855f7;
     --flood: #3b82f6;
   }
-  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; }
+  html, body { background: var(--bg); color: var(--text);
+                font-family: 'Inter', 'Noto Sans Arabic', 'Noto Sans Gurmukhi', system-ui, sans-serif; }
+  /* Use script-appropriate font automatically for embedded RTL/Gurmukhi text */
+  [lang="ur"], [dir="rtl"] { font-family: 'Noto Sans Arabic', 'Inter', system-ui, sans-serif; }
+  [lang="pa"] { font-family: 'Noto Sans Gurmukhi', 'Inter', system-ui, sans-serif; }
   .panel { background: var(--panel); border: 1px solid var(--border); }
   .panel2 { background: var(--panel2); border: 1px solid var(--border); }
   .panel3 { background: var(--panel3); border: 1px solid var(--border); }
   .muted { color: var(--muted); }
   .accent { color: var(--accent); }
 
+  /* Global focus ring — keyboard-only via :focus-visible */
+  *:focus { outline: none; }
+  a:focus-visible, button:focus-visible, summary:focus-visible,
+  input:focus-visible, select:focus-visible, textarea:focus-visible,
+  [role="button"]:focus-visible, .nav-item:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Honor reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
   /* Sidebar */
   .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 6px;
-              font-size: 13px; color: var(--muted); cursor: pointer; transition: background .1s; }
+              font-size: 13px; color: var(--muted); cursor: pointer; transition: background .1s;
+              text-decoration: none; position: relative; }
   .nav-item:hover { background: var(--panel2); color: var(--text); }
   .nav-item.active { background: var(--panel2); color: var(--text); }
   .nav-item.active::before { content: ""; position: absolute; left: 0; width: 3px; height: 20px;
                               background: var(--accent); border-radius: 0 2px 2px 0; }
-  .nav-item { position: relative; }
   .nav-icon { width: 16px; height: 16px; opacity: .8; }
   .nav-badge { margin-left: auto; background: var(--red); color: white; font-size: 10px;
                padding: 1px 6px; border-radius: 999px; font-weight: 600; }
@@ -179,38 +208,38 @@
       </div>
     </div>
 
-    <nav class="flex-1 px-3 py-3 space-y-0.5">
-      <div class="nav-item" data-view="overview">
-        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 8l6-6 6 6v6a1 1 0 0 1-1 1h-3v-4H6v4H3a1 1 0 0 1-1-1V8z"/></svg>
+    <nav class="flex-1 px-3 py-3 space-y-0.5" aria-label="Primary">
+      <a class="nav-item" href="#overview" data-view="overview">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M2 8l6-6 6 6v6a1 1 0 0 1-1 1h-3v-4H6v4H3a1 1 0 0 1-1-1V8z"/></svg>
         Overview
-      </div>
-      <div class="nav-item" data-view="hazards">
-        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l7 13H1L8 1zm0 4v5m0 2v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
+      </a>
+      <a class="nav-item" href="#hazards" data-view="hazards">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1l7 13H1L8 1zm0 4v5m0 2v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
         Hazard Watch
-        <span class="nav-badge anim-pulse">4</span>
-      </div>
-      <div class="nav-item" data-view="schools">
-        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="3" width="12" height="2"/><rect x="2" y="7" width="12" height="2"/><rect x="2" y="11" width="12" height="2"/></svg>
+        <span class="nav-badge anim-pulse" aria-label="4 active alerts">4</span>
+      </a>
+      <a class="nav-item" href="#schools" data-view="schools">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="2" y="3" width="12" height="2"/><rect x="2" y="7" width="12" height="2"/><rect x="2" y="11" width="12" height="2"/></svg>
         Schools <span class="muted ml-1 text-[11px]">(50)</span>
-      </div>
-      <div class="nav-item" data-view="advisory">
-        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12v8H2z"/><path d="M2 4l6 5 6-5"/></svg>
+      </a>
+      <a class="nav-item" href="#advisory" data-view="advisory">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 4h12v8H2z"/><path d="M2 4l6 5 6-5"/></svg>
         Advisory
-      </div>
-      <div class="nav-item" data-view="data">
-        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><ellipse cx="8" cy="3.5" rx="6" ry="2"/><path d="M2 3.5v9c0 1.1 2.7 2 6 2s6-.9 6-2v-9" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M2 8c0 1.1 2.7 2 6 2s6-.9 6-2" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+      </a>
+      <a class="nav-item" href="#data" data-view="data">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><ellipse cx="8" cy="3.5" rx="6" ry="2"/><path d="M2 3.5v9c0 1.1 2.7 2 6 2s6-.9 6-2v-9" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M2 8c0 1.1 2.7 2 6 2s6-.9 6-2" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
         Open Data
-      </div>
+      </a>
 
       <div class="nav-section">Configuration</div>
-      <div class="nav-item" data-view="settings">
-        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2.5"/><path d="M8 1v2M8 13v2M3 8H1M15 8h-2M4.5 4.5l-1.4-1.4M12.9 12.9l-1.4-1.4M4.5 11.5l-1.4 1.4M12.9 3.1l-1.4 1.4"/></svg>
+      <a class="nav-item" href="#settings" data-view="settings">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8" cy="8" r="2.5"/><path d="M8 1v2M8 13v2M3 8H1M15 8h-2M4.5 4.5l-1.4-1.4M12.9 12.9l-1.4-1.4M4.5 11.5l-1.4 1.4M12.9 3.1l-1.4 1.4"/></svg>
         Settings
-      </div>
-      <div class="nav-item" data-view="docs">
-        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 2h7l3 3v9H3z"/><path d="M10 2v3h3M5 8h6M5 11h6"/></svg>
+      </a>
+      <a class="nav-item" href="#docs" data-view="docs">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M3 2h7l3 3v9H3z"/><path d="M10 2v3h3M5 8h6M5 11h6"/></svg>
         Docs & API
-      </div>
+      </a>
     </nav>
 
     <div class="px-4 py-3 border-t border-[color:var(--border)] text-[10px] muted">
@@ -254,7 +283,7 @@
             <div class="text-xs muted mt-0.5">Forecast 41–43°C across Gujranwala for next 3 days · 925 children at high-heat schools</div>
           </div>
         </div>
-        <button class="btn primary" onclick="goView('hazards')">Open Hazard Watch →</button>
+        <a class="btn primary" href="#hazards">Open Hazard Watch →</a>
       </div>
 
       <!-- KPI strip -->
@@ -462,10 +491,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="border-b border-[color:var(--border-soft)]"><td class="py-2 font-mono text-xs">14:22</td><td>GPS Kot Bhano Shah</td><td><span class="chip red">Heat</span></td><td class="text-xs">SMS · WhatsApp</td><td><span class="chip green">Acknowledged</span></td></tr>
-                <tr class="border-b border-[color:var(--border-soft)]"><td class="py-2 font-mono text-xs">14:21</td><td>GGPS Iftikhar Colony</td><td><span class="chip red">Heat</span></td><td class="text-xs">SMS · WhatsApp</td><td><span class="chip green">Acknowledged</span></td></tr>
-                <tr class="border-b border-[color:var(--border-soft)]"><td class="py-2 font-mono text-xs">14:19</td><td>GPS Eminabad</td><td><span class="chip amber">Smog</span></td><td class="text-xs">WhatsApp</td><td><span class="chip amber">Dispatched</span></td></tr>
-                <tr class="border-b border-[color:var(--border-soft)]"><td class="py-2 font-mono text-xs">14:17</td><td>GGPS Wahndo</td><td><span class="chip red">Heat</span></td><td class="text-xs">SMS</td><td><span class="chip">Draft</span></td></tr>
+                <tr class="border-b border-[color:var(--border-soft)]"><td class="py-2 font-mono text-xs">14:22</td><td translate="no">GPS Kot Bhano Shah</td><td><span class="chip red">Heat</span></td><td class="text-xs">SMS · WhatsApp</td><td><span class="chip green">Acknowledged</span></td></tr>
+                <tr class="border-b border-[color:var(--border-soft)]"><td class="py-2 font-mono text-xs">14:21</td><td translate="no">GGPS Iftikhar Colony</td><td><span class="chip red">Heat</span></td><td class="text-xs">SMS · WhatsApp</td><td><span class="chip green">Acknowledged</span></td></tr>
+                <tr class="border-b border-[color:var(--border-soft)]"><td class="py-2 font-mono text-xs">14:19</td><td translate="no">GPS Eminabad</td><td><span class="chip amber">Smog</span></td><td class="text-xs">WhatsApp</td><td><span class="chip amber">Dispatched</span></td></tr>
+                <tr class="border-b border-[color:var(--border-soft)]"><td class="py-2 font-mono text-xs">14:17</td><td translate="no">GGPS Wahndo</td><td><span class="chip red">Heat</span></td><td class="text-xs">SMS</td><td><span class="chip">Draft</span></td></tr>
                 <tr class="border-b border-[color:var(--border-soft)]"><td class="py-2 font-mono text-xs">09:02</td><td>All Cluster C-1</td><td><span class="chip">Daily</span></td><td class="text-xs">SMS · WhatsApp · PA</td><td><span class="chip green">Acknowledged</span></td></tr>
                 <tr><td class="py-2 font-mono text-xs muted">08:15</td><td class="muted">All 50 schools</td><td><span class="chip">Routine</span></td><td class="text-xs muted">WhatsApp</td><td><span class="chip green">Acknowledged</span></td></tr>
               </tbody>
@@ -729,7 +758,7 @@
     <div class="px-5 py-4 border-b border-[color:var(--border)] flex items-center justify-between">
       <div>
         <div class="tag">Step 3 of 6 · Approve & dispatch</div>
-        <h3 class="text-base font-semibold mt-1" id="modal-title">Advisory draft</h3>
+        <h3 class="text-base font-semibold mt-1" id="modal-title" translate="no">Advisory draft</h3>
       </div>
       <button class="btn ghost" onclick="closeModal()">✕</button>
     </div>
@@ -833,7 +862,7 @@ function paintMarkers() {
     if (cluster && s.cluster !== cluster) return;
     const score = mockScore(s, HAZARD);
     const m = L.marker([s.lat, s.lon], { icon: makeIcon(ragColor(score)) })
-               .bindPopup(`<div style="font-size:12px"><strong>${s.school_name}</strong><br/>EMIS ${s.emis_code} · ${s.cluster} · ${s.students} students<br/><span style="color:#8a96a8">${HAZARD.toUpperCase()} ${score}/100</span></div>`)
+               .bindPopup(`<div style="font-size:12px"><strong translate="no">${s.school_name}</strong><br/>EMIS ${s.emis_code} · ${s.cluster} · ${s.students} students<br/><span style="color:#8a96a8">${HAZARD.toUpperCase()} ${score}/100</span></div>`)
                .on('click', () => showSchool(s));
     m.addTo(map);
     MARKERS[s.emis_code] = m;
@@ -847,7 +876,7 @@ function defaultDetail() {
       <div>
         <div class="tag">Pilot overview</div>
         <h2 class="text-lg font-semibold mt-1">All clusters · Gujranwala</h2>
-        <p class="muted text-sm mt-1">Click any school marker for detail, or jump to <a class="text-amber-400 hover:underline" onclick="goView('schools')">RAG matrix →</a></p>
+        <p class="muted text-sm mt-1">Click any school marker for detail, or jump to <a class="text-amber-400 hover:underline" href="#schools">RAG matrix →</a></p>
       </div>
       <div class="space-y-3">
         <div class="flex justify-between items-baseline"><span class="text-sm">High heat risk</span><span class="font-mono text-sm">23 schools · 6,144 children</span></div>
@@ -890,7 +919,7 @@ function showSchool(s) {
           <div class="tag">School detail</div>
           <button onclick="defaultDetail()" class="text-xs muted hover:text-white">← back</button>
         </div>
-        <h2 class="text-lg font-semibold mt-1 leading-tight">${s.school_name}</h2>
+        <h2 class="text-lg font-semibold mt-1 leading-tight" translate="no">${s.school_name}</h2>
         <div class="muted text-xs mt-1 font-mono">EMIS ${s.emis_code} · ${s.cluster} · ${s.tehsil}</div>
         <div class="muted text-xs mt-0.5">${s.project} · ${s.students} students</div>
       </div>
@@ -916,7 +945,7 @@ function showSchool(s) {
       ${overall >= 80 ? `
       <div class="panel2 rounded-lg p-3 border-l-2 border-red-500">
         <div class="tag" style="color:#fca5a5">Active alert</div>
-        <p class="text-sm mt-1">This school is in the red zone today. Open the <a class="text-amber-400 hover:underline" onclick="goView('hazards')">Hazard Watch</a> to take action.</p>
+        <p class="text-sm mt-1">This school is in the red zone today. Open the <a class="text-amber-400 hover:underline" href="#hazards">Hazard Watch</a> to take action.</p>
       </div>` : ''}
       <div class="text-xs muted">
         <span class="font-mono">lat ${s.lat.toFixed(4)}, lon ${s.lon.toFixed(4)}</span><br/>
@@ -952,7 +981,7 @@ function renderRagTable() {
   });
   document.getElementById('rag-tbody').innerHTML = rows.map(r => `
     <tr onclick="goView('overview'); showSchool(SCHOOLS.find(x=>x.emis_code===${r.s.emis_code})); map.setView([${r.s.lat},${r.s.lon}], 14);">
-      <td><div class="font-medium">${r.school_name}</div><div class="text-xs muted font-mono">EMIS ${r.s.emis_code}</div></td>
+      <td><div class="font-medium" translate="no">${r.school_name}</div><div class="text-xs muted font-mono">EMIS ${r.s.emis_code}</div></td>
       <td><span class="chip">${r.cluster}</span></td>
       <td class="font-mono">${r.students}</td>
       <td><span class="rag ${ragClass(r.heat)}">${r.heat}</span></td>
@@ -982,7 +1011,7 @@ function renderHazardList() {
           <div class="flex items-center gap-2">
             <span class="rag red">RED</span>
             <span class="chip red">Heat</span>
-            <span class="font-medium">${r.s.school_name}</span>
+            <span class="font-medium" translate="no">${r.s.school_name}</span>
             <span class="text-xs muted font-mono">EMIS ${r.s.emis_code} · ${r.s.cluster} · ${r.s.students} students</span>
           </div>
           <div class="text-sm muted mt-2">
@@ -1094,9 +1123,9 @@ function dispatchAdvisory() {
 window.dispatchAdvisory = dispatchAdvisory;
 
 // -------- wire up --------
-document.querySelectorAll('.nav-item').forEach(el => {
-  el.addEventListener('click', () => goView(el.dataset.view));
-});
+// Nav items are real anchors (<a href="#view">) — clicking them changes the
+// hash, which fires the `hashchange` handler below, which calls goView().
+// No explicit click listener needed.
 
 document.getElementById('f-hazard').addEventListener('change', e => { HAZARD = e.target.value; paintMarkers(); });
 document.getElementById('f-cluster').addEventListener('change', () => paintMarkers());
