@@ -1,0 +1,42 @@
+[project]
+name = "school-climate-hub"
+version = "0.1.0"
+description = "Open infrastructure for school-level climate exposure data and operational tools for children's health."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Beaconhouse Technology" },
+    { name = "Premier DLC" },
+]
+dependencies = [
+    "duckdb>=1.0",
+    "pandas>=2.2",
+    "pyarrow>=16",
+    "xarray>=2024.3",
+    "netcdf4>=1.6",
+    "requests>=2.32",
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.30",
+    "pydantic>=2.7",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "ruff>=0.4",
+    "mypy>=1.10",
+    "pre-commit>=3.7",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"

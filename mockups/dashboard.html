@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>School Climate Hub — Gujranwala-50 Dashboard</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<style>
+  :root {
+    --bg: #0b0f14;
+    --panel: #11161d;
+    --panel2: #161c25;
+    --border: #232b36;
+    --text: #e6ebf2;
+    --muted: #8a96a8;
+    --accent: #f59e0b;
+    --heat: #ef4444;
+    --aq: #a855f7;
+    --flood: #3b82f6;
+    --good: #10b981;
+  }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; }
+  body { font-feature-settings: 'cv11', 'ss01'; }
+  .panel { background: var(--panel); border: 1px solid var(--border); }
+  .panel2 { background: var(--panel2); border: 1px solid var(--border); }
+  .muted { color: var(--muted); }
+  .accent { color: var(--accent); }
+  #map { height: 100%; background: #0e131a; border-radius: 0; }
+  .leaflet-container { background: #0e131a; font-family: inherit; }
+  .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(0.85) contrast(1.05); }
+  .leaflet-popup-content-wrapper { background: var(--panel2); color: var(--text); border: 1px solid var(--border); border-radius: 6px; }
+  .leaflet-popup-tip { background: var(--panel2); border: 1px solid var(--border); }
+  .leaflet-control-attribution { background: rgba(11,15,20,0.7) !important; color: var(--muted) !important; }
+  .leaflet-control-attribution a { color: var(--muted) !important; }
+  .leaflet-control-zoom a { background: var(--panel2) !important; color: var(--text) !important; border-color: var(--border) !important; }
+  .marker {
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.85);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.5);
+    cursor: pointer; transition: transform .12s ease;
+  }
+  .marker:hover { transform: scale(1.35); }
+  .marker.selected { transform: scale(1.5); border-color: #fff; box-shadow: 0 0 0 3px rgba(245,158,11,0.5); }
+  .bar { height: 6px; border-radius: 3px; background: #1a212c; overflow: hidden; }
+  .bar > div { height: 100%; border-radius: 3px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 500;
+          background: #1a212c; color: var(--muted); border: 1px solid var(--border); }
+  .chip.live { color: var(--good); }
+  .chip.live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--good); box-shadow: 0 0 8px var(--good); }
+  .kpi { padding: 14px 16px; }
+  .kpi .label { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .kpi .value { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin-top: 2px; line-height: 1.05; }
+  .kpi .sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .tag { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .seg { display: inline-flex; background: #0e131a; border: 1px solid var(--border); border-radius: 6px; padding: 2px; }
+  .seg button { padding: 4px 10px; font-size: 12px; color: var(--muted); border-radius: 4px; }
+  .seg button.active { background: var(--panel2); color: var(--text); }
+  select.f { background: #0e131a; border: 1px solid var(--border); color: var(--text); padding: 5px 10px; border-radius: 6px; font-size: 12px; }
+  details summary::-webkit-details-marker { display: none; }
+  details summary { cursor: pointer; list-style: none; }
+  details[open] summary .chev { transform: rotate(180deg); }
+  .chev { transition: transform .15s ease; display: inline-block; }
+  .scroll::-webkit-scrollbar { width: 8px; }
+  .scroll::-webkit-scrollbar-thumb { background: #232b36; border-radius: 4px; }
+  .scroll::-webkit-scrollbar-track { background: transparent; }
+  .gridline { background-image: linear-gradient(to right, var(--border) 1px, transparent 1px),
+                                 linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+              background-size: 40px 40px;
+              background-position: -1px -1px; }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- HEADER -->
+<header class="border-b border-[color:var(--border)] bg-[color:var(--panel)]">
+  <div class="px-6 py-3 flex items-center justify-between gap-6">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-md bg-gradient-to-br from-amber-400 to-rose-500 flex items-center justify-center font-bold text-black">S</div>
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="text-base font-semibold tracking-tight">School Climate Hub</h1>
+          <span class="chip">Prototype · May 2026</span>
+          <span class="chip live">Live</span>
+        </div>
+        <div class="text-xs muted mt-0.5">Gujranwala · Punjab · Pakistan &nbsp;·&nbsp; 50 schools · 12,034 students · PSSP + PSRP (PDLC)</div>
+      </div>
+    </div>
+    <nav class="flex items-center gap-4 text-sm muted">
+      <a href="#" class="hover:text-white">Dashboard</a>
+      <a href="#" class="hover:text-white">Open Dataset</a>
+      <a href="#" class="hover:text-white">Advisory</a>
+      <a href="#" class="hover:text-white">Docs</a>
+      <a href="#" class="px-3 py-1.5 rounded-md panel2 hover:bg-[color:var(--border)] text-xs">GitHub →</a>
+    </nav>
+  </div>
+</header>
+
+<!-- KPI STRIP -->
+<section class="px-6 py-4 grid grid-cols-4 gap-3 border-b border-[color:var(--border)]">
+  <div class="panel rounded-lg kpi">
+    <div class="label">Child-burden days, 2025</div>
+    <div class="value">566,598<span class="text-base muted ml-1">/yr</span></div>
+    <div class="sub">student-enrolment × hazard-exposure days</div>
+  </div>
+  <div class="panel rounded-lg kpi">
+    <div class="label">Schools at high heat risk</div>
+    <div class="value">23<span class="text-base muted ml-1">/ 50</span></div>
+    <div class="sub">≥40 high-heat days/yr (10-yr avg)</div>
+  </div>
+  <div class="panel rounded-lg kpi">
+    <div class="label">Today's advisory</div>
+    <div class="value text-amber-400">HEAT</div>
+    <div class="sub">PMD heatwave alert · 4 schools in red zone</div>
+  </div>
+  <div class="panel rounded-lg kpi">
+    <div class="label">Data freshness</div>
+    <div class="value">2h<span class="text-base muted ml-1">ago</span></div>
+    <div class="sub">last ingest run · 5 sources OK</div>
+  </div>
+</section>
+
+<!-- FILTER BAR -->
+<section class="px-6 py-2.5 flex items-center justify-between gap-4 border-b border-[color:var(--border)] bg-[color:var(--panel)]">
+  <div class="flex items-center gap-2">
+    <span class="tag mr-1">Filter</span>
+    <select class="f" id="f-cluster">
+      <option value="">All clusters</option><option>C-1</option><option>C-2</option><option>C-3</option><option>C-4</option>
+    </select>
+    <select class="f" id="f-tehsil">
+      <option value="">All tehsils</option><option>Gujranwala</option><option>Kamoki</option><option>Noshera Virkan</option><option>Wazirabad</option>
+    </select>
+    <select class="f" id="f-hazard">
+      <option value="heat">Hazard: Heat</option><option value="aq">Hazard: Air Quality</option><option value="flood">Hazard: Flood</option>
+    </select>
+    <span class="text-xs muted ml-2" id="result-count">50 schools shown</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <div class="seg">
+      <button class="active">Map</button>
+      <button>List</button>
+      <button>Cluster</button>
+    </div>
+  </div>
+</section>
+
+<!-- BODY: map + detail -->
+<section class="grid" style="grid-template-columns: 1fr 380px; height: calc(100vh - 220px); min-height: 580px;">
+  <div id="map" class="border-r border-[color:var(--border)]"></div>
+
+  <aside class="bg-[color:var(--panel)] overflow-y-auto scroll">
+    <!-- Default state: cluster overview -->
+    <div id="default-detail" class="p-5 space-y-5">
+      <div>
+        <div class="tag">Pilot overview</div>
+        <h2 class="text-lg font-semibold mt-1">All clusters · Gujranwala</h2>
+        <p class="muted text-sm mt-1">Click any school marker for detail.</p>
+      </div>
+
+      <div class="space-y-3">
+        <div class="flex justify-between items-baseline">
+          <span class="text-sm">High heat risk</span>
+          <span class="font-mono text-sm">23 schools · 6,144 children</span>
+        </div>
+        <div class="bar"><div style="width:46%; background:var(--heat)"></div></div>
+
+        <div class="flex justify-between items-baseline mt-3">
+          <span class="text-sm">Severe air-quality risk</span>
+          <span class="font-mono text-sm">31 schools · 7,830 children</span>
+        </div>
+        <div class="bar"><div style="width:62%; background:var(--aq)"></div></div>
+
+        <div class="flex justify-between items-baseline mt-3">
+          <span class="text-sm">Flood-exposed (50-yr)</span>
+          <span class="font-mono text-sm">7 schools · 1,562 children</span>
+        </div>
+        <div class="bar"><div style="width:14%; background:var(--flood)"></div></div>
+      </div>
+
+      <div class="panel2 rounded-lg p-3">
+        <div class="tag">Headline</div>
+        <p class="text-sm mt-1 leading-relaxed">
+          Across the 50 schools, students collectively experience an estimated
+          <span class="accent font-semibold">566,598 child-hazard-days per year</span> —
+          equivalent to every enrolled child losing
+          <span class="accent font-semibold">47 school-quality days annually</span>
+          to climate stressors.
+        </p>
+      </div>
+
+      <div>
+        <div class="tag mb-2">Cluster breakdown</div>
+        <table class="w-full text-sm">
+          <thead class="muted text-xs">
+            <tr><th class="text-left font-normal py-1">Cluster</th><th class="text-right font-normal">Schools</th><th class="text-right font-normal">Students</th><th class="text-right font-normal">Heat idx</th></tr>
+          </thead>
+          <tbody class="font-mono">
+            <tr><td class="py-1.5">C-1</td><td class="text-right">13</td><td class="text-right">3,047</td><td class="text-right text-amber-400">71</td></tr>
+            <tr><td class="py-1.5">C-2</td><td class="text-right">12</td><td class="text-right">2,941</td><td class="text-right text-amber-400">68</td></tr>
+            <tr><td class="py-1.5">C-3</td><td class="text-right">11</td><td class="text-right">2,612</td><td class="text-right">59</td></tr>
+            <tr><td class="py-1.5">C-4</td><td class="text-right">14</td><td class="text-right">3,434</td><td class="text-right">63</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <details class="panel2 rounded-lg p-3" open>
+        <summary class="flex justify-between items-center">
+          <span class="text-sm font-medium">Today's parent advisory <span class="chip ml-2">EN · UR · PA</span></span>
+          <span class="chev muted">▾</span>
+        </summary>
+        <div class="text-sm mt-3 space-y-2 muted">
+          <p><span class="text-white">Heatwave alert</span> — PMD forecasts 41–43°C across Gujranwala for the next 3 days. School-day adjustments recommended.</p>
+          <p class="text-xs">Sample (EN): "Dear parents — temperatures will reach 42°C tomorrow. Please send your child with extra water, a hat, and light cotton clothing. Outdoor assembly is cancelled. Pickup time advanced to 11:30am."</p>
+          <p class="text-xs">آپ کے بچے کی صحت — کل درجہ حرارت 42 ڈگری تک پہنچے گا۔ پانی کی اضافی بوتل اور ٹوپی ساتھ بھیجیں۔ صبح کی اسمبلی منسوخ ہے۔</p>
+        </div>
+      </details>
+    </div>
+
+    <!-- School detail (populated on click) -->
+    <div id="school-detail" class="p-5 space-y-5 hidden"></div>
+  </aside>
+</section>
+
+<!-- FOOTER -->
+<footer class="px-6 py-3 text-xs muted flex justify-between border-t border-[color:var(--border)]">
+  <div>Open dataset · <a href="../LICENSE" class="hover:text-white">Apache-2.0</a> code · <a href="https://creativecommons.org/licenses/by/4.0/" class="hover:text-white">CC BY 4.0</a> data</div>
+  <div>Built with PDLC for UNICEF Venture Fund 2026 · <span class="muted">v0.1-mockup</span></div>
+</footer>
+
+<script>
+// ---------- mockup logic ----------
+// Deterministic-but-varied mock vulnerability scores derived from lat/lon
+function mockScore(school, hazard) {
+  const seed = (school.lat * 1e3 + school.lon * 1e3 + school.emis_code) % 100;
+  const x = Math.abs(Math.sin(seed)) * 100;
+  if (hazard === 'heat')  return Math.round(40 + (x % 60));
+  if (hazard === 'aq')    return Math.round(35 + ((x * 1.3) % 65));
+  if (hazard === 'flood') return Math.round((x * 0.4) % 70);
+}
+
+function hazardColor(score) {
+  if (score >= 80) return '#ef4444';
+  if (score >= 65) return '#f59e0b';
+  if (score >= 45) return '#eab308';
+  return '#10b981';
+}
+
+const map = L.map('map', { zoomControl: true, attributionControl: true }).setView([32.13, 74.15], 11);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 18, attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+let SCHOOLS = [];
+let HAZARD = 'heat';
+let MARKERS = {};
+let SELECTED = null;
+
+function makeIcon(color) {
+  return L.divIcon({
+    className: '',
+    iconSize: [14, 14],
+    iconAnchor: [7, 7],
+    html: `<div class="marker" style="background:${color}"></div>`
+  });
+}
+
+function paintMarkers() {
+  Object.values(MARKERS).forEach(m => map.removeLayer(m));
+  MARKERS = {};
+  const cluster = document.getElementById('f-cluster').value;
+  const tehsil  = document.getElementById('f-tehsil').value;
+  let shown = 0;
+  SCHOOLS.forEach(s => {
+    if (cluster && s.cluster !== cluster) return;
+    if (tehsil && s.tehsil !== tehsil) return;
+    const score = mockScore(s, HAZARD);
+    const m = L.marker([s.lat, s.lon], { icon: makeIcon(hazardColor(score)) })
+               .bindPopup(`<div style="font-size:12px"><strong>${s.school_name}</strong><br/>EMIS ${s.emis_code} · ${s.cluster} · ${s.students} students</div>`)
+               .on('click', () => showSchool(s));
+    m.addTo(map);
+    MARKERS[s.emis_code] = m;
+    shown++;
+  });
+  document.getElementById('result-count').textContent = `${shown} schools shown`;
+}
+
+function bar(value, color) {
+  return `<div class="bar"><div style="width:${value}%; background:${color}"></div></div>`;
+}
+
+function showSchool(s) {
+  SELECTED = s.emis_code;
+  document.getElementById('default-detail').classList.add('hidden');
+  const el = document.getElementById('school-detail');
+  el.classList.remove('hidden');
+  const heat = mockScore(s, 'heat'), aq = mockScore(s, 'aq'), flood = mockScore(s, 'flood');
+  const overall = Math.round((heat + aq + flood) / 3);
+  const burden = Math.round(s.students * (heat * 0.5 + aq * 0.4 + flood * 0.1));
+  el.innerHTML = `
+    <div>
+      <div class="flex items-center justify-between">
+        <div class="tag">School detail</div>
+        <button onclick="resetDetail()" class="text-xs muted hover:text-white">← back</button>
+      </div>
+      <h2 class="text-lg font-semibold mt-1 leading-tight">${s.school_name}</h2>
+      <div class="muted text-xs mt-1 font-mono">EMIS ${s.emis_code} · ${s.cluster} · ${s.tehsil}</div>
+      <div class="muted text-xs mt-0.5">${s.project} · ${s.students} students</div>
+    </div>
+
+    <div class="space-y-3">
+      <div class="flex justify-between items-baseline text-sm">
+        <span>Heat vulnerability</span>
+        <span class="font-mono">${heat}<span class="muted">/100</span></span>
+      </div>
+      ${bar(heat, '#ef4444')}
+      <div class="flex justify-between items-baseline text-sm mt-3">
+        <span>Air-quality vulnerability</span>
+        <span class="font-mono">${aq}<span class="muted">/100</span></span>
+      </div>
+      ${bar(aq, '#a855f7')}
+      <div class="flex justify-between items-baseline text-sm mt-3">
+        <span>Flood vulnerability</span>
+        <span class="font-mono">${flood}<span class="muted">/100</span></span>
+      </div>
+      ${bar(flood, '#3b82f6')}
+    </div>
+
+    <div class="panel2 rounded-lg p-3 space-y-1">
+      <div class="flex justify-between"><span class="muted text-xs">Overall score</span><span class="font-mono">${overall}/100</span></div>
+      <div class="flex justify-between"><span class="muted text-xs">Child-burden days/yr</span><span class="font-mono accent">${burden.toLocaleString()}</span></div>
+      <div class="flex justify-between"><span class="muted text-xs">National percentile</span><span class="font-mono">${Math.max(60, overall)}</span></div>
+    </div>
+
+    <div>
+      <div class="tag mb-2">Exposure days (2025)</div>
+      <table class="w-full text-sm font-mono">
+        <tr><td class="py-1">Days &gt; 40°C</td><td class="text-right">${Math.round(heat * 0.55)}</td></tr>
+        <tr><td class="py-1">Smog days (AQI&gt;200)</td><td class="text-right">${Math.round(aq * 0.45)}</td></tr>
+        <tr><td class="py-1">Flood-prob days</td><td class="text-right">${Math.round(flood * 0.07)}</td></tr>
+        <tr><td class="py-1">Heavy rain days</td><td class="text-right">${Math.round(aq * 0.12)}</td></tr>
+      </table>
+    </div>
+
+    <details class="panel2 rounded-lg p-3">
+      <summary class="flex justify-between items-center">
+        <span class="text-sm font-medium">Today's advisory</span>
+        <span class="chev muted">▾</span>
+      </summary>
+      <div class="text-xs mt-2 space-y-2 muted">
+        <p>${heat >= 70
+          ? `<span class="text-amber-400">Heat alert.</span> Forecast 41–43°C. Recommend early dismissal, double water rations, no outdoor activity.`
+          : `Routine. No active alerts for this school today.`}</p>
+        <p class="text-[11px]">Generated for ${s.students} parents · EN / UR / PA · queued to messaging gateway</p>
+      </div>
+    </details>
+
+    <div class="text-xs muted">
+      <span class="font-mono">lat ${s.lat.toFixed(4)}, lon ${s.lon.toFixed(4)}</span><br/>
+      Data sources: ERA5 · MODIS LST · Sentinel-5P · CAMS · GloFAS
+    </div>
+  `;
+}
+
+function resetDetail() {
+  SELECTED = null;
+  document.getElementById('school-detail').classList.add('hidden');
+  document.getElementById('default-detail').classList.remove('hidden');
+}
+window.resetDetail = resetDetail;
+
+// Load schools + wire filters
+fetch('schools.json')
+  .then(r => r.json())
+  .then(rows => {
+    SCHOOLS = rows;
+    paintMarkers();
+    map.fitBounds(rows.map(s => [s.lat, s.lon]), { padding: [40, 40] });
+  });
+
+['f-cluster','f-tehsil','f-hazard'].forEach(id => {
+  document.getElementById(id).addEventListener('change', e => {
+    if (id === 'f-hazard') HAZARD = e.target.value;
+    paintMarkers();
+  });
+});
+</script>
+</body>
+</html>

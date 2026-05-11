@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+build/
+dist/
+
+# Node / Next.js
+node_modules/
+.next/
+.turbo/
+out/
+.pnpm-debug.log*
+
+# Data — large climate downloads
+data/raw/
+data/cache/
+data/exports/*.parquet
+data/exports/*.csv.gz
+*.nc
+*.tif
+*.tiff
+
+# Secrets / env
+.env
+.env.local
+.env.*.local
+.bt-creds/
+*.pem
+*.key
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
