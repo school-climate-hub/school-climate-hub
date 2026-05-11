@@ -332,9 +332,10 @@
   .step .bar { flex: 1; height: 1px; background: var(--border-strong); }
   .step.done + .bar { background: var(--green); }
 
-  /* View transitions */
-  .view { display: none; }
-  .view.active { display: block; }
+  /* View transitions — use :not + !important to override Tailwind utility classes
+     applied to view sections (e.g. v-schools uses 'flex' which would otherwise
+     beat .view { display:none }) */
+  .view:not(.active) { display: none !important; }
 
   /* Code preview */
   .code { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px;
@@ -375,6 +376,21 @@
     0%   { transform: scale(.7); opacity: .35; }
     100% { transform: scale(2);  opacity: 0; }
   }
+
+  /* ============== School detail drawer ============== */
+  .school-drawer {
+    position: fixed; top: 0; right: 0; height: 100vh; width: 440px; max-width: 92vw;
+    background: var(--surface); border-left: 1px solid var(--border);
+    box-shadow: var(--shadow-xl); z-index: 940;
+    display: flex; flex-direction: column;
+    transform: translateX(100%); transition: transform .25s ease;
+  }
+  .school-drawer.open { transform: translateX(0); }
+  .school-drawer-header {
+    padding: 14px 18px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .school-drawer-body { flex: 1; overflow-y: auto; }
 
   /* ============== Chat FAB + Panel ============== */
   .chat-fab {
@@ -797,6 +813,15 @@
   </main>
 </div>
 
+<!-- School detail drawer (global; opens over any view) -->
+<aside class="school-drawer scroll" id="school-drawer" role="dialog" aria-modal="false" aria-label="School detail">
+  <div class="school-drawer-header">
+    <div class="tag">School detail</div>
+    <button class="btn ghost" id="school-drawer-close" aria-label="Close school detail">✕</button>
+  </div>
+  <div class="school-drawer-body scroll" id="school-drawer-body"></div>
+</aside>
+
 <!-- Chat FAB -->
 <button class="chat-fab" id="chat-fab" aria-label="Ask the hub (⌘K)" title="Ask the hub (⌘K)">
   <svg width="24" height="24" viewBox="0 0 16 16" fill="white" aria-hidden="true"><path d="M8 0l1.8 4.2L14 6l-4.2 1.8L8 12 6.2 7.8 2 6l4.2-1.8L8 0zm5 9l.8 1.8L15.5 11.5l-1.7.8L13 14l-.8-1.7L10.5 11.5l1.7-.7L13 9z"/></svg>
@@ -962,9 +987,18 @@ function alertCardCompact(r) {
         <span class="chip amber" id="status-${r.s.emis_code}" style="white-space:nowrap">Pending</span>
       </div>
       <div class="flex gap-1 mt-2">
-        <button class="btn primary btn-sm" onclick="openDispatch(${r.s.emis_code})" style="flex:1; padding: 4px 8px"><span aria-hidden="true">📨</span> Send</button>
-        <button class="btn btn-sm" onclick="openSchoolDay(${r.s.emis_code})" style="padding: 4px 8px" aria-label="Modify school day"><span aria-hidden="true">🕐</span></button>
-        <button class="btn btn-sm" style="padding: 4px 8px" aria-label="Defer 24 hours"><span aria-hidden="true">⏱</span></button>
+        <button class="btn primary btn-sm" onclick="openDispatch(${r.s.emis_code})" style="flex:1; padding: 4px 8px" title="Send parent advisory (EN/UR/PA)">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 4h12v8H2z"/><path d="M2 4l6 5 6-5"/></svg>
+          Send
+        </button>
+        <button class="btn btn-sm" onclick="openSchoolDay(${r.s.emis_code})" style="padding: 4px 8px" title="Modify school day (early dismissal, water rations, cancel outdoor PE)" aria-label="Modify school day">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M2 6h12M5 1.5v3M11 1.5v3"/><path d="M7 9.5l1.2 1.2L11 8" stroke-linecap="round"/></svg>
+          Day
+        </button>
+        <button class="btn btn-sm" style="padding: 4px 8px" title="Defer this alert by 24 hours" aria-label="Defer 24 hours">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2.2 1.4" stroke-linecap="round"/><path d="M11.5 1.5l2 2-2 2" stroke-linecap="round"/></svg>
+          Defer
+        </button>
       </div>
     </div>`;
 }
@@ -1078,16 +1112,14 @@ function renderForecastStrip() {
 }
 
 function showSchool(s) {
+  // Close chat if open — drawer and chat are mutually exclusive
+  document.getElementById('chat-panel').classList.remove('open');
   const heat = mockScore(s, 'heat'), aq = mockScore(s, 'aq'), flood = mockScore(s, 'flood');
   const overall = mockScore(s, 'overall'), b = burden(s);
-  document.getElementById('detail-panel').innerHTML = `
+  document.getElementById('school-drawer-body').innerHTML = `
     <div class="p-5 space-y-5">
       <div>
-        <div class="flex items-center justify-between">
-          <div class="tag">School detail</div>
-          <button onclick="defaultDetail()" class="text-xs hover:underline" style="color:var(--brand)">← back</button>
-        </div>
-        <h2 class="text-lg font-semibold mt-1 leading-tight" translate="no" style="color:var(--text)">${s.school_name}</h2>
+        <h2 class="text-lg font-semibold leading-tight" translate="no" style="color:var(--text)">${s.school_name}</h2>
         <div class="text-xs mt-1 mono" style="color:var(--text-3)">EMIS ${s.emis_code} · ${s.cluster} · ${s.tehsil}</div>
         <div class="text-xs mt-0.5" style="color:var(--text-3)">${s.project} · ${s.students} students</div>
       </div>
@@ -1160,8 +1192,20 @@ function showSchool(s) {
         Sources: ERA5 · MODIS LST · Sentinel-5P · CAMS · GloFAS
       </div>
     </div>`;
+
+  // Slide the drawer in
+  document.getElementById('school-drawer').classList.add('open');
+  document.getElementById('chat-fab').classList.add('hidden');
+}
+function closeSchoolDrawer() {
+  document.getElementById('school-drawer').classList.remove('open');
+  // Reveal FAB unless chat is open
+  if (!document.getElementById('chat-panel').classList.contains('open')) {
+    setTimeout(() => document.getElementById('chat-fab').classList.remove('hidden'), 200);
+  }
 }
 window.showSchool = showSchool;
+window.closeSchoolDrawer = closeSchoolDrawer;
 window.defaultDetail = defaultDetail;
 
 function rowBar(label, v, color) {
@@ -1187,7 +1231,7 @@ function renderRagTable() {
     return RAG_SORT.dir === 'asc' ? a[c] - b[c] : b[c] - a[c];
   });
   document.getElementById('rag-tbody').innerHTML = rows.length ? rows.map(r => `
-    <tr onclick="goView('overview'); showSchool(SCHOOLS.find(x=>x.emis_code===${r.s.emis_code})); map.setView([${r.s.lat},${r.s.lon}], 14);">
+    <tr onclick="showSchool(SCHOOLS.find(x=>x.emis_code===${r.s.emis_code}))">
       <td><div class="font-medium" translate="no" style="color:var(--text)">${r.school_name}</div><div class="text-xs mono" style="color:var(--text-3)">EMIS ${r.s.emis_code}</div></td>
       <td><span class="chip">${r.cluster}</span></td>
       <td class="mono num" style="color:var(--text-2)">${r.students}</td>
@@ -1436,6 +1480,8 @@ PDLC کے 50 سکولوں میں سے:
 let chatMessages = [];
 
 function openChat(prefilledQuestion) {
+  // Mutually exclusive with school drawer
+  document.getElementById('school-drawer').classList.remove('open');
   document.getElementById('chat-panel').classList.add('open');
   document.getElementById('chat-fab').classList.add('hidden');
   setTimeout(() => {
@@ -1571,20 +1617,23 @@ document.getElementById('chat-input').addEventListener('input', e => {
   e.target.style.height = Math.min(120, e.target.scrollHeight) + 'px';
 });
 
-// Cmd-K / Ctrl-K to open chat; Esc to close
+// Cmd-K / Ctrl-K opens chat; Esc closes whatever right-side panel is open
 document.addEventListener('keydown', e => {
   if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
     e.preventDefault();
+    closeSchoolDrawer();
     if (!document.getElementById('chat-panel').classList.contains('open')) openChat();
     else document.getElementById('chat-input').focus();
   }
-  if (e.key === 'Escape' && document.getElementById('chat-panel').classList.contains('open')) {
-    closeChat();
+  if (e.key === 'Escape') {
+    if (document.getElementById('chat-panel').classList.contains('open')) closeChat();
+    else if (document.getElementById('school-drawer').classList.contains('open')) closeSchoolDrawer();
   }
 });
 
 document.getElementById('chat-fab').addEventListener('click', () => openChat());
 document.getElementById('chat-close-btn').addEventListener('click', () => closeChat());
+document.getElementById('school-drawer-close').addEventListener('click', () => closeSchoolDrawer());
 
 </script>
 </body>
