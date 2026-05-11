@@ -34,7 +34,7 @@ We're building it. Starting with 50 schools. Designed to scale.
 ## Quickstart (planned)
 
 ```bash
-git clone https://github.com/<org>/school-climate-hub.git
+git clone https://github.com/school-climate-hub/school-climate-hub.git
 cd school-climate-hub
 make setup           # Python + Node + pre-commit
 make ingest          # pulls latest climate data for all schools
@@ -65,5 +65,5 @@ The open dataset is published under [CC BY 4.0](https://creativecommons.org/lice
 
 ## Acknowledgements
 
-Built by [Beaconhouse Technology](https://beaconhouse.tech) with [Premier DLC](https://premierdlc.com).
-Submitted to UNICEF Venture Fund Cohort 2026.
+A joint project of [Premier DLC](https://premierdlc.com) and [Beaconhouse Technology](https://beaconhouse.tech).
+Submission target: 17 May 2026 — [UNICEF Venture Fund — Funding Frontier Climate Tech for Children's Health](https://www.unicefinnovationfund.org/).
