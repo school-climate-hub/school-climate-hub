@@ -58,6 +58,12 @@ school-climate-hub/
 └── docs/                  Architecture, data sources, deployment
 ```
 
+## Documentation
+
+- [PRD](./docs/PRD.md) — what the product does and why (concise, v0.1)
+- [Architecture](./docs/architecture.md) — system design
+- [Open dataset schema](./open_data_layer/schema.md) — CC BY 4.0 data layer
+
 ## License
 
 [Apache-2.0](./LICENSE).
