@@ -308,16 +308,94 @@ add_heading1("10. Phase roadmap")
 add_table(
     ["Phase", "Window", "Deliverables"],
     [
-        ["v0.1 — Submission", "now → 2026-05-17", "Working demo, open dataset schema, this PRD, architecture doc"],
-        ["v0.2 — Grant Phase 1", "2026-06 → 2026-12 (if funded)", "Live LLM chat, real ingest pipelines daily, real SMS/WhatsApp dispatch, audit-log persistence, deployment to PDLC infrastructure"],
-        ["v0.3 — Expansion", "2027", "Climate-attendance ML model, Sindh + KPK schools, multi-tenant operator support"],
+        ["v0.1 — Submission", "now → 2026-05-17", "PDLC pilot proves the architecture; open dataset schema; this PRD; architecture, onboarding, access-control, disclaimer docs"],
+        ["v0.2 — Grant Phase 1: SaaS go-live", "2026-06 → 2026-12 (if funded)", "Multi-tenant rewrite; self-service operator signup; hosted free SaaS at schoolclimatehub.org; self-host shipped as Docker Compose; live LLM chat; real SMS/WhatsApp dispatch; audit-log persistence"],
+        ["v0.3 — Parent reach", "2027 H1", "Parent / student PWA; phone-OTP subscriptions; web push + SMS + WhatsApp alerts; multilingual auto-detect; opt-in tenant data ingestion (attendance, infrastructure, health incidents)"],
+        ["v0.4 — Sustainability + scale", "2027 H2 → 2028", "Premium tier for OECD operators; white-label + federation for ministries; Sindh + KPK + Bangladesh + ROSA-wide rollout; first climate-attendance ML model trained on contributed data"],
+        ["v0.5 — Governance handover", "2028+", "Foundation or independent non-profit; open multi-stakeholder governance; commercial sustainability via mixed grants + paid licences + donations"],
     ],
     col_widths=[1.6, 2.0, 2.9],
 )
 
+add_heading1("11. Productisation strategy & UNICEF alignment")
+add_body("Dual model: open-source code + free hosted SaaS. Both first-class.")
+add_table(
+    ["Channel", "Who it serves", "Why"],
+    [
+        ["OSS self-host\n(github.com/school-climate-hub)", "Ministries needing data residency; technical operators; researchers", "Sovereignty, auditability, no vendor lock-in"],
+        ["Free hosted SaaS\n(schoolclimatehub.org, v0.2+)", "The 99% of operators without staff to run their own deployment; parents and the public", "Lowers barrier to entry; captures network-effect of cross-tenant dataset; underwrites OSS development"],
+    ],
+    col_widths=[2.2, 2.5, 1.8],
+)
+add_body("This is the GitLab / Sentry / PostHog / Plausible model adapted to a children's-health public good. "
+         "Code is Apache-2.0; dataset is CC BY 4.0; running infrastructure is the value-add operators pay for "
+         "(or receive funded).")
+
+# Three product surfaces
+p = doc.add_paragraph()
+r = p.add_run("Three product surfaces (not one)")
+r.font.size = Pt(11); r.font.bold = True; r.font.color.rgb = BT_DARK; r.font.name = 'Calibri'
+p.paragraph_format.space_before = Pt(8); p.paragraph_format.space_after = Pt(4)
+for x in [
+    "Operator Console (B2B/B2G) — what v0.1 builds; multi-tenant in v0.2",
+    "Open Data Platform (B2D — developers, researchers, ministries) — strengthens what's there",
+    "Parent app PWA (B2C, v0.3) — anyone can subscribe to any school; phone-OTP; free",
+]:
+    add_bullet(x)
+
+# Onboarding etc.
+p = doc.add_paragraph()
+r = p.add_run("Onboarding, access control, disclaimers")
+r.font.size = Pt(11); r.font.bold = True; r.font.color.rgb = BT_DARK; r.font.name = 'Calibri'
+p.paragraph_format.space_before = Pt(8); p.paragraph_format.space_after = Pt(4)
+for x in [
+    "docs/ONBOARDING.md — four-tier access model (T0 public · T1 demo · T2 verified operator · T3 federated ministry); verification workflow including conflict resolution for overlapping operator claims",
+    "docs/ACCESS-CONTROL.md — PII categories, role × access matrix, technical enforcement (Postgres RLS + ABAC + encryption + audit), what we deliberately refuse to hold, voluntary opt-in tenant data ingestion (attendance, infrastructure, health incidents)",
+    "docs/DISCLAIMER.md — risk profile, core legal principles (\"information not advice\"; operator owns the decision; best-available accuracy), required legal documents per launch phase",
+]:
+    add_bullet(x)
+
+# Privacy posture
+p = doc.add_paragraph()
+r = p.add_run("Privacy posture")
+r.font.size = Pt(11); r.font.bold = True; r.font.color.rgb = BT_DARK; r.font.name = 'Calibri'
+p.paragraph_format.space_before = Pt(8); p.paragraph_format.space_after = Pt(4)
+for x in [
+    "We never ingest parent contacts. Tenant keeps them in their existing messaging gateway; hub fires dispatch trigger; tenant fans out.",
+    "Public subscribers (parent app) sign up directly. Phone-OTP, opt-in, no identity verification (\"are you a parent?\" is exclusionary + unverifiable + irrelevant — broadcast data is public).",
+    "Voluntary tenant data (attendance, infrastructure, health incidents) is opt-in only, stripped of student PII before ingest, k-anonymised for cross-tenant aggregates.",
+]:
+    add_bullet(x)
+
+# UNICEF alignment
+p = doc.add_paragraph()
+r = p.add_run("UNICEF Green Schools & global infrastructure alignment")
+r.font.size = Pt(11); r.font.bold = True; r.font.color.rgb = BT_DARK; r.font.name = 'Calibri'
+p.paragraph_format.space_before = Pt(8); p.paragraph_format.space_after = Pt(4)
+add_body("The hub is designed to plug into UNICEF's active climate-and-education infrastructure:")
+add_table(
+    ["Initiative", "How we fit"],
+    [
+        ["UNICEF Regional Green School Platform (RGSP) — launched April 2026 in Central Asia; 23M children in scope",
+         "Operational infrastructure-monitoring layer for the platform's school-resilience pillar. Apache-2.0 + CC BY 4.0 makes it usable by any participating ministry without vendor negotiation."],
+        ["UNICEF West & Central Africa Green School Initiative",
+         "Same fit; WCA has the highest heat-stress urgency globally."],
+        ["UNICEF Children's Climate Risk Index (CCRI)",
+         "Our school-level data refines CCRI from sub-national to per-institution granularity. Direct contribution to UNICEF's flagship measurement product."],
+        ["UNICEF Pakistan CARE programme (Climate Action & Resilience in Education)",
+         "PDLC pilot sits inside CARE's geographic scope; natural country-office on-ramp."],
+        ["UNESCO-led Greening Education Partnership (UNICEF partner)",
+         "Open-data interoperability layer for the partnership."],
+    ],
+    col_widths=[2.5, 4.0],
+)
+add_body("We do not claim formal partnership with these programmes; we claim architectural, licensing, and data alignment. "
+         "As regional Green School platforms roll out (RGSP launched 3 weeks ago; ROSA next), the hub is ready to plug in immediately.",
+         italic=True)
+
 add_body("This PRD is intentionally short. Architecture details are in docs/architecture.md. "
-         "Open-dataset schema is in open_data_layer/schema.md. The live demo is at "
-         "https://school-climate-hub.github.io/school-climate-hub/.",
+         "Open-dataset schema is in open_data_layer/schema.md. Onboarding / access / disclaimer docs are in docs/. "
+         "Live demo at https://school-climate-hub.github.io/school-climate-hub/.",
          italic=True)
 
 doc.save(PRD_DOCX)
