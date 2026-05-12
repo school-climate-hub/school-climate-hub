@@ -577,6 +577,15 @@
             <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M6 1.5A6.5 6.5 0 1 0 14.5 10 5.5 5.5 0 0 1 6 1.5z"/></svg>
           </button>
         </div>
+
+        <!-- Language switcher (v0.1 affordance; full UI i18n ships in v0.2) -->
+        <button class="btn btn-sm" id="lang-switcher" title="UI language" aria-label="UI language"
+                style="padding: 4px 9px; gap: 5px">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><path d="M1.5 8h13M8 1.5a10 6.5 0 0 1 0 13M8 1.5a10 6.5 0 0 0 0 13"/></svg>
+          <span style="font-weight: 500">EN</span>
+          <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><path d="M2 4l3 3 3-3z"/></svg>
+        </button>
+
         <div class="text-xs" style="color:var(--text-3)">Zeeshan Ahmed · PDLC Ops</div>
         <div class="w-7 h-7 rounded-full text-white flex items-center justify-center font-bold text-xs"
               style="background: linear-gradient(135deg, var(--brand) 0%, #8a4f9c 100%)">Z</div>
@@ -741,6 +750,48 @@
     <!-- ============== VIEW: SETTINGS ============== -->
     <section class="view flex-1 overflow-y-auto scroll" id="v-settings" style="background: var(--bg)">
       <div class="px-6 py-5 grid grid-cols-2 gap-4 max-w-5xl">
+
+        <!-- Operator status -->
+        <div class="card p-5 col-span-2" style="border-left: 4px solid var(--green)">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <div class="tag">Operator status</div>
+                <span class="chip green">T2 · Verified</span>
+              </div>
+              <div class="text-lg font-semibold mt-1" translate="no" style="color:var(--text)">Premier DLC (Private) Limited</div>
+              <div class="text-xs mt-1" style="color:var(--text-3)">
+                <span class="mono">Reg# PDLC-2018-0042</span> · Pakistan ·
+                <span class="font-medium" style="color:var(--text-2)">50 schools</span> ·
+                <span class="font-medium" style="color:var(--text-2)">12,034 students</span>
+              </div>
+            </div>
+            <div class="text-xs text-right shrink-0" style="color:var(--text-3)">
+              <div>Verified <span style="color:var(--text-2)">2026-05-12</span></div>
+              <div class="mt-0.5">Next renewal <span style="color:var(--text-2)">2027-05-12</span></div>
+              <button class="btn btn-sm mt-2" style="padding: 3px 10px">Manage team</button>
+            </div>
+          </div>
+          <div class="grid grid-cols-4 gap-3 mt-4 pt-4" style="border-top: 1px solid var(--border)">
+            <div>
+              <div class="tag">Team</div>
+              <div class="text-sm font-semibold mt-0.5" style="color:var(--text)">3 admins · 7 staff</div>
+            </div>
+            <div>
+              <div class="tag">Districts</div>
+              <div class="text-sm font-semibold mt-0.5" style="color:var(--text)">4 clusters · 4 tehsils</div>
+            </div>
+            <div>
+              <div class="tag">Data residency</div>
+              <div class="text-sm font-semibold mt-0.5" style="color:var(--text)">EU + US dual</div>
+            </div>
+            <div>
+              <div class="tag">Tier</div>
+              <div class="text-sm font-semibold mt-0.5" style="color:var(--text)">Free · Mission</div>
+            </div>
+          </div>
+        </div>
+
         <div class="card p-5">
           <div class="tag mb-4">Hazard thresholds</div>
           <div class="space-y-3 text-sm">
@@ -827,6 +878,51 @@
             </div>
           </div>
           <div class="text-xs mt-3" style="color:var(--text-3)">Templates are auto-translated to active languages via Claude. <span style="color:var(--text)">Operator must approve translations before they go live.</span></div>
+        </div>
+
+        <!-- Legal & policies -->
+        <div class="card p-5 col-span-2">
+          <div class="flex items-center justify-between mb-3">
+            <div class="tag">Legal & policies</div>
+            <div class="text-[11px]" style="color:var(--text-3)">Last updated 2026-05-12 · v0.1 draft (pending counsel)</div>
+          </div>
+          <div class="grid grid-cols-3 gap-3 text-sm">
+            ${''/* generated as static HTML */ ''}
+            <a class="rounded-lg p-4 hover:bg-[color:var(--surface-hover)] transition-colors" style="background:var(--bg); border:1px solid var(--border); text-decoration: none; color: inherit"
+               href="https://github.com/school-climate-hub/school-climate-hub/blob/main/docs/DISCLAIMER.md" target="_blank" rel="noopener">
+              <div class="font-medium" style="color:var(--text)">Terms of Service</div>
+              <div class="text-xs mt-1" style="color:var(--text-3)">Information not advice · operator owns the decision · liability limits</div>
+            </a>
+            <a class="rounded-lg p-4 hover:bg-[color:var(--surface-hover)] transition-colors" style="background:var(--bg); border:1px solid var(--border); text-decoration: none; color: inherit"
+               href="https://github.com/school-climate-hub/school-climate-hub/blob/main/docs/ACCESS-CONTROL.md" target="_blank" rel="noopener">
+              <div class="font-medium" style="color:var(--text)">Privacy Policy</div>
+              <div class="text-xs mt-1" style="color:var(--text-3)">PII categories · role-based access · what we refuse to hold · audit</div>
+            </a>
+            <a class="rounded-lg p-4 hover:bg-[color:var(--surface-hover)] transition-colors" style="background:var(--bg); border:1px solid var(--border); text-decoration: none; color: inherit"
+               href="https://github.com/school-climate-hub/school-climate-hub/blob/main/docs/ONBOARDING.md" target="_blank" rel="noopener">
+              <div class="font-medium" style="color:var(--text)">Operator onboarding</div>
+              <div class="text-xs mt-1" style="color:var(--text-3)">T0–T3 access tiers · KYC verification · annual recertification</div>
+            </a>
+            <a class="rounded-lg p-4 hover:bg-[color:var(--surface-hover)] transition-colors" style="background:var(--bg); border:1px solid var(--border); text-decoration: none; color: inherit"
+               href="https://github.com/school-climate-hub/school-climate-hub/blob/main/docs/DISCLAIMER.md#core-legal-principles" target="_blank" rel="noopener">
+              <div class="font-medium" style="color:var(--text)">Acceptable Use Policy</div>
+              <div class="text-xs mt-1" style="color:var(--text-3)">No commercial resale · no parent-targeting · no misuse · no advertising</div>
+            </a>
+            <a class="rounded-lg p-4 hover:bg-[color:var(--surface-hover)] transition-colors" style="background:var(--bg); border:1px solid var(--border); text-decoration: none; color: inherit"
+               href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">
+              <div class="font-medium" style="color:var(--text)">Open Data License</div>
+              <div class="text-xs mt-1" style="color:var(--text-3)">CC BY 4.0 with disclaimer addendum · attribution required</div>
+            </a>
+            <a class="rounded-lg p-4 hover:bg-[color:var(--surface-hover)] transition-colors" style="background:var(--bg); border:1px solid var(--border); text-decoration: none; color: inherit"
+               href="https://github.com/school-climate-hub/school-climate-hub/blob/main/LICENSE" target="_blank" rel="noopener">
+              <div class="font-medium" style="color:var(--text)">Source License</div>
+              <div class="text-xs mt-1" style="color:var(--text-3)">Apache-2.0 · self-host always supported · no warranty</div>
+            </a>
+          </div>
+          <div class="text-xs mt-3" style="color:var(--text-3)">
+            <span style="color: var(--text-2); font-weight: 500">Working drafts pending counsel finalisation.</span>
+            Production ToS / DPA / Privacy will be lawyer-reviewed before v0.2 SaaS launch.
+          </div>
         </div>
 
       </div>
@@ -1792,6 +1888,44 @@ document.addEventListener('keydown', e => {
 document.getElementById('chat-fab').addEventListener('click', () => openChat());
 document.getElementById('chat-close-btn').addEventListener('click', () => closeChat());
 document.getElementById('school-drawer-close').addEventListener('click', () => closeSchoolDrawer());
+
+// Language switcher — v0.1 shows the affordance; full UI i18n lands in v0.2
+document.getElementById('lang-switcher').addEventListener('click', () => {
+  saveFocus();
+  document.getElementById('modal-title').textContent = 'UI language';
+  document.getElementById('modal-body').innerHTML = `
+    <div class="text-sm" style="color:var(--text-2)">
+      <p>The dashboard UI is currently English-only. Full multilingual UI ships in v0.2 (Q4 2026).</p>
+      <p class="mt-3"><strong style="color:var(--text)">Already multilingual today:</strong> parent advisory content
+      auto-translates to English, Urdu, and Punjabi (Shahmukhi). Click any red alert → <em>Send</em> to see the trilingual draft.</p>
+    </div>
+    <div>
+      <div class="tag mb-2">UI languages — coming in v0.2</div>
+      <div class="grid grid-cols-2 gap-2 text-sm">
+        ${[
+          { code: 'en', name: 'English', native: 'English', active: true },
+          { code: 'ur', name: 'Urdu', native: 'اردو', dir: 'rtl' },
+          { code: 'pnb', name: 'Punjabi (Shahmukhi)', native: 'پنجابی', dir: 'rtl' },
+          { code: 'sd', name: 'Sindhi', native: 'سنڌي', dir: 'rtl' },
+          { code: 'ps', name: 'Pashto', native: 'پښتو', dir: 'rtl' },
+          { code: 'bn', name: 'Bangla', native: 'বাংলা' },
+        ].map(l => `
+          <div class="rounded-lg px-3 py-2 flex items-center gap-2" style="background: var(--bg); border: 1px solid var(--border)">
+            <span style="color: ${l.active ? 'var(--green)' : 'var(--muted)'}; font-family: 'JetBrains Mono', monospace; font-size: 11px; width: 28px; text-transform: uppercase">${l.code}</span>
+            <span style="color: var(--text-2); flex: 1">${l.name}</span>
+            <span lang="${l.code}" ${l.dir ? 'dir="rtl"' : ''} style="color: var(--text-3); font-size: 13px">${l.native}</span>
+            ${l.active ? '<span class="chip green" style="padding: 1px 6px; font-size: 10px">Active</span>' : '<span class="chip" style="padding: 1px 6px; font-size: 10px">v0.2</span>'}
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    <div class="text-xs" style="color:var(--text-3)">
+      Locale auto-detection from <code style="background: var(--bar-bg); padding: 1px 4px; border-radius: 3px">Accept-Language</code> header in v0.2.
+      Translation source: Crowdin + native-speaker review per locale.
+    </div>
+  `;
+  document.getElementById('modal-bg').classList.add('open');
+});
 
 </script>
 </body>
