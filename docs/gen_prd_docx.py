@@ -1,177 +1,185 @@
 #!/usr/bin/env python3
-"""Generate docs/PRD.docx from docs/PRD.md with BT-standard header + footer."""
+"""Generate docs/PRD.docx from docs/PRD.md using the BT corporate style.
+   Colors / fonts / heading patterns mirror /Users/rezamalik/Claude/contract_styles.py."""
 
 from pathlib import Path
 from docx import Document
-from docx.shared import Inches, Pt, RGBColor
+from docx.shared import Inches, Pt, Cm, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
 ROOT = Path("/Users/rezamalik/Repo/school-climate-hub")
-PRD_MD = ROOT / "docs" / "PRD.md"
 PRD_DOCX = ROOT / "docs" / "PRD.docx"
 LOGO = Path("/Users/rezamalik/Library/CloudStorage/GoogleDrive-reza@beaconhouse.tech/My Drive/_Claude/bt-beams-logo.png")
 
-INDIGO = RGBColor(0x63, 0x5B, 0xFF)
-TEXT   = RGBColor(0x0A, 0x25, 0x40)
-TEXT2  = RGBColor(0x42, 0x54, 0x66)
-TEXT3  = RGBColor(0x69, 0x73, 0x86)
-MUTED  = RGBColor(0x88, 0x98, 0xAA)
+# BT corporate palette (from contract_styles.py)
+BT_BLUE = RGBColor(0x00, 0x3D, 0x6B)
+BT_DARK = RGBColor(0x33, 0x33, 0x33)
+BT_GRAY = RGBColor(0x66, 0x66, 0x66)
+BT_LIGHT_GRAY = RGBColor(0xF2, 0xF2, 0xF2)
+TABLE_HEADER_BG = "003D6B"
+TABLE_ALT_BG = "F2F2F2"
 
 doc = Document()
 
-# Page setup
-section = doc.sections[0]
-section.top_margin = Inches(1.0)
-section.bottom_margin = Inches(0.8)
-section.left_margin = Inches(0.9)
-section.right_margin = Inches(0.9)
+# ---- Page setup: BT standard (2.54cm all sides) ----
+for section in doc.sections:
+    section.top_margin = Cm(2.54)
+    section.bottom_margin = Cm(2.54)
+    section.left_margin = Cm(2.54)
+    section.right_margin = Cm(2.54)
 
-# Base style — Inter-ish (Calibri is the closest universal fallback in Word)
+# ---- Default font: Calibri 10pt BT_DARK, 1.15 line spacing ----
 style = doc.styles['Normal']
 style.font.name = 'Calibri'
-style.font.size = Pt(10.5)
-style.font.color.rgb = TEXT2
-style.paragraph_format.space_after = Pt(4)
-style.paragraph_format.line_spacing = 1.35
+style.font.size = Pt(10)
+style.font.color.rgb = BT_DARK
+style.paragraph_format.space_after = Pt(6)
+style.paragraph_format.line_spacing = 1.15
 
-# Header: BT logo, left-aligned, 3.6"
+# ---- Header: BT logo, left-aligned, 3.6" ----
+section = doc.sections[0]
 header = section.header
-htbl = header.add_table(rows=1, cols=1, width=Inches(6.7))
-hcell = htbl.cell(0, 0)
-hp = hcell.paragraphs[0]
+header.is_linked_to_previous = False
+for p in header.paragraphs:
+    p.clear()
+hp = header.paragraphs[0]
 hp.alignment = WD_ALIGN_PARAGRAPH.LEFT
 hp.add_run().add_picture(str(LOGO), width=Inches(3.6))
+hp.paragraph_format.space_after = Pt(6)
 
-# Footer with page numbering field
+# ---- Footer: copyright + CONFIDENTIAL + Page X, centered, BT_GRAY 8pt ----
 footer = section.footer
+footer.is_linked_to_previous = False
 fp = footer.paragraphs[0]
-fp.alignment = WD_ALIGN_PARAGRAPH.LEFT
-run_a = fp.add_run("© 2026 Beaconhouse Technology LLC. All Rights Reserved. | CONFIDENTIAL | Page ")
-run_a.font.size = Pt(8)
-run_a.font.color.rgb = MUTED
+fp.alignment = WD_ALIGN_PARAGRAPH.CENTER
+run = fp.add_run("© 2026 Beaconhouse Technology LLC. All Rights Reserved. | CONFIDENTIAL | Page ")
+run.font.size = Pt(8); run.font.color.rgb = BT_GRAY; run.font.name = 'Calibri'
 # PAGE field
-fld = OxmlElement('w:fldSimple')
-fld.set(qn('w:instr'), 'PAGE')
-page_run = OxmlElement('w:r')
-page_text = OxmlElement('w:t')
-page_text.text = "1"
-page_run.append(page_text)
-fld.append(page_run)
+fld = OxmlElement('w:fldSimple'); fld.set(qn('w:instr'), 'PAGE')
+page_run = OxmlElement('w:r'); page_text = OxmlElement('w:t'); page_text.text = "1"
+page_run.append(page_text); fld.append(page_run)
 fp._p.append(fld)
-# Apply size/color to the PAGE field run
 for r in fp.runs:
-    r.font.size = Pt(8)
-    r.font.color.rgb = MUTED
+    r.font.size = Pt(8); r.font.color.rgb = BT_GRAY; r.font.name = 'Calibri'
 
-# ---------- Body content ----------
+# ---- BT style helpers (inlined for repo self-containment) ----
 
-def add_title(text, level=1):
-    p = doc.add_paragraph()
-    r = p.add_run(text)
-    r.bold = True
-    if level == 0:
-        r.font.size = Pt(22)
-        r.font.color.rgb = TEXT
-        p.paragraph_format.space_before = Pt(0)
-        p.paragraph_format.space_after = Pt(2)
-    elif level == 1:
-        r.font.size = Pt(13)
-        r.font.color.rgb = INDIGO
-        p.paragraph_format.space_before = Pt(14)
-        p.paragraph_format.space_after = Pt(4)
-    elif level == 2:
-        r.font.size = Pt(11)
-        r.font.color.rgb = TEXT
-        p.paragraph_format.space_before = Pt(8)
-        p.paragraph_format.space_after = Pt(3)
+def add_title(text):
+    p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    r = p.add_run(text); r.font.size = Pt(16); r.font.bold = True
+    r.font.color.rgb = BT_BLUE; r.font.name = 'Calibri'
+    p.paragraph_format.space_after = Pt(4)
     return p
 
-def add_para(text, color=TEXT2, size=10.5, italic=False, bold=False):
+def add_subtitle(text):
+    p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    r = p.add_run(text); r.font.size = Pt(12); r.font.bold = True
+    r.font.color.rgb = BT_BLUE; r.font.name = 'Calibri'
+    p.paragraph_format.space_after = Pt(12)
+    return p
+
+def add_heading1(text):
     p = doc.add_paragraph()
-    r = p.add_run(text)
-    r.font.size = Pt(size)
-    r.font.color.rgb = color
+    r = p.add_run(text); r.font.size = Pt(12); r.font.bold = True
+    r.font.color.rgb = BT_BLUE; r.font.name = 'Calibri'
+    p.paragraph_format.space_before = Pt(18)
+    p.paragraph_format.space_after = Pt(8)
+    pPr = p._p.get_or_add_pPr()
+    pBdr = OxmlElement('w:pBdr')
+    bottom = OxmlElement('w:bottom')
+    bottom.set(qn('w:val'), 'single'); bottom.set(qn('w:sz'), '4')
+    bottom.set(qn('w:space'), '1'); bottom.set(qn('w:color'), '003D6B')
+    pBdr.append(bottom); pPr.append(pBdr)
+    return p
+
+def add_body(text, italic=False):
+    p = doc.add_paragraph()
+    r = p.add_run(text); r.font.size = Pt(10); r.font.name = 'Calibri'
+    r.font.color.rgb = BT_DARK
     if italic: r.italic = True
-    if bold: r.bold = True
+    p.paragraph_format.space_after = Pt(6)
     return p
 
-def add_meta(items):
-    p = doc.add_paragraph()
+def add_bullet(text):
+    p = doc.add_paragraph(style='List Bullet')
+    r = p.add_run(text); r.font.size = Pt(10); r.font.name = 'Calibri'
+    r.font.color.rgb = BT_DARK
+    p.paragraph_format.space_after = Pt(3)
+    return p
+
+def add_meta_line(items):
+    p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     for i, (label, value) in enumerate(items):
         if i > 0:
             r = p.add_run("   ·   ")
-            r.font.size = Pt(9); r.font.color.rgb = TEXT3
+            r.font.size = Pt(9); r.font.color.rgb = BT_GRAY; r.font.name = 'Calibri'
         rl = p.add_run(label + ": ")
-        rl.font.size = Pt(9); rl.font.color.rgb = TEXT3
+        rl.font.size = Pt(9); rl.font.color.rgb = BT_GRAY; rl.font.name = 'Calibri'
         rv = p.add_run(value)
-        rv.font.size = Pt(9); rv.font.color.rgb = TEXT
-        rv.bold = True
+        rv.font.size = Pt(9); rv.font.color.rgb = BT_DARK; rv.font.name = 'Calibri'; rv.bold = True
+    p.paragraph_format.space_after = Pt(14)
+    return p
 
-def set_cell_bg(cell, hex_color):
-    tc_pr = cell._tc.get_or_add_tcPr()
+def set_cell_shading(cell, color_hex):
     shd = OxmlElement('w:shd')
-    shd.set(qn('w:val'), 'clear')
-    shd.set(qn('w:color'), 'auto')
-    shd.set(qn('w:fill'), hex_color)
-    tc_pr.append(shd)
+    shd.set(qn('w:fill'), color_hex); shd.set(qn('w:val'), 'clear')
+    cell._tc.get_or_add_tcPr().append(shd)
 
 def add_table(headers, rows, col_widths=None):
     table = doc.add_table(rows=1 + len(rows), cols=len(headers))
     table.autofit = False
-    if col_widths:
-        for i, w in enumerate(col_widths):
-            for cell in table.columns[i].cells:
-                cell.width = Inches(w)
-    # Header
     for i, h in enumerate(headers):
         cell = table.rows[0].cells[i]
-        set_cell_bg(cell, "F0F1FF")
+        cell.text = ''
         p = cell.paragraphs[0]
         r = p.add_run(h)
-        r.bold = True
-        r.font.size = Pt(9)
-        r.font.color.rgb = INDIGO
-    # Rows
+        r.font.size = Pt(9); r.font.bold = True; r.font.name = 'Calibri'
+        r.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
+        set_cell_shading(cell, TABLE_HEADER_BG)
     for ri, row in enumerate(rows):
-        for ci, value in enumerate(row):
+        for ci, val in enumerate(row):
             cell = table.rows[ri + 1].cells[ci]
+            cell.text = ''
             p = cell.paragraphs[0]
-            r = p.add_run(str(value))
-            r.font.size = Pt(9.5)
-            r.font.color.rgb = TEXT2
+            r = p.add_run(str(val))
+            r.font.size = Pt(9); r.font.name = 'Calibri'; r.font.color.rgb = BT_DARK
+            if ri % 2 == 1:
+                set_cell_shading(cell, TABLE_ALT_BG)
+    if col_widths:
+        for ri, row_obj in enumerate(table.rows):
+            for ci, w in enumerate(col_widths):
+                row_obj.cells[ci].width = Inches(w)
+    tbl = table._tbl
+    tblPr = tbl.tblPr if tbl.tblPr is not None else OxmlElement('w:tblPr')
+    borders = OxmlElement('w:tblBorders')
+    for edge in ('top', 'left', 'bottom', 'right', 'insideH', 'insideV'):
+        e = OxmlElement(f'w:{edge}')
+        e.set(qn('w:val'), 'single'); e.set(qn('w:sz'), '4')
+        e.set(qn('w:space'), '0'); e.set(qn('w:color'), '999999')
+        borders.append(e)
+    tblPr.append(borders)
+    doc.add_paragraph()
     return table
 
-def add_bullet(text, color=TEXT2):
-    p = doc.add_paragraph(style='List Bullet')
-    r = p.add_run(text)
-    r.font.size = Pt(10)
-    r.font.color.rgb = color
-    p.paragraph_format.space_after = Pt(2)
+# ============================== Content ==============================
 
-# ---- Title block ----
-add_title("PRD — School Climate Hub v0.1", level=0)
-sub = doc.add_paragraph()
-sr = sub.add_run("Product Requirements Document")
-sr.font.size = Pt(11); sr.font.color.rgb = TEXT3
-sub.paragraph_format.space_after = Pt(10)
+add_title("School Climate Hub")
+add_subtitle("Product Requirements Document — v0.1")
 
-add_meta([
+add_meta_line([
     ("Status", "Draft for 2026-05-17 UNICEF Venture Fund submission"),
     ("Owner", "Reza Malik (BT) · Erum Rabbani (PDLC)"),
     ("Last updated", "2026-05-12"),
 ])
-doc.add_paragraph()  # spacer
 
-# 1
-add_title("1. Problem", level=1)
-add_para("School-level climate exposure data — heat, air quality, flood, rainfall — does not exist "
+add_heading1("1. Problem")
+add_body("School-level climate exposure data — heat, air quality, flood, rainfall — does not exist "
          "as a clean, open, EMIS-keyed dataset. Operators rely on district-level weather and intuition. "
-         "The data needed to act, school by school, isn't there.", color=TEXT)
+         "The data needed to act, school by school, isn't there.")
 
-# 2
-add_title("2. Users", level=1)
+add_heading1("2. Users")
 add_table(
     ["User", "When they use it"],
     [
@@ -182,11 +190,10 @@ add_table(
         ["UNICEF reviewer", "One-time — evaluates the submission"],
         ["Researcher / NGO / ministry", "Ad-hoc — downloads the open dataset"],
     ],
-    col_widths=[2.5, 4.4],
+    col_widths=[2.5, 4.0],
 )
 
-# 3
-add_title("3. Jobs to be done", level=1)
+add_heading1("3. Jobs to be done")
 add_table(
     ["ID", "Job", "Surface"],
     [
@@ -201,11 +208,10 @@ add_table(
         ["J9", "Tune thresholds, languages, channels, templates", "Settings"],
         ["J10", "Broadcast advisory to an entire cluster", "Overview → cluster row"],
     ],
-    col_widths=[0.5, 4.2, 2.2],
+    col_widths=[0.5, 4.0, 2.0],
 )
 
-# 4
-add_title("4. Features (v0.1)", level=1)
+add_heading1("4. Features (v0.1)")
 add_table(
     ["Feature", "Status"],
     [
@@ -224,12 +230,11 @@ add_table(
         ["Theme: light / dark / system", "Done"],
         ["Cluster-level broadcast", "UI complete"],
     ],
-    col_widths=[5.0, 1.7],
+    col_widths=[4.7, 1.8],
 )
 
-# 5
-add_title("5. Functional requirements", level=1)
-frs = [
+add_heading1("5. Functional requirements")
+add_table(["#", "Requirement"], [
     ("FR-1",  "Display all 50 schools on a Leaflet map with hazard-coloured markers"),
     ("FR-2",  "Switch map layer: heat / air-quality / flood / overall"),
     ("FR-3",  "Filter by cluster (C-1 to C-4)"),
@@ -248,12 +253,10 @@ frs = [
     ("FR-16", "Chat: ⌘K + FAB; streaming responses; tool-call display; clickable citations"),
     ("FR-17", "Chat: 5 capability buckets — query, decide, explain, draft, multilingual"),
     ("FR-18", "Cluster-level actions on Overview: click row → filter map; envelope → broadcast advisory"),
-]
-add_table(["#", "Requirement"], frs, col_widths=[0.7, 6.0])
+], col_widths=[0.7, 5.8])
 
-# 6
-add_title("6. Non-functional requirements", level=1)
-nfrs = [
+add_heading1("6. Non-functional requirements")
+add_table(["#", "Requirement"], [
     ("NFR-1", "WCAG 2.2 AA; keyboard nav; visible focus rings on all interactive elements"),
     ("NFR-2", "i18n: EN / UR / Punjabi-Shahmukhi; Intl.DateTimeFormat + Intl.NumberFormat; school names translate=\"no\""),
     ("NFR-3", "Performance: LCP < 1.5s on 3G; map renders 50 markers in single frame"),
@@ -263,11 +266,9 @@ nfrs = [
     ("NFR-7", "Deployment: stateless API, static front-end, cron-driven ingest"),
     ("NFR-8", "Observability: all dispatches + decisions audit-logged with operator ID"),
     ("NFR-9", "Reduced-motion: animations honour prefers-reduced-motion: reduce"),
-]
-add_table(["#", "Requirement"], nfrs, col_widths=[0.7, 6.0])
+], col_widths=[0.7, 5.8])
 
-# 7
-add_title("7. Out of scope (v0.1)", level=1)
+add_heading1("7. Out of scope (v0.1)")
 for x in [
     "Climate–attendance ML model — needs PEF SIS attendance history; deferred to Phase 1 grant deliverable",
     "Live LLM-backed chat — submission ships scripted demos; real Claude tool-use built post-funding",
@@ -278,8 +279,7 @@ for x in [
 ]:
     add_bullet(x)
 
-# 8
-add_title("8. Open questions / pending decisions", level=1)
+add_heading1("8. Open questions / pending decisions")
 add_table(
     ["#", "Question", "Owner", "Needed by"],
     [
@@ -290,11 +290,10 @@ add_table(
         ["Q5", "Demo video target length and key beats", "Reza (BT)", "2026-05-15"],
         ["Q6", "Submission package PDF — who signs the cover letter?", "Erum (PDLC)", "2026-05-16"],
     ],
-    col_widths=[0.5, 3.7, 1.4, 1.1],
+    col_widths=[0.5, 3.5, 1.4, 1.1],
 )
 
-# 9
-add_title("9. Success criteria", level=1)
+add_heading1("9. Success criteria")
 for x in [
     "Submission filed by 2026-05-17 by PDLC",
     "Public demo URL live by 2026-05-16",
@@ -305,8 +304,7 @@ for x in [
 ]:
     add_bullet(x)
 
-# 10
-add_title("10. Phase roadmap", level=1)
+add_heading1("10. Phase roadmap")
 add_table(
     ["Phase", "Window", "Deliverables"],
     [
@@ -314,16 +312,13 @@ add_table(
         ["v0.2 — Grant Phase 1", "2026-06 → 2026-12 (if funded)", "Live LLM chat, real ingest pipelines daily, real SMS/WhatsApp dispatch, audit-log persistence, deployment to PDLC infrastructure"],
         ["v0.3 — Expansion", "2027", "Climate-attendance ML model, Sindh + KPK schools, multi-tenant operator support"],
     ],
-    col_widths=[1.8, 2.0, 2.9],
+    col_widths=[1.6, 2.0, 2.9],
 )
 
-# Closing note
-doc.add_paragraph()
-p = doc.add_paragraph()
-r = p.add_run("This PRD is intentionally short. Architecture details are in docs/architecture.md. "
-              "Open-dataset schema is in open_data_layer/schema.md. The live demo is at "
-              "https://school-climate-hub.github.io/school-climate-hub/.")
-r.font.size = Pt(9); r.font.color.rgb = TEXT3; r.italic = True
+add_body("This PRD is intentionally short. Architecture details are in docs/architecture.md. "
+         "Open-dataset schema is in open_data_layer/schema.md. The live demo is at "
+         "https://school-climate-hub.github.io/school-climate-hub/.",
+         italic=True)
 
 doc.save(PRD_DOCX)
 print(f"wrote {PRD_DOCX}")
