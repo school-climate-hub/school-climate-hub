@@ -1,0 +1,17 @@
+# Cloudflare Worker — School Climate Hub chat backend.
+# Deploy:   wrangler deploy
+# Logs:     wrangler tail
+# Secret:   wrangler secret put ANTHROPIC_API_KEY
+#
+# Custom domain (chat.schoolclimatehub.org) is configured AFTER first deploy
+# via the Cloudflare dashboard once the schoolclimatehub.org DNS settles.
+# Until then the Worker is reachable at:
+#   https://school-climate-hub-chat.<account>.workers.dev
+
+name = "school-climate-hub-chat"
+main = "src/index.ts"
+compatibility_date = "2026-05-01"
+
+# Free observability — Worker logs visible via `wrangler tail` + dashboard.
+[observability]
+enabled = true
