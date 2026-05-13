@@ -1029,7 +1029,19 @@ const VIEW_META = {
               narr: 'Operator config. Thresholds, languages, channels, advisory templates, approval policy.' },
 };
 
+// Real scores from the ingestion pipeline. Loaded asynchronously from scores.json.
+// If fetch fails (e.g. file not yet published), mockScore falls back to a
+// deterministic synthetic value so the dashboard never breaks on load.
+let REAL_SCORES = null;  // { emis_code: { scores: {heat,aq,flood,overall}, raw: {...}, burden_days_per_year: N } }
+let SCORES_GENERATED_AT = null;  // timestamp string from scores.json
+
 function mockScore(school, hazard) {
+  // Real-data path
+  if (REAL_SCORES && REAL_SCORES[school.emis_code]) {
+    const v = REAL_SCORES[school.emis_code].scores[hazard];
+    if (typeof v === 'number') return v;
+  }
+  // Deterministic-mock fallback (used if scores.json hasn't loaded yet or is missing)
   const seed = (school.lat * 1e3 + school.lon * 1e3 + school.emis_code) % 100;
   const x = Math.abs(Math.sin(seed)) * 100;
   if (hazard === 'heat')    return Math.round(40 + (x % 60));
@@ -1047,8 +1059,34 @@ function ragColor(s) {
   return '#067647';
 }
 function burden(s) {
+  // Real-data path
+  if (REAL_SCORES && REAL_SCORES[s.emis_code]) {
+    const b = REAL_SCORES[s.emis_code].burden_days_per_year;
+    if (typeof b === 'number') return b;
+  }
+  // Fallback: compute from mock scores
   const h = mockScore(s,'heat'), a = mockScore(s,'aq'), f = mockScore(s,'flood');
   return Math.round(s.students * (h*0.5 + a*0.4 + f*0.1));
+}
+
+// Fetch scores.json on load. Populates REAL_SCORES so subsequent mockScore()
+// calls return live values. Re-renders any view that depends on scores.
+async function loadRealScores() {
+  try {
+    const r = await fetch('scores.json', { cache: 'no-cache' });
+    if (!r.ok) throw new Error('scores.json HTTP ' + r.status);
+    const data = await r.json();
+    REAL_SCORES = {};
+    for (const s of data.schools) REAL_SCORES[s.emis_code] = s;
+    SCORES_GENERATED_AT = data.generated_at;
+    console.log(`[scores] loaded ${data.schools.length} schools · generated ${SCORES_GENERATED_AT}`);
+    // Re-paint anything that's already rendered
+    if (typeof paintMarkers === 'function') paintMarkers();
+    if (CURRENT_VIEW === 'overview' && typeof defaultDetail === 'function') defaultDetail();
+    if (CURRENT_VIEW === 'schools' && typeof renderRagTable === 'function') renderRagTable();
+  } catch (e) {
+    console.warn('[scores] live data unavailable — using deterministic fallback:', e.message);
+  }
 }
 
 function goView(name) {
@@ -1732,6 +1770,8 @@ fetch('schools.json').then(r => r.json()).then(rows => {
   defaultDetail();
   const initial = (location.hash || '#overview').slice(1);
   goView(VIEW_META[initial] ? initial : 'overview');
+  // Then load real scores; this re-paints if the mock was shown first
+  loadRealScores();
 });
 
 window.addEventListener('hashchange', () => {
@@ -1931,6 +1971,52 @@ function askChat(q) {
 }
 window.askChat = askChat;
 
+// Live chat endpoint — falls back to scripted if unreachable.
+// Override via ?chat=<url> in the URL for testing alternative deploys.
+const CHAT_WORKER_URL = (new URLSearchParams(location.search).get('chat'))
+  || 'https://chat.schoolclimatehub.org/api/chat';
+const CHAT_WORKER_FALLBACK = 'https://school-climate-hub-chat.workers.dev/api/chat';
+
+async function streamFromWorker(messages, assistantMsg) {
+  // Try primary then fallback Worker URL
+  for (const url of [CHAT_WORKER_URL, CHAT_WORKER_FALLBACK]) {
+    try {
+      const resp = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages }),
+      });
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = '';
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += decoder.decode(value, { stream: true });
+        // Parse SSE: events separated by blank lines
+        const events = buf.split('\n\n');
+        buf = events.pop() || '';
+        for (const ev of events) {
+          const dataLine = ev.split('\n').find(l => l.startsWith('data: '));
+          if (!dataLine) continue;
+          try {
+            const j = JSON.parse(dataLine.slice(6));
+            if (j.type === 'content_block_delta' && j.delta?.text) {
+              assistantMsg.content += j.delta.text;
+              renderChat();
+            }
+          } catch (_) { /* skip non-JSON ping events */ }
+        }
+      }
+      return true;
+    } catch (e) {
+      console.warn('[chat] worker', url, 'failed:', e.message);
+    }
+  }
+  return false;
+}
+
 function sendChat() {
   const input = document.getElementById('chat-input');
   const q = input.value.trim();
@@ -1941,25 +2027,26 @@ function sendChat() {
   chatMessages.push({ role: 'user', content: q });
   renderChat();
 
-  // Match against canned demos
+  // Canned demos run instantly + reliably (used during product demos)
   const demo = CHAT_DEMOS.find(d => d.match.test(q));
-  const tools = demo ? demo.tools : ["Searching across schools, scores, and policies…"];
-  const finalContent = demo
-    ? demo.assistant
-    : `<em>(Demo mode — this would query the live LLM in production.)</em><br/><br/>I'd answer questions about the 50 schools using the open data layer, hazard policies in Settings, and feature attribution from the scoring model. Try one of the suggested questions for a working preview.`;
+  const tools = demo ? demo.tools : ["Calling Claude with the current dataset as context…"];
+  const finalContent = demo ? demo.assistant : null;
 
   // Simulate streaming: tools appear progressively, then content streams in
   const assistantMsg = { role: 'assistant', content: '', tools: [] };
   chatMessages.push(assistantMsg);
 
   let toolIdx = 0;
-  const toolTimer = setInterval(() => {
+  const toolTimer = setInterval(async () => {
     if (toolIdx < tools.length) {
       assistantMsg.tools.push(tools[toolIdx++]);
       renderChat();
-    } else {
-      clearInterval(toolTimer);
-      // Stream the content
+      return;
+    }
+    clearInterval(toolTimer);
+
+    if (demo) {
+      // Scripted demo — local typewriter effect
       let i = 0;
       const stride = Math.max(2, Math.ceil(finalContent.length / 80));
       const streamTimer = setInterval(() => {
@@ -1968,6 +2055,20 @@ function sendChat() {
         renderChat();
         if (i >= finalContent.length) clearInterval(streamTimer);
       }, 18);
+    } else {
+      // Live Claude — stream from Worker
+      assistantMsg.content = '<span class="typing-cursor"></span>';
+      renderChat();
+      // Build conversation history (last 8 turns to keep context bounded)
+      const history = chatMessages
+        .filter(m => m.role === 'user' || (m.role === 'assistant' && m.content))
+        .slice(-8)
+        .map(m => ({ role: m.role, content: typeof m.content === 'string' ? m.content.replace(/<[^>]+>/g, '') : '' }));
+      const ok = await streamFromWorker(history, assistantMsg);
+      if (!ok) {
+        assistantMsg.content = `<em>Live chat is temporarily unavailable.</em><br/><br/>You can try one of the suggested questions for an instant scripted answer, or ask again in a moment.`;
+        renderChat();
+      }
     }
   }, 280);
 }
