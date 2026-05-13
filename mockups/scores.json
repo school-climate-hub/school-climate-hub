@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-13T15:03:36+00:00",
+  "generated_at": "2026-05-13T20:29:41+00:00",
   "source": {
     "heat": "ERA5 2m_temperature (last 7 days, school lat/lon nearest)",
     "rainfall": "ERA5 total_precipitation (24h max across last 7 days)",
@@ -12,6 +12,12 @@
     "heat_red_c": 42.0,
     "rain_amber_mm": 50.0,
     "rain_red_mm": 100.0
+  },
+  "forecast_meta": {
+    "model": "ECMWF HRES (IFS 0.25\u00b0)",
+    "cycle": "2026051312",
+    "issued_at": "2026-05-13T12:00:00Z",
+    "horizon_days": 10
   },
   "schools": [
     {
@@ -33,7 +39,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 19111
+      "burden_days_per_year": 19111,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.6,
+          "precip_mm": 0.0,
+          "heat_score": 41,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 38.2,
+          "precip_mm": 0.4,
+          "heat_score": 51,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.7,
+          "precip_mm": 0.2,
+          "heat_score": 45,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.7,
+          "precip_mm": 0.0,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.7,
+          "precip_mm": 0.0,
+          "heat_score": 63,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.0,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.8,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110621,
@@ -54,7 +132,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 28506
+      "burden_days_per_year": 28506,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.6,
+          "precip_mm": 0.0,
+          "heat_score": 41,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 38.2,
+          "precip_mm": 0.4,
+          "heat_score": 51,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.7,
+          "precip_mm": 0.2,
+          "heat_score": 45,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.7,
+          "precip_mm": 0.0,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.7,
+          "precip_mm": 0.0,
+          "heat_score": 63,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.0,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.8,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110320,
@@ -75,7 +225,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 22046
+      "burden_days_per_year": 22046,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.8,
+          "precip_mm": 0.0,
+          "heat_score": 38,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.3,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 35.8,
+          "precip_mm": 0.2,
+          "heat_score": 42,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.4,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.8,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.6,
+          "precip_mm": 0.0,
+          "heat_score": 77,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.1,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.4,
+          "heat_score": 73,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110468,
@@ -96,7 +318,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 22564
+      "burden_days_per_year": 22564,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.6,
+          "precip_mm": 0.0,
+          "heat_score": 41,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 38.2,
+          "precip_mm": 0.4,
+          "heat_score": 51,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.7,
+          "precip_mm": 0.2,
+          "heat_score": 45,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.7,
+          "precip_mm": 0.0,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.7,
+          "precip_mm": 0.0,
+          "heat_score": 63,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.0,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.8,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110627,
@@ -117,7 +411,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 17812
+      "burden_days_per_year": 17812,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.8,
+          "precip_mm": 0.0,
+          "heat_score": 38,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.3,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 35.8,
+          "precip_mm": 0.2,
+          "heat_score": 42,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.4,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.8,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.6,
+          "precip_mm": 0.0,
+          "heat_score": 77,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.1,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.4,
+          "heat_score": 73,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110167,
@@ -138,7 +504,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 23506
+      "burden_days_per_year": 23506,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.8,
+          "precip_mm": 0.0,
+          "heat_score": 38,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.3,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 35.8,
+          "precip_mm": 0.2,
+          "heat_score": 42,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.4,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.8,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.6,
+          "precip_mm": 0.0,
+          "heat_score": 77,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.1,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.4,
+          "heat_score": 73,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110161,
@@ -159,7 +597,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 18104
+      "burden_days_per_year": 18104,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.8,
+          "precip_mm": 0.0,
+          "heat_score": 38,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.3,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 35.8,
+          "precip_mm": 0.2,
+          "heat_score": 42,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.4,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.8,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.6,
+          "precip_mm": 0.0,
+          "heat_score": 77,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.1,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.4,
+          "heat_score": 73,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110518,
@@ -180,7 +690,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 17593
+      "burden_days_per_year": 17593,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.8,
+          "precip_mm": 0.0,
+          "heat_score": 38,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.3,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 35.8,
+          "precip_mm": 0.2,
+          "heat_score": 42,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.4,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.8,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.6,
+          "precip_mm": 0.0,
+          "heat_score": 77,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.1,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.4,
+          "heat_score": 73,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110256,
@@ -201,7 +783,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 43800
+      "burden_days_per_year": 43800,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.8,
+          "precip_mm": 0.0,
+          "heat_score": 38,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.3,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 35.8,
+          "precip_mm": 0.2,
+          "heat_score": 42,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.4,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.8,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.6,
+          "precip_mm": 0.0,
+          "heat_score": 77,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.1,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.4,
+          "heat_score": 73,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110242,
@@ -222,7 +876,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 19710
+      "burden_days_per_year": 19710,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.8,
+          "precip_mm": 0.0,
+          "heat_score": 38,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.3,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 35.8,
+          "precip_mm": 0.2,
+          "heat_score": 42,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.4,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.8,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.6,
+          "precip_mm": 0.0,
+          "heat_score": 77,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.1,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.4,
+          "heat_score": 73,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34120186,
@@ -243,7 +969,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 15330
+      "burden_days_per_year": 15330,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.8,
+          "precip_mm": 0.0,
+          "heat_score": 38,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.3,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 35.8,
+          "precip_mm": 0.2,
+          "heat_score": 42,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.4,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.8,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.6,
+          "precip_mm": 0.0,
+          "heat_score": 77,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.1,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.4,
+          "heat_score": 73,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34120145,
@@ -264,7 +1062,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 16133
+      "burden_days_per_year": 16133,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.8,
+          "precip_mm": 0.0,
+          "heat_score": 38,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.3,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 35.8,
+          "precip_mm": 0.2,
+          "heat_score": 42,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.4,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.8,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.6,
+          "precip_mm": 0.0,
+          "heat_score": 77,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.1,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.4,
+          "heat_score": 73,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34120108,
@@ -285,7 +1155,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 12921
+      "burden_days_per_year": 12921,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.4,
+          "precip_mm": 0.0,
+          "heat_score": 36,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.4,
+          "precip_mm": 0.2,
+          "heat_score": 48,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.1,
+          "precip_mm": 0.0,
+          "heat_score": 43,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 36.8,
+          "precip_mm": 0.0,
+          "heat_score": 45,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 60,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.2,
+          "precip_mm": 0.0,
+          "heat_score": 74,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.0,
+          "precip_mm": 0.0,
+          "heat_score": 73,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 41.9,
+          "precip_mm": 0.0,
+          "heat_score": 79,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 40.2,
+          "precip_mm": 0.5,
+          "heat_score": 66,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110193,
@@ -306,7 +1248,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 21170
+      "burden_days_per_year": 21170,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.8,
+          "precip_mm": 0.0,
+          "heat_score": 38,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.3,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 35.8,
+          "precip_mm": 0.2,
+          "heat_score": 42,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.4,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.8,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.6,
+          "precip_mm": 0.0,
+          "heat_score": 77,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.1,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.4,
+          "heat_score": 73,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110200,
@@ -327,7 +1341,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 15184
+      "burden_days_per_year": 15184,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.8,
+          "precip_mm": 0.0,
+          "heat_score": 38,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.3,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 35.8,
+          "precip_mm": 0.2,
+          "heat_score": 42,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.4,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.8,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.6,
+          "precip_mm": 0.0,
+          "heat_score": 77,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.1,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.4,
+          "heat_score": 73,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110353,
@@ -348,7 +1434,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 9855
+      "burden_days_per_year": 9855,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.8,
+          "precip_mm": 0.0,
+          "heat_score": 38,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.3,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 35.8,
+          "precip_mm": 0.2,
+          "heat_score": 42,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.4,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.8,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.6,
+          "precip_mm": 0.0,
+          "heat_score": 77,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.1,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.4,
+          "heat_score": 73,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110616,
@@ -369,7 +1527,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 13578
+      "burden_days_per_year": 13578,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.8,
+          "precip_mm": 0.0,
+          "heat_score": 38,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.3,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 35.8,
+          "precip_mm": 0.2,
+          "heat_score": 42,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.4,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.8,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.6,
+          "precip_mm": 0.0,
+          "heat_score": 77,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.1,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.4,
+          "heat_score": 73,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110221,
@@ -390,7 +1620,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 18469
+      "burden_days_per_year": 18469,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.6,
+          "precip_mm": 0.0,
+          "heat_score": 41,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 38.2,
+          "precip_mm": 0.4,
+          "heat_score": 51,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.7,
+          "precip_mm": 0.2,
+          "heat_score": 45,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.7,
+          "precip_mm": 0.0,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.7,
+          "precip_mm": 0.0,
+          "heat_score": 63,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.0,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.8,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110175,
@@ -411,7 +1713,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 14600
+      "burden_days_per_year": 14600,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.8,
+          "precip_mm": 0.0,
+          "heat_score": 38,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.3,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 35.8,
+          "precip_mm": 0.2,
+          "heat_score": 42,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.4,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.8,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.6,
+          "precip_mm": 0.0,
+          "heat_score": 77,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.1,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.4,
+          "heat_score": 73,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110405,
@@ -432,7 +1806,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 15658
+      "burden_days_per_year": 15658,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.6,
+          "precip_mm": 0.0,
+          "heat_score": 41,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 38.2,
+          "precip_mm": 0.4,
+          "heat_score": 51,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.7,
+          "precip_mm": 0.2,
+          "heat_score": 45,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.7,
+          "precip_mm": 0.0,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.7,
+          "precip_mm": 0.0,
+          "heat_score": 63,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.0,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.8,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110194,
@@ -453,7 +1899,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 11461
+      "burden_days_per_year": 11461,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.8,
+          "precip_mm": 0.0,
+          "heat_score": 38,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.3,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 35.8,
+          "precip_mm": 0.2,
+          "heat_score": 42,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.4,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.8,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.6,
+          "precip_mm": 0.0,
+          "heat_score": 77,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.1,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.4,
+          "heat_score": 73,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110181,
@@ -474,7 +1992,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 19345
+      "burden_days_per_year": 19345,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.8,
+          "precip_mm": 0.0,
+          "heat_score": 38,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.3,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 35.8,
+          "precip_mm": 0.2,
+          "heat_score": 42,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.4,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.8,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.6,
+          "precip_mm": 0.0,
+          "heat_score": 77,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.1,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.4,
+          "heat_score": 73,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110208,
@@ -495,7 +2085,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 10001
+      "burden_days_per_year": 10001,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.8,
+          "precip_mm": 0.0,
+          "heat_score": 38,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.3,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 35.8,
+          "precip_mm": 0.2,
+          "heat_score": 42,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.4,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.8,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.6,
+          "precip_mm": 0.0,
+          "heat_score": 77,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.1,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.4,
+          "heat_score": 73,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110171,
@@ -516,7 +2178,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 26280
+      "burden_days_per_year": 26280,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.8,
+          "precip_mm": 0.0,
+          "heat_score": 38,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.3,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 35.8,
+          "precip_mm": 0.2,
+          "heat_score": 42,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.4,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.8,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.6,
+          "precip_mm": 0.0,
+          "heat_score": 77,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.1,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.4,
+          "heat_score": 73,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110183,
@@ -537,7 +2271,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 17520
+      "burden_days_per_year": 17520,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.8,
+          "precip_mm": 0.0,
+          "heat_score": 38,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.3,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 35.8,
+          "precip_mm": 0.2,
+          "heat_score": 42,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.4,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.8,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.6,
+          "precip_mm": 0.0,
+          "heat_score": 77,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.1,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.4,
+          "heat_score": 73,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34130304,
@@ -558,7 +2364,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 21280
+      "burden_days_per_year": 21280,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.6,
+          "precip_mm": 0.0,
+          "heat_score": 41,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 38.2,
+          "precip_mm": 0.4,
+          "heat_score": 51,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.7,
+          "precip_mm": 0.2,
+          "heat_score": 45,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.7,
+          "precip_mm": 0.0,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.7,
+          "precip_mm": 0.0,
+          "heat_score": 63,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.0,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.8,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34130373,
@@ -579,7 +2457,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 11242
+      "burden_days_per_year": 11242,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.6,
+          "precip_mm": 0.0,
+          "heat_score": 41,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 38.2,
+          "precip_mm": 0.4,
+          "heat_score": 51,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.7,
+          "precip_mm": 0.2,
+          "heat_score": 45,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.7,
+          "precip_mm": 0.0,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.7,
+          "precip_mm": 0.0,
+          "heat_score": 63,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.0,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.8,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34130496,
@@ -600,7 +2550,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 22645
+      "burden_days_per_year": 22645,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.6,
+          "precip_mm": 0.0,
+          "heat_score": 41,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 38.2,
+          "precip_mm": 0.4,
+          "heat_score": 51,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.7,
+          "precip_mm": 0.2,
+          "heat_score": 45,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.7,
+          "precip_mm": 0.0,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.7,
+          "precip_mm": 0.0,
+          "heat_score": 63,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.0,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.8,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34130288,
@@ -621,7 +2643,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 22082
+      "burden_days_per_year": 22082,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.6,
+          "precip_mm": 0.0,
+          "heat_score": 41,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 38.2,
+          "precip_mm": 0.4,
+          "heat_score": 51,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.7,
+          "precip_mm": 0.2,
+          "heat_score": 45,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.7,
+          "precip_mm": 0.0,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.7,
+          "precip_mm": 0.0,
+          "heat_score": 63,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.0,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.8,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34130229,
@@ -642,7 +2736,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 19914
+      "burden_days_per_year": 19914,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.6,
+          "precip_mm": 0.0,
+          "heat_score": 41,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 38.2,
+          "precip_mm": 0.4,
+          "heat_score": 51,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.7,
+          "precip_mm": 0.2,
+          "heat_score": 45,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.7,
+          "precip_mm": 0.0,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.7,
+          "precip_mm": 0.0,
+          "heat_score": 63,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.0,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.8,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34130419,
@@ -663,7 +2829,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 16462
+      "burden_days_per_year": 16462,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.6,
+          "precip_mm": 0.0,
+          "heat_score": 41,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 38.2,
+          "precip_mm": 0.4,
+          "heat_score": 51,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.7,
+          "precip_mm": 0.2,
+          "heat_score": 45,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.7,
+          "precip_mm": 0.0,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.7,
+          "precip_mm": 0.0,
+          "heat_score": 63,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.0,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.8,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34130505,
@@ -684,7 +2922,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 22564
+      "burden_days_per_year": 22564,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.6,
+          "precip_mm": 0.0,
+          "heat_score": 41,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 38.2,
+          "precip_mm": 0.4,
+          "heat_score": 51,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.7,
+          "precip_mm": 0.2,
+          "heat_score": 45,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.7,
+          "precip_mm": 0.0,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.7,
+          "precip_mm": 0.0,
+          "heat_score": 63,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.0,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.8,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34130081,
@@ -705,7 +3015,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 18549
+      "burden_days_per_year": 18549,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.6,
+          "precip_mm": 0.0,
+          "heat_score": 41,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 38.2,
+          "precip_mm": 0.4,
+          "heat_score": 51,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.7,
+          "precip_mm": 0.2,
+          "heat_score": 45,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.7,
+          "precip_mm": 0.0,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.7,
+          "precip_mm": 0.0,
+          "heat_score": 63,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.0,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.8,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34130506,
@@ -726,7 +3108,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 23769
+      "burden_days_per_year": 23769,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.6,
+          "precip_mm": 0.0,
+          "heat_score": 41,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 38.2,
+          "precip_mm": 0.4,
+          "heat_score": 51,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.7,
+          "precip_mm": 0.2,
+          "heat_score": 45,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.7,
+          "precip_mm": 0.0,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.7,
+          "precip_mm": 0.0,
+          "heat_score": 63,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.0,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.8,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110415,
@@ -747,7 +3201,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 13250
+      "burden_days_per_year": 13250,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.6,
+          "precip_mm": 0.0,
+          "heat_score": 41,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 38.2,
+          "precip_mm": 0.4,
+          "heat_score": 51,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.7,
+          "precip_mm": 0.2,
+          "heat_score": 45,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.7,
+          "precip_mm": 0.0,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.7,
+          "precip_mm": 0.0,
+          "heat_score": 63,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.0,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.8,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110212,
@@ -768,7 +3294,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 9234
+      "burden_days_per_year": 9234,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.6,
+          "precip_mm": 0.0,
+          "heat_score": 41,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 38.2,
+          "precip_mm": 0.4,
+          "heat_score": 51,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.7,
+          "precip_mm": 0.2,
+          "heat_score": 45,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.7,
+          "precip_mm": 0.0,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.7,
+          "precip_mm": 0.0,
+          "heat_score": 63,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.0,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.8,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34140378,
@@ -789,7 +3387,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 13852
+      "burden_days_per_year": 13852,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 36.3,
+          "precip_mm": 0.0,
+          "heat_score": 43,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 38.4,
+          "precip_mm": 0.2,
+          "heat_score": 53,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 37.1,
+          "precip_mm": 0.3,
+          "heat_score": 46,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 38.0,
+          "precip_mm": 0.0,
+          "heat_score": 50,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.9,
+          "precip_mm": 0.0,
+          "heat_score": 64,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 42.9,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.4,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.7,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.6,
+          "precip_mm": 0.0,
+          "heat_score": 82,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.8,
+          "precip_mm": 0.0,
+          "heat_score": 79,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34140363,
@@ -810,7 +3480,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 11826
+      "burden_days_per_year": 11826,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.6,
+          "precip_mm": 0.0,
+          "heat_score": 41,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.7,
+          "precip_mm": 0.2,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.6,
+          "precip_mm": 0.5,
+          "heat_score": 45,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 60,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 41.2,
+          "precip_mm": 0.0,
+          "heat_score": 74,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 40.5,
+          "precip_mm": 0.0,
+          "heat_score": 69,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 41.3,
+          "precip_mm": 0.0,
+          "heat_score": 74,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 40.7,
+          "precip_mm": 0.0,
+          "heat_score": 70,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34140224,
@@ -831,7 +3573,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 17666
+      "burden_days_per_year": 17666,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.1,
+          "precip_mm": 0.0,
+          "heat_score": 39,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.6,
+          "heat_score": 48,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.1,
+          "precip_mm": 0.0,
+          "heat_score": 43,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.1,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.2,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 41.7,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 40.7,
+          "precip_mm": 0.0,
+          "heat_score": 70,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 41.2,
+          "precip_mm": 0.0,
+          "heat_score": 74,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 40.8,
+          "precip_mm": 0.4,
+          "heat_score": 71,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34140351,
@@ -852,7 +3666,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 21550
+      "burden_days_per_year": 21550,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.6,
+          "precip_mm": 0.0,
+          "heat_score": 41,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.7,
+          "precip_mm": 0.2,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.6,
+          "precip_mm": 0.5,
+          "heat_score": 45,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 60,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 41.2,
+          "precip_mm": 0.0,
+          "heat_score": 74,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 40.5,
+          "precip_mm": 0.0,
+          "heat_score": 69,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 41.3,
+          "precip_mm": 0.0,
+          "heat_score": 74,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 40.7,
+          "precip_mm": 0.0,
+          "heat_score": 70,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34140365,
@@ -873,7 +3759,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 17520
+      "burden_days_per_year": 17520,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.6,
+          "precip_mm": 0.0,
+          "heat_score": 41,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.7,
+          "precip_mm": 0.2,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.6,
+          "precip_mm": 0.5,
+          "heat_score": 45,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 60,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 42.3,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 41.2,
+          "precip_mm": 0.0,
+          "heat_score": 74,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 40.5,
+          "precip_mm": 0.0,
+          "heat_score": 69,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 41.3,
+          "precip_mm": 0.0,
+          "heat_score": 74,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 40.7,
+          "precip_mm": 0.0,
+          "heat_score": 70,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110489,
@@ -894,7 +3852,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 53947
+      "burden_days_per_year": 53947,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.8,
+          "precip_mm": 0.0,
+          "heat_score": 38,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.3,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 35.8,
+          "precip_mm": 0.2,
+          "heat_score": 42,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.4,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.8,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.6,
+          "precip_mm": 0.0,
+          "heat_score": 77,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.1,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.4,
+          "heat_score": 73,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110441,
@@ -915,7 +3945,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 10840
+      "burden_days_per_year": 10840,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.1,
+          "precip_mm": 0.0,
+          "heat_score": 39,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.6,
+          "heat_score": 48,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.1,
+          "precip_mm": 0.0,
+          "heat_score": 43,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.1,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.2,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 41.7,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 40.7,
+          "precip_mm": 0.0,
+          "heat_score": 70,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 41.2,
+          "precip_mm": 0.0,
+          "heat_score": 74,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 40.8,
+          "precip_mm": 0.4,
+          "heat_score": 71,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110270,
@@ -936,7 +4038,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 27704
+      "burden_days_per_year": 27704,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.1,
+          "precip_mm": 0.0,
+          "heat_score": 39,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.6,
+          "heat_score": 48,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.1,
+          "precip_mm": 0.0,
+          "heat_score": 43,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.1,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.2,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 41.7,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 40.7,
+          "precip_mm": 0.0,
+          "heat_score": 70,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 41.2,
+          "precip_mm": 0.0,
+          "heat_score": 74,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 40.8,
+          "precip_mm": 0.4,
+          "heat_score": 71,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110300,
@@ -957,7 +4131,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 10840
+      "burden_days_per_year": 10840,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.1,
+          "precip_mm": 0.0,
+          "heat_score": 39,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.6,
+          "heat_score": 48,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.1,
+          "precip_mm": 0.0,
+          "heat_score": 43,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.1,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.2,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 41.7,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 40.7,
+          "precip_mm": 0.0,
+          "heat_score": 70,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 41.2,
+          "precip_mm": 0.0,
+          "heat_score": 74,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 40.8,
+          "precip_mm": 0.4,
+          "heat_score": 71,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110432,
@@ -978,7 +4224,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 16060
+      "burden_days_per_year": 16060,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.1,
+          "precip_mm": 0.0,
+          "heat_score": 39,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.6,
+          "heat_score": 48,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.1,
+          "precip_mm": 0.0,
+          "heat_score": 43,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.1,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.2,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 41.7,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 40.7,
+          "precip_mm": 0.0,
+          "heat_score": 70,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 41.2,
+          "precip_mm": 0.0,
+          "heat_score": 74,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 40.8,
+          "precip_mm": 0.4,
+          "heat_score": 71,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110437,
@@ -999,7 +4317,79 @@
         "precip_24h_mm_max": 0.1,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 16060
+      "burden_days_per_year": 16060,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 34.8,
+          "precip_mm": 0.0,
+          "heat_score": 38,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.3,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 35.8,
+          "precip_mm": 0.2,
+          "heat_score": 42,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.4,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 42.8,
+          "precip_mm": 0.0,
+          "heat_score": 83,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.6,
+          "precip_mm": 0.0,
+          "heat_score": 77,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 42.1,
+          "precip_mm": 0.0,
+          "heat_score": 80,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.4,
+          "heat_score": 73,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110440,
@@ -1020,7 +4410,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 16060
+      "burden_days_per_year": 16060,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.1,
+          "precip_mm": 0.0,
+          "heat_score": 39,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.6,
+          "heat_score": 48,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.1,
+          "precip_mm": 0.0,
+          "heat_score": 43,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.1,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.2,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 41.7,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 40.7,
+          "precip_mm": 0.0,
+          "heat_score": 70,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 41.2,
+          "precip_mm": 0.0,
+          "heat_score": 74,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 40.8,
+          "precip_mm": 0.4,
+          "heat_score": 71,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34140216,
@@ -1041,7 +4503,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 12509
+      "burden_days_per_year": 12509,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.7,
+          "precip_mm": 0.0,
+          "heat_score": 41,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.8,
+          "precip_mm": 0.6,
+          "heat_score": 49,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 37.4,
+          "precip_mm": 0.2,
+          "heat_score": 48,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.3,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.3,
+          "precip_mm": 0.0,
+          "heat_score": 60,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 42.2,
+          "precip_mm": 0.0,
+          "heat_score": 81,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 41.7,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 41.1,
+          "precip_mm": 0.0,
+          "heat_score": 73,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 41.8,
+          "precip_mm": 0.0,
+          "heat_score": 79,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 41.3,
+          "precip_mm": 0.0,
+          "heat_score": 75,
+          "rain_score": 0
+        }
+      ]
     },
     {
       "emis_code": 34110433,
@@ -1062,7 +4596,79 @@
         "precip_24h_mm_max": 0.0,
         "modis_lst_day_c": null
       },
-      "burden_days_per_year": 10439
+      "burden_days_per_year": 10439,
+      "forecast": [
+        {
+          "date": "2026-05-13",
+          "t2m_max_c": 35.1,
+          "precip_mm": 0.0,
+          "heat_score": 39,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-14",
+          "t2m_max_c": 37.6,
+          "precip_mm": 0.6,
+          "heat_score": 48,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-15",
+          "t2m_max_c": 36.1,
+          "precip_mm": 0.0,
+          "heat_score": 43,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-16",
+          "t2m_max_c": 37.1,
+          "precip_mm": 0.0,
+          "heat_score": 47,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-17",
+          "t2m_max_c": 39.2,
+          "precip_mm": 0.0,
+          "heat_score": 59,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-18",
+          "t2m_max_c": 41.5,
+          "precip_mm": 0.0,
+          "heat_score": 76,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-19",
+          "t2m_max_c": 41.7,
+          "precip_mm": 0.0,
+          "heat_score": 78,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-20",
+          "t2m_max_c": 40.7,
+          "precip_mm": 0.0,
+          "heat_score": 70,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-21",
+          "t2m_max_c": 41.2,
+          "precip_mm": 0.0,
+          "heat_score": 74,
+          "rain_score": 0
+        },
+        {
+          "date": "2026-05-22",
+          "t2m_max_c": 40.8,
+          "precip_mm": 0.4,
+          "heat_score": 71,
+          "rain_score": 0
+        }
+      ]
     }
   ]
 }
