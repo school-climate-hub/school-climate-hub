@@ -26,9 +26,9 @@ interface ChatMessage {
   content: string;
 }
 
-const SCORES_URL = "https://schoolclimatehub.org/mockups/scores.json";
+const SCORES_URL = "https://schoolclimatehub.org/dashboard/scores.json";
 // Fallback while the custom domain is provisioning:
-const SCORES_URL_FALLBACK = "https://school-climate-hub.github.io/school-climate-hub/mockups/scores.json";
+const SCORES_URL_FALLBACK = "https://school-climate-hub.github.io/school-climate-hub/dashboard/scores.json";
 
 const MODEL = "claude-haiku-4-5";
 const MAX_TOKENS = 800;

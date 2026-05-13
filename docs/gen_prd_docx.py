@@ -11,6 +11,7 @@ from docx.oxml import OxmlElement
 
 ROOT = Path("/Users/rezamalik/Repo/school-climate-hub")
 PRD_DOCX = ROOT / "docs" / "PRD.docx"
+DRIVE_COPY = Path("/Users/rezamalik/Library/CloudStorage/GoogleDrive-reza@beaconhouse.tech/My Drive/_Claude/Eng/PDLC/BT-Eng-School-Climate-Hub-PRD-260512v1.3.docx")
 LOGO = Path("/Users/rezamalik/Library/CloudStorage/GoogleDrive-reza@beaconhouse.tech/My Drive/_Claude/bt-beams-logo.png")
 
 # BT corporate palette (from contract_styles.py)
@@ -49,18 +50,24 @@ hp.alignment = WD_ALIGN_PARAGRAPH.LEFT
 hp.add_run().add_picture(str(LOGO), width=Inches(3.6))
 hp.paragraph_format.space_after = Pt(6)
 
-# ---- Footer: copyright + CONFIDENTIAL + Page X, centered, BT_GRAY 8pt ----
+# ---- Footer: copyright + CONFIDENTIAL + Page X of N, centered, BT_GRAY 8pt ----
 footer = section.footer
 footer.is_linked_to_previous = False
 fp = footer.paragraphs[0]
 fp.alignment = WD_ALIGN_PARAGRAPH.CENTER
 run = fp.add_run("© 2026 Beaconhouse Technology LLC. All Rights Reserved. | CONFIDENTIAL | Page ")
 run.font.size = Pt(8); run.font.color.rgb = BT_GRAY; run.font.name = 'Calibri'
-# PAGE field
+# PAGE field (X)
 fld = OxmlElement('w:fldSimple'); fld.set(qn('w:instr'), 'PAGE')
-page_run = OxmlElement('w:r'); page_text = OxmlElement('w:t'); page_text.text = "1"
-page_run.append(page_text); fld.append(page_run)
-fp._p.append(fld)
+fr = OxmlElement('w:r'); ft = OxmlElement('w:t'); ft.text = "1"
+fr.append(ft); fld.append(fr); fp._p.append(fld)
+# " of "
+of_run = fp.add_run(" of ")
+of_run.font.size = Pt(8); of_run.font.color.rgb = BT_GRAY; of_run.font.name = 'Calibri'
+# NUMPAGES field (N)
+fld2 = OxmlElement('w:fldSimple'); fld2.set(qn('w:instr'), 'NUMPAGES')
+fr2 = OxmlElement('w:r'); ft2 = OxmlElement('w:t'); ft2.text = "1"
+fr2.append(ft2); fld2.append(fr2); fp._p.append(fld2)
 for r in fp.runs:
     r.font.size = Pt(8); r.font.color.rgb = BT_GRAY; r.font.name = 'Calibri'
 
@@ -401,3 +408,7 @@ add_body("This PRD is intentionally short. Architecture details are in docs/arch
 doc.save(PRD_DOCX)
 print(f"wrote {PRD_DOCX}")
 print(f"size: {PRD_DOCX.stat().st_size:,} bytes")
+# Mirror to Drive PDLC folder
+import shutil
+shutil.copy2(PRD_DOCX, DRIVE_COPY)
+print(f"copied to {DRIVE_COPY}")
