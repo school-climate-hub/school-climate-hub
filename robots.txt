@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /
+
+# Prototype site — not for indexing during the UNICEF Venture Fund 2026
+# review window. Re-evaluate after PDLC consent for open-data publication.
