@@ -92,7 +92,9 @@ def hres_steps() -> list[int]:
 def _fetch_index(cycle: str, step: int, stream: str = "oper") -> list[dict]:
     """Fetch + parse a JSONL index file."""
     date, hh = cycle[:8], cycle[8:10]
-    url = f"{S3}/{date}/{hh}z/ifs/0p25/{stream}/{date}{hh}0000-{step}h-oper-fc.index"
+    # HRES file pattern is "...-oper-fc"; ENS is "...-enfo-ef"
+    tag = "enfo-ef" if stream == "enfo" else "oper-fc"
+    url = f"{S3}/{date}/{hh}z/ifs/0p25/{stream}/{date}{hh}0000-{step}h-{tag}.index"
     r = _SESSION.get(url, timeout=30)
     r.raise_for_status()
     return [json.loads(line) for line in r.text.strip().splitlines()]
@@ -146,8 +148,60 @@ def fetch_hres(cycle: str | None = None, steps: Iterable[int] | None = None) -> 
     return target
 
 
+# ---- ENS (ensemble forecast — 51 members, used for probabilistic week-2) -----
+
+# Daily-only cadence to keep download tractable. Day boundaries from a 12z run.
+ENS_STEPS = [24, 48, 72, 96, 120, 144, 168, 192, 216, 240, 264, 288, 312, 336, 360]
+
+
+def fetch_ens(cycle: str | None = None, steps: Iterable[int] | None = None) -> Path:
+    """Fetch ENS perturbed members (2t only, 24h cadence, 15-day horizon).
+
+    51 members × 15 steps × ~700KB per 2t field ≈ ~500 MB total.
+    """
+    cycle = cycle or latest_cycle()
+    steps = list(steps) if steps is not None else ENS_STEPS
+    out_dir = RAW / cycle
+    out_dir.mkdir(parents=True, exist_ok=True)
+    target = out_dir / "ens_2t.grib2"
+    if target.exists() and target.stat().st_size > 10_000_000:
+        return target
+
+    tmp = target.with_suffix(".grib2.partial")
+    if tmp.exists():
+        tmp.unlink()
+
+    date, hh = cycle[:8], cycle[8:10]
+    grib_url = f"{S3}/{date}/{hh}z/ifs/0p25/enfo/{date}{hh}0000-{{step}}h-enfo-ef.grib2"
+
+    total = 0
+    with tmp.open("wb") as fout:
+        for step in steps:
+            try:
+                idx = _fetch_index(cycle, step, stream="enfo")
+            except requests.HTTPError as e:
+                print(f"  step {step:>3}h: index missing ({e.response.status_code}) — skipping")
+                continue
+            # 2t only at the surface, all perturbed members
+            wanted = [e for e in idx if e.get("param") == "2t" and e.get("levtype") == "sfc"]
+            if not wanted:
+                continue
+            url = grib_url.format(step=step)
+            for entry in wanted:
+                blob = _fetch_range(url, entry["_offset"], entry["_length"])
+                fout.write(blob)
+                total += len(blob)
+                time.sleep(0.05)
+            print(f"  step {step:>3}h: {len(wanted)} members, running {total/1e6:.0f} MB")
+
+    shutil.move(tmp, target)
+    return target
+
+
 if __name__ == "__main__":
     cycle = latest_cycle()
     print(f"ECMWF cycle: {cycle}")
     out = fetch_hres(cycle)
     print(f"HRES: {out} ({out.stat().st_size/1e6:.1f} MB)")
+    ens = fetch_ens(cycle)
+    print(f"ENS:  {ens} ({ens.stat().st_size/1e6:.1f} MB)")

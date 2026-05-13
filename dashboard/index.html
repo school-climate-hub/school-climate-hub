@@ -796,12 +796,15 @@
         <div class="card p-5">
           <div class="tag mb-4">Hazard thresholds</div>
           <div class="space-y-3 text-sm">
-            <div class="flex items-center justify-between"><span style="color:var(--text-2)">Heat — amber</span><input class="f w-24 mono num" value="≥38°C" aria-label="Heat amber threshold"/></div>
-            <div class="flex items-center justify-between"><span style="color:var(--text-2)">Heat — red</span><input class="f w-24 mono num" value="≥42°C" aria-label="Heat red threshold"/></div>
-            <div class="flex items-center justify-between"><span style="color:var(--text-2)">AQI — amber</span><input class="f w-24 mono num" value="≥150" aria-label="AQI amber threshold"/></div>
-            <div class="flex items-center justify-between"><span style="color:var(--text-2)">AQI — red</span><input class="f w-24 mono num" value="≥200" aria-label="AQI red threshold"/></div>
-            <div class="flex items-center justify-between"><span style="color:var(--text-2)">Rainfall — amber</span><input class="f w-24 mono num" value="≥50 mm" aria-label="Rainfall amber threshold"/></div>
-            <div class="flex items-center justify-between"><span style="color:var(--text-2)">Rainfall — red</span><input class="f w-24 mono num" value="≥100 mm" aria-label="Rainfall red threshold"/></div>
+            <div class="flex items-center justify-between"><span style="color:var(--text-2)">Heat — amber (°C)</span><input id="thr-heat-amber" type="number" min="20" max="55" step="0.5" class="f w-24 mono num" aria-label="Heat amber threshold"/></div>
+            <div class="flex items-center justify-between"><span style="color:var(--text-2)">Heat — red (°C)</span><input id="thr-heat-red" type="number" min="20" max="55" step="0.5" class="f w-24 mono num" aria-label="Heat red threshold"/></div>
+            <div class="flex items-center justify-between"><span style="color:var(--text-2)">AQI — amber</span><input class="f w-24 mono num" value="≥150" disabled title="AQ pipeline not yet live" aria-label="AQI amber threshold"/></div>
+            <div class="flex items-center justify-between"><span style="color:var(--text-2)">AQI — red</span><input class="f w-24 mono num" value="≥200" disabled title="AQ pipeline not yet live" aria-label="AQI red threshold"/></div>
+            <div class="flex items-center justify-between"><span style="color:var(--text-2)">Rainfall — amber (mm/24h)</span><input id="thr-rain-amber" type="number" min="0" max="500" step="1" class="f w-24 mono num" aria-label="Rainfall amber threshold"/></div>
+            <div class="flex items-center justify-between"><span style="color:var(--text-2)">Rainfall — red (mm/24h)</span><input id="thr-rain-red" type="number" min="0" max="500" step="1" class="f w-24 mono num" aria-label="Rainfall red threshold"/></div>
+          </div>
+          <div class="text-xs mt-3" style="color:var(--text-3)">
+            Changes apply live to all scores. <button onclick="applyThresholds({heatAmberC:38,heatRedC:42,rainAmberMm:50,rainRedMm:100}); hydrateThresholdInputs();" class="underline" style="color:var(--text-2)">Reset to defaults</button>
           </div>
         </div>
         <div class="card p-5">
@@ -1036,11 +1039,47 @@ const VIEW_META = {
 let REAL_SCORES = null;  // { emis_code: { scores: {heat,aq,flood,overall}, raw: {...}, burden_days_per_year: N } }
 let SCORES_GENERATED_AT = null;  // timestamp string from scores.json
 
+// Operator-tunable thresholds. Persisted to localStorage; server-side defaults
+// come from scores.json `thresholds`. Re-edited via the Settings page.
+const THRESHOLD_DEFAULTS = { heatAmberC: 38, heatRedC: 42, rainAmberMm: 50, rainRedMm: 100 };
+let THRESHOLDS = (function() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('thresholds') || 'null');
+    if (saved && typeof saved === 'object') return { ...THRESHOLD_DEFAULTS, ...saved };
+  } catch (e) {}
+  return { ...THRESHOLD_DEFAULTS };
+})();
+
+// Threshold-driven score ramps (mirror scoring/vulnerability.py exactly)
+function scoreFromTemp(tC) {
+  if (tC == null || isNaN(tC)) return 0;
+  const amber = THRESHOLDS.heatAmberC, red = THRESHOLDS.heatRedC;
+  if (tC <= 25) return 0;
+  if (tC <= amber) return Math.round(50 * (tC - 25) / (amber - 25));
+  if (tC <= red) return Math.round(50 + 30 * (tC - amber) / (red - amber));
+  return Math.min(100, Math.round(80 + 20 * (tC - red) / (48 - red)));
+}
+function scoreFromRain(mm) {
+  if (mm == null || isNaN(mm)) return 0;
+  const amber = THRESHOLDS.rainAmberMm, red = THRESHOLDS.rainRedMm;
+  if (mm <= 5) return 0;
+  if (mm <= amber) return Math.round(50 * (mm - 5) / (amber - 5));
+  if (mm <= red) return Math.round(50 + 30 * (mm - amber) / (red - amber));
+  return Math.min(100, Math.round(80 + 20 * (mm - red) / 100));
+}
+
 function mockScore(school, hazard) {
-  // Real-data path
+  // Real-data path: recompute heat/flood live from raw values + current thresholds.
+  // This is what lets the Settings sliders drive the map without a server roundtrip.
   if (REAL_SCORES && REAL_SCORES[school.emis_code]) {
-    const v = REAL_SCORES[school.emis_code].scores[hazard];
-    if (typeof v === 'number') return v;
+    const r = REAL_SCORES[school.emis_code];
+    if (hazard === 'heat')    return r.raw && r.raw.t2m_max_c != null ? scoreFromTemp(r.raw.t2m_max_c) : (r.scores.heat ?? 0);
+    if (hazard === 'flood')   return r.raw && r.raw.precip_24h_mm_max != null ? scoreFromRain(r.raw.precip_24h_mm_max) : (r.scores.flood ?? 0);
+    if (hazard === 'aq')      return r.scores.aq ?? 0;
+    if (hazard === 'overall') {
+      const h = mockScore(school,'heat'), a = mockScore(school,'aq'), f = mockScore(school,'flood');
+      return Math.round(h*0.5 + a*0.4 + f*0.1);
+    }
   }
   // Deterministic-mock fallback (used if scores.json hasn't loaded yet or is missing)
   const seed = (school.lat * 1e3 + school.lon * 1e3 + school.emis_code) % 100;
@@ -1051,6 +1090,15 @@ function mockScore(school, hazard) {
   if (hazard === 'overall') {
     return Math.round((mockScore(school,'heat')*0.5 + mockScore(school,'aq')*0.4 + mockScore(school,'flood')*0.1));
   }
+}
+
+// Called when the user edits a threshold in the Settings page.
+function applyThresholds(next) {
+  THRESHOLDS = { ...THRESHOLDS, ...next };
+  try { localStorage.setItem('thresholds', JSON.stringify(THRESHOLDS)); } catch (e) {}
+  if (typeof paintMarkers === 'function') paintMarkers();
+  if (CURRENT_VIEW === 'overview' && typeof defaultDetail === 'function') defaultDetail();
+  if (CURRENT_VIEW === 'schools' && typeof renderRagTable === 'function') renderRagTable();
 }
 function ragClass(s) { return s >= 80 ? 'red' : s >= 65 ? 'amber' : 'green'; }
 function ragColor(s) {
@@ -1102,7 +1150,29 @@ function goView(name) {
   document.getElementById('view-narrative').textContent = m.narr;
   if (name === 'overview' && map) setTimeout(() => map.invalidateSize(), 50);
   if (name === 'schools') renderRagTable();
+  if (name === 'settings') hydrateThresholdInputs();
 }
+
+// Sync the Settings inputs to the current THRESHOLDS object. Called whenever
+// the Settings view is shown or thresholds are reset.
+function hydrateThresholdInputs() {
+  const bind = (id, key, parser) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.value = THRESHOLDS[key];
+    el.oninput = () => {
+      const v = parser(el.value);
+      if (!isFinite(v)) return;
+      applyThresholds({ [key]: v });
+    };
+  };
+  bind('thr-heat-amber', 'heatAmberC', parseFloat);
+  bind('thr-heat-red',   'heatRedC',   parseFloat);
+  bind('thr-rain-amber', 'rainAmberMm', parseFloat);
+  bind('thr-rain-red',   'rainRedMm',   parseFloat);
+}
+window.hydrateThresholdInputs = hydrateThresholdInputs;
+window.applyThresholds = applyThresholds;
 
 // ---- Theme-aware Leaflet basemap ----
 const TILES = {
@@ -1925,13 +1995,13 @@ function renderChat() {
         Which 5 schools need most attention this week?
         <div class="hint">Returns prioritised list with citations</div>
       </button>
-      <button class="chat-suggest" onclick="askChat('Should I recommend closure tomorrow if it hits 43°C?')">
-        Should I recommend closure tomorrow if it hits 43°C?
-        <div class="hint">Decision support with policy citation</div>
+      <button class="chat-suggest" onclick="askChat('Which schools will cross the red heat threshold next week, and on which dates?')">
+        Which schools will cross red heat next week?
+        <div class="hint">Uses the 10-day ECMWF forecast</div>
       </button>
-      <button class="chat-suggest" onclick="askChat('Why is GPS Kot Bhano Shah&apos;s heat score 92?')">
-        Why is GPS Kot Bhano Shah's heat score 92?
-        <div class="hint">Feature attribution explanation</div>
+      <button class="chat-suggest" onclick="askChat('Should we close schools 18–22 May given the heatwave forecast? Cite the model.')">
+        Should we close schools 18–22 May?
+        <div class="hint">Decision support grounded in forecast</div>
       </button>
       <button class="chat-suggest" onclick="askChat('Draft a closure memo for district admin')">
         Draft a closure memo for district admin
