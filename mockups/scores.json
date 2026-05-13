@@ -1,0 +1,1068 @@
+{
+  "generated_at": "2026-05-13T15:03:36+00:00",
+  "source": {
+    "heat": "ERA5 2m_temperature (last 7 days, school lat/lon nearest)",
+    "rainfall": "ERA5 total_precipitation (24h max across last 7 days)",
+    "aq": "placeholder (Sentinel-5P pipeline pending)",
+    "flood": "ERA5 precipitation proxy (GloFAS pending)",
+    "lst": "MODIS MOD11A1 v061 (georeferenced sampling pending)"
+  },
+  "thresholds": {
+    "heat_amber_c": 38.0,
+    "heat_red_c": 42.0,
+    "rain_amber_mm": 50.0,
+    "rain_red_mm": 100.0
+  },
+  "schools": [
+    {
+      "emis_code": 34110214,
+      "school_name": "GPS Kot Bhano Shah",
+      "cluster": "C-1",
+      "tehsil": "Gujranwala",
+      "students": 238,
+      "lat": 32.08175,
+      "lon": 74.152056,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.4,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 19111
+    },
+    {
+      "emis_code": 34110621,
+      "school_name": "GGPS Iftikhar Colony",
+      "cluster": "C-1",
+      "tehsil": "Gujranwala",
+      "students": 355,
+      "lat": 32.115167,
+      "lon": 74.16275,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.4,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 28506
+    },
+    {
+      "emis_code": 34110320,
+      "school_name": "GGPS Qila Sunder Singh",
+      "cluster": "C-1",
+      "tehsil": "Gujranwala",
+      "students": 302,
+      "lat": 32.136833,
+      "lon": 74.157,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 22046
+    },
+    {
+      "emis_code": 34110468,
+      "school_name": "GGPS Kot Shera",
+      "cluster": "C-1",
+      "tehsil": "Gujranwala",
+      "students": 281,
+      "lat": 32.124306,
+      "lon": 74.125222,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.4,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 22564
+    },
+    {
+      "emis_code": 34110627,
+      "school_name": "GGPS Hassan Pura",
+      "cluster": "C-1",
+      "tehsil": "Gujranwala",
+      "students": 244,
+      "lat": 32.164222,
+      "lon": 74.148389,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 17812
+    },
+    {
+      "emis_code": 34110167,
+      "school_name": "GPS Rehman Pura",
+      "cluster": "C-1",
+      "tehsil": "Gujranwala",
+      "students": 322,
+      "lat": 32.161472,
+      "lon": 74.16075,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 23506
+    },
+    {
+      "emis_code": 34110161,
+      "school_name": "GPS Javed Islamia",
+      "cluster": "C-1",
+      "tehsil": "Gujranwala",
+      "students": 248,
+      "lat": 32.158333,
+      "lon": 74.1705,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 18104
+    },
+    {
+      "emis_code": 34110518,
+      "school_name": "GPS Mc No. 18",
+      "cluster": "C-1",
+      "tehsil": "Gujranwala",
+      "students": 241,
+      "lat": 32.164056,
+      "lon": 74.168444,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 17593
+    },
+    {
+      "emis_code": 34110256,
+      "school_name": "GPS Rahwali No. 1",
+      "cluster": "C-1",
+      "tehsil": "Gujranwala",
+      "students": 600,
+      "lat": 32.250417,
+      "lon": 74.172472,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 43800
+    },
+    {
+      "emis_code": 34110242,
+      "school_name": "GPS Rahwali No. 2",
+      "cluster": "C-1",
+      "tehsil": "Gujranwala",
+      "students": 270,
+      "lat": 32.255639,
+      "lon": 74.161444,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 19710
+    },
+    {
+      "emis_code": 34120186,
+      "school_name": "GPS Baghrian Kohna",
+      "cluster": "C-1",
+      "tehsil": "Wazirabad",
+      "students": 210,
+      "lat": 32.350778,
+      "lon": 74.199444,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 15330
+    },
+    {
+      "emis_code": 34120145,
+      "school_name": "GPS Jandiala Dhabwala",
+      "cluster": "C-1",
+      "tehsil": "Wazirabad",
+      "students": 221,
+      "lat": 32.363806,
+      "lon": 74.132167,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 16133
+    },
+    {
+      "emis_code": 34120108,
+      "school_name": "GPS Dadwali",
+      "cluster": "C-1",
+      "tehsil": "Wazirabad",
+      "students": 177,
+      "lat": 32.383778,
+      "lon": 74.136139,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 12921
+    },
+    {
+      "emis_code": 34110193,
+      "school_name": "GPS Solukhan Abad",
+      "cluster": "C-2",
+      "tehsil": "Gujranwala",
+      "students": 290,
+      "lat": 32.178389,
+      "lon": 74.264306,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 21170
+    },
+    {
+      "emis_code": 34110200,
+      "school_name": "GPS Mokhal Sindwan",
+      "cluster": "C-2",
+      "tehsil": "Gujranwala",
+      "students": 208,
+      "lat": 32.17825,
+      "lon": 74.351667,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 15184
+    },
+    {
+      "emis_code": 34110353,
+      "school_name": "GMPS Tohar Kalan",
+      "cluster": "C-2",
+      "tehsil": "Gujranwala",
+      "students": 135,
+      "lat": 32.1655,
+      "lon": 74.272194,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 9855
+    },
+    {
+      "emis_code": 34110616,
+      "school_name": "GMPS Dolo Wali",
+      "cluster": "C-2",
+      "tehsil": "Gujranwala",
+      "students": 186,
+      "lat": 32.135722,
+      "lon": 74.348,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 13578
+    },
+    {
+      "emis_code": 34110221,
+      "school_name": "GPS Muslim Chak",
+      "cluster": "C-2",
+      "tehsil": "Gujranwala",
+      "students": 230,
+      "lat": 32.118861,
+      "lon": 74.234028,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.4,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 18469
+    },
+    {
+      "emis_code": 34110175,
+      "school_name": "GPS Khokhar Ke",
+      "cluster": "C-2",
+      "tehsil": "Gujranwala",
+      "students": 200,
+      "lat": 32.172444,
+      "lon": 74.202167,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 14600
+    },
+    {
+      "emis_code": 34110405,
+      "school_name": "GMPS Kotli Dianat Rai",
+      "cluster": "C-2",
+      "tehsil": "Gujranwala",
+      "students": 195,
+      "lat": 32.084833,
+      "lon": 74.295861,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.4,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 15658
+    },
+    {
+      "emis_code": 34110194,
+      "school_name": "GPS Gaggar Kay",
+      "cluster": "C-2",
+      "tehsil": "Gujranwala",
+      "students": 157,
+      "lat": 32.179944,
+      "lon": 74.283639,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 11461
+    },
+    {
+      "emis_code": 34110181,
+      "school_name": "GPS Muslim Feroze Wala ",
+      "cluster": "C-2",
+      "tehsil": "Gujranwala",
+      "students": 265,
+      "lat": 32.157806,
+      "lon": 74.212444,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 19345
+    },
+    {
+      "emis_code": 34110208,
+      "school_name": "GPS Nawan Pind",
+      "cluster": "C-2",
+      "tehsil": "Gujranwala",
+      "students": 137,
+      "lat": 32.129222,
+      "lon": 74.287889,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 10001
+    },
+    {
+      "emis_code": 34110171,
+      "school_name": "GPS Kalyar Sabri",
+      "cluster": "C-2",
+      "tehsil": "Gujranwala",
+      "students": 360,
+      "lat": 32.165278,
+      "lon": 74.213056,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 26280
+    },
+    {
+      "emis_code": 34110183,
+      "school_name": "GPS Millat Saddique ",
+      "cluster": "C-2",
+      "tehsil": "Gujranwala",
+      "students": 240,
+      "lat": 32.133722,
+      "lon": 74.202222,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 17520
+    },
+    {
+      "emis_code": 34130304,
+      "school_name": "GGPS Manhais",
+      "cluster": "C-3",
+      "tehsil": "Kamoki",
+      "students": 265,
+      "lat": 31.923583,
+      "lon": 74.227083,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.4,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 21280
+    },
+    {
+      "emis_code": 34130373,
+      "school_name": "GGPS Nithran Wali",
+      "cluster": "C-3",
+      "tehsil": "Kamoki",
+      "students": 140,
+      "lat": 31.927778,
+      "lon": 74.286,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.4,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 11242
+    },
+    {
+      "emis_code": 34130496,
+      "school_name": "GPS Mc No.5 Kamoke",
+      "cluster": "C-3",
+      "tehsil": "Kamoki",
+      "students": 282,
+      "lat": 31.970472,
+      "lon": 74.218667,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.4,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 22645
+    },
+    {
+      "emis_code": 34130288,
+      "school_name": "GGPS Darga Pur",
+      "cluster": "C-3",
+      "tehsil": "Kamoki",
+      "students": 275,
+      "lat": 31.931639,
+      "lon": 74.185222,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.4,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 22082
+    },
+    {
+      "emis_code": 34130229,
+      "school_name": "GPS Manhes",
+      "cluster": "C-3",
+      "tehsil": "Kamoki",
+      "students": 248,
+      "lat": 31.923417,
+      "lon": 74.227056,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.4,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 19914
+    },
+    {
+      "emis_code": 34130419,
+      "school_name": "GMPS Samun Bala",
+      "cluster": "C-3",
+      "tehsil": "Kamoki",
+      "students": 205,
+      "lat": 31.982778,
+      "lon": 74.293444,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.4,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 16462
+    },
+    {
+      "emis_code": 34130505,
+      "school_name": "GGPS Ward No.3 Kmk",
+      "cluster": "C-3",
+      "tehsil": "Kamoki",
+      "students": 281,
+      "lat": 31.976361,
+      "lon": 74.233056,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.4,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 22564
+    },
+    {
+      "emis_code": 34130081,
+      "school_name": "GPS Eminabad No.4",
+      "cluster": "C-3",
+      "tehsil": "Kamoki",
+      "students": 231,
+      "lat": 32.042556,
+      "lon": 74.253,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.4,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 18549
+    },
+    {
+      "emis_code": 34130506,
+      "school_name": "GMPS Khot Kalan",
+      "cluster": "C-3",
+      "tehsil": "Kamoki",
+      "students": 296,
+      "lat": 32.007333,
+      "lon": 74.20525,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.4,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 23769
+    },
+    {
+      "emis_code": 34110415,
+      "school_name": "GMPS Musa Pur",
+      "cluster": "C-3",
+      "tehsil": "Gujranwala",
+      "students": 165,
+      "lat": 32.070944,
+      "lon": 74.231472,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.4,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 13250
+    },
+    {
+      "emis_code": 34110212,
+      "school_name": "GPS Lorriki",
+      "cluster": "C-3",
+      "tehsil": "Gujranwala",
+      "students": 115,
+      "lat": 32.07025,
+      "lon": 74.241306,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.4,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 9234
+    },
+    {
+      "emis_code": 34140378,
+      "school_name": "GMPS Chak Chatha",
+      "cluster": "C-4",
+      "tehsil": "Noshera Virkan",
+      "students": 165,
+      "lat": 32.122139,
+      "lon": 73.916278,
+      "scores": {
+        "heat": 46,
+        "aq": 0,
+        "flood": 0,
+        "overall": 23
+      },
+      "raw": {
+        "t2m_max_c": 37.1,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 13852
+    },
+    {
+      "emis_code": 34140363,
+      "school_name": "GMPS Kot Lala",
+      "cluster": "C-4",
+      "tehsil": "Noshera Virkan",
+      "students": 135,
+      "lat": 32.123972,
+      "lon": 73.861056,
+      "scores": {
+        "heat": 48,
+        "aq": 0,
+        "flood": 0,
+        "overall": 24
+      },
+      "raw": {
+        "t2m_max_c": 37.5,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 11826
+    },
+    {
+      "emis_code": 34140224,
+      "school_name": "GPS Udho Wali",
+      "cluster": "C-4",
+      "tehsil": "Noshera Virkan",
+      "students": 220,
+      "lat": 32.143944,
+      "lon": 73.89525,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.5,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 17666
+    },
+    {
+      "emis_code": 34140351,
+      "school_name": "GGPS Chandar",
+      "cluster": "C-4",
+      "tehsil": "Noshera Virkan",
+      "students": 246,
+      "lat": 32.104778,
+      "lon": 73.81325,
+      "scores": {
+        "heat": 48,
+        "aq": 0,
+        "flood": 0,
+        "overall": 24
+      },
+      "raw": {
+        "t2m_max_c": 37.5,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 21550
+    },
+    {
+      "emis_code": 34140365,
+      "school_name": "GMPS Ram Garh",
+      "cluster": "C-4",
+      "tehsil": "Noshera Virkan",
+      "students": 200,
+      "lat": 32.100833,
+      "lon": 73.861639,
+      "scores": {
+        "heat": 48,
+        "aq": 0,
+        "flood": 0,
+        "overall": 24
+      },
+      "raw": {
+        "t2m_max_c": 37.5,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 17520
+    },
+    {
+      "emis_code": 34110489,
+      "school_name": "GPS No.3 Nai Abadi Ladhay Wala",
+      "cluster": "C-4",
+      "tehsil": "Gujranwala",
+      "students": 739,
+      "lat": 32.153889,
+      "lon": 74.125139,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 53947
+    },
+    {
+      "emis_code": 34110441,
+      "school_name": "GMPS Ball",
+      "cluster": "C-4",
+      "tehsil": "Gujranwala",
+      "students": 135,
+      "lat": 32.157111,
+      "lon": 74.03,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.5,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 10840
+    },
+    {
+      "emis_code": 34110270,
+      "school_name": "GPS No.2 Qila Didar Singh",
+      "cluster": "C-4",
+      "tehsil": "Gujranwala",
+      "students": 345,
+      "lat": 32.1295,
+      "lon": 74.014722,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.5,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 27704
+    },
+    {
+      "emis_code": 34110300,
+      "school_name": "GPS Dhendh Say",
+      "cluster": "C-4",
+      "tehsil": "Gujranwala",
+      "students": 135,
+      "lat": 32.21475,
+      "lon": 74.037083,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.5,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 10840
+    },
+    {
+      "emis_code": 34110432,
+      "school_name": "GMPS Hardo Burrhi",
+      "cluster": "C-4",
+      "tehsil": "Gujranwala",
+      "students": 200,
+      "lat": 32.149528,
+      "lon": 74.000028,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.5,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 16060
+    },
+    {
+      "emis_code": 34110437,
+      "school_name": "GMPS Jhugian",
+      "cluster": "C-4",
+      "tehsil": "Gujranwala",
+      "students": 220,
+      "lat": 32.294611,
+      "lon": 74.151278,
+      "scores": {
+        "heat": 40,
+        "aq": 0,
+        "flood": 0,
+        "overall": 20
+      },
+      "raw": {
+        "t2m_max_c": 35.5,
+        "precip_24h_mm_max": 0.1,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 16060
+    },
+    {
+      "emis_code": 34110440,
+      "school_name": "GMPS Kalu Wali",
+      "cluster": "C-4",
+      "tehsil": "Gujranwala",
+      "students": 200,
+      "lat": 32.161694,
+      "lon": 74.042056,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.5,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 16060
+    },
+    {
+      "emis_code": 34140216,
+      "school_name": "GPS Bhiri Shah Rehman",
+      "cluster": "C-4",
+      "tehsil": "Noshera Virkan",
+      "students": 149,
+      "lat": 32.125139,
+      "lon": 73.819139,
+      "scores": {
+        "heat": 46,
+        "aq": 0,
+        "flood": 0,
+        "overall": 23
+      },
+      "raw": {
+        "t2m_max_c": 36.9,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 12509
+    },
+    {
+      "emis_code": 34110433,
+      "school_name": "GGPS Heigher",
+      "cluster": "C-4",
+      "tehsil": "Gujranwala",
+      "students": 130,
+      "lat": 32.160833,
+      "lon": 74.007222,
+      "scores": {
+        "heat": 44,
+        "aq": 0,
+        "flood": 0,
+        "overall": 22
+      },
+      "raw": {
+        "t2m_max_c": 36.5,
+        "precip_24h_mm_max": 0.0,
+        "modis_lst_day_c": null
+      },
+      "burden_days_per_year": 10439
+    }
+  ]
+}
