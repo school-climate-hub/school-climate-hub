@@ -1975,7 +1975,7 @@ window.askChat = askChat;
 // Override via ?chat=<url> in the URL for testing alternative deploys.
 const CHAT_WORKER_URL = (new URLSearchParams(location.search).get('chat'))
   || 'https://chat.schoolclimatehub.org/api/chat';
-const CHAT_WORKER_FALLBACK = 'https://school-climate-hub-chat.workers.dev/api/chat';
+const CHAT_WORKER_FALLBACK = 'https://school-climate-hub-chat.beaconhouse-tech.workers.dev/api/chat';
 
 async function streamFromWorker(messages, assistantMsg) {
   // Try primary then fallback Worker URL
