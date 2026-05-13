@@ -45,12 +45,12 @@
     --muted:     #8898aa;
     --muted-2:   #a3acb9;
 
-    /* Brand */
-    --brand:     #635bff;
-    --brand-50:  #f0f1ff;
-    --brand-100: #e6e6ff;
-    --brand-strong: #5851ec;
-    --brand-ring: rgba(99,91,255,.15);
+    /* Brand — BT corporate blue */
+    --brand:     #003D6B;
+    --brand-50:  #eef3f8;
+    --brand-100: #d6e3ed;
+    --brand-strong: #002a4d;
+    --brand-ring: rgba(0,61,107,.18);
 
     /* RAG semantics */
     --red:       #df1b41;
@@ -100,12 +100,12 @@
     --muted:     #6b7588;
     --muted-2:   #565f70;
 
-    /* Brand — brighter indigo for dark contrast */
-    --brand:     #8a82ff;
-    --brand-50:  #1e1c3e;
-    --brand-100: #2b2855;
-    --brand-strong: #a094ff;
-    --brand-ring: rgba(138,130,255,.25);
+    /* Brand — lighter BT blue for dark contrast */
+    --brand:     #5fa3d6;
+    --brand-50:  #0d2335;
+    --brand-100: #1a3a55;
+    --brand-strong: #7ab5e0;
+    --brand-ring: rgba(95,163,214,.28);
 
     /* RAG — brighter tones, low-saturation bg tints */
     --red:       #f87171;
@@ -327,7 +327,7 @@
   .step.done .num   { background: var(--green); color: white; }
   .step.done       { color: var(--text-2); }
   .step.active .num { background: var(--brand); color: white;
-                      box-shadow: 0 0 0 3px rgba(99,91,255,.18); }
+                      box-shadow: 0 0 0 3px rgba(0,61,107,.18); }
   .step.active     { color: var(--text); font-weight: 500; }
   .step .bar { flex: 1; height: 1px; background: var(--border-strong); }
   .step.done + .bar { background: var(--green); }
@@ -365,14 +365,14 @@
   /* Banner accents (the one place we let Stripe-style gradient shine) */
   .gradient-mesh {
     background:
-      radial-gradient(at 25% 20%, rgba(99,91,255,.12) 0px, transparent 50%),
+      radial-gradient(at 25% 20%, rgba(0,61,107,.12) 0px, transparent 50%),
       radial-gradient(at 80% 0%,  rgba(0,115,230,.10) 0px, transparent 50%),
       radial-gradient(at 70% 90%, rgba(223,27,65,.07) 0px, transparent 50%),
       var(--surface);
   }
   [data-theme="dark"] .gradient-mesh {
     background:
-      radial-gradient(at 25% 20%, rgba(138,130,255,.18) 0px, transparent 50%),
+      radial-gradient(at 25% 20%, rgba(95,163,214,.20) 0px, transparent 50%),
       radial-gradient(at 80% 0%,  rgba(96,165,250,.12) 0px, transparent 50%),
       radial-gradient(at 70% 90%, rgba(248,113,113,.10) 0px, transparent 50%),
       var(--surface);
@@ -415,17 +415,17 @@
   .chat-fab {
     position: fixed; bottom: 24px; right: 24px; z-index: 900;
     width: 52px; height: 52px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--brand) 0%, #8a4f9c 100%);
+    background: linear-gradient(135deg, var(--brand) 0%, #5fa3d6 100%);
     color: white; border: none; cursor: pointer;
-    box-shadow: 0 6px 20px rgba(99,91,255,.35), 0 2px 6px rgba(0,0,0,.15);
+    box-shadow: 0 6px 20px rgba(0,61,107,.40), 0 2px 6px rgba(0,0,0,.15);
     display: flex; align-items: center; justify-content: center;
     transition: transform .15s ease, box-shadow .15s ease;
   }
-  .chat-fab:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(99,91,255,.45), 0 3px 8px rgba(0,0,0,.18); }
+  .chat-fab:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,61,107,.50), 0 3px 8px rgba(0,0,0,.18); }
   .chat-fab.hidden { opacity: 0; pointer-events: none; transform: scale(.7); }
   .chat-fab::after {
     content: ""; position: absolute; inset: -2px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--brand) 0%, #8a4f9c 100%);
+    background: linear-gradient(135deg, var(--brand) 0%, #5fa3d6 100%);
     opacity: .3; z-index: -1; animation: pulse 3s infinite;
   }
 
@@ -508,7 +508,7 @@
     <div class="px-4 py-4 border-b border-[color:var(--border)]">
       <div class="flex items-center gap-2.5">
         <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm"
-              style="background: linear-gradient(135deg, var(--brand) 0%, #8a4f9c 100%); box-shadow: var(--shadow-sm)">S</div>
+              style="background: linear-gradient(135deg, var(--brand) 0%, #5fa3d6 100%); box-shadow: var(--shadow-sm)">S</div>
         <div>
           <div class="text-sm font-semibold leading-tight" style="color:var(--text)">School Climate Hub</div>
           <div class="text-[11px]" style="color:var(--text-3)">Prototype · v0.1</div>
@@ -588,7 +588,7 @@
 
         <div class="text-xs" style="color:var(--text-3)">Zeeshan Ahmed · PDLC Ops</div>
         <div class="w-7 h-7 rounded-full text-white flex items-center justify-center font-bold text-xs"
-              style="background: linear-gradient(135deg, var(--brand) 0%, #8a4f9c 100%)">Z</div>
+              style="background: linear-gradient(135deg, var(--brand) 0%, #5fa3d6 100%)">Z</div>
       </div>
     </header>
 
@@ -966,7 +966,7 @@
 <aside class="chat-panel" id="chat-panel" role="dialog" aria-modal="false" aria-label="Ask the hub">
   <div class="chat-header">
     <div class="flex items-center gap-2">
-      <div style="width: 24px; height: 24px; border-radius: 6px; background: linear-gradient(135deg, var(--brand) 0%, #8a4f9c 100%); display: inline-flex; align-items: center; justify-content: center">
+      <div style="width: 24px; height: 24px; border-radius: 6px; background: linear-gradient(135deg, var(--brand) 0%, #5fa3d6 100%); display: inline-flex; align-items: center; justify-content: center">
         <svg width="14" height="14" viewBox="0 0 16 16" fill="white" aria-hidden="true"><path d="M8 0l1.8 4.2L14 6l-4.2 1.8L8 12 6.2 7.8 2 6l4.2-1.8L8 0z"/></svg>
       </div>
       <div>
@@ -1588,7 +1588,7 @@ function openTeamManager() {
         ${members.map((m, i) => `
           <div class="flex items-center gap-3 px-3 py-2.5" style="${i ? 'border-top: 1px solid var(--border);' : ''} background: var(--surface)">
             <div class="w-7 h-7 rounded-full text-white flex items-center justify-center font-semibold text-xs shrink-0"
-                  style="background: linear-gradient(135deg, var(--brand) 0%, #8a4f9c 100%)" aria-hidden="true">${m.name.split(' ').map(n => n[0]).slice(0,2).join('')}</div>
+                  style="background: linear-gradient(135deg, var(--brand) 0%, #5fa3d6 100%)" aria-hidden="true">${m.name.split(' ').map(n => n[0]).slice(0,2).join('')}</div>
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2">
                 <span class="text-sm font-medium truncate" style="color: var(--text)" translate="no">${m.name}</span>
@@ -1873,7 +1873,7 @@ function renderChat() {
   if (!chatMessages.length) {
     body.innerHTML = `
       <div style="text-align:center; padding: 20px 0 16px">
-        <div style="display:inline-flex; align-items:center; justify-content:center; width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, var(--brand) 0%, #8a4f9c 100%); margin-bottom: 12px">
+        <div style="display:inline-flex; align-items:center; justify-content:center; width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, var(--brand) 0%, #5fa3d6 100%); margin-bottom: 12px">
           <svg width="22" height="22" viewBox="0 0 16 16" fill="white" aria-hidden="true"><path d="M8 0l1.8 4.2L14 6l-4.2 1.8L8 12 6.2 7.8 2 6l4.2-1.8L8 0z"/></svg>
         </div>
         <div style="font-size: 15px; font-weight: 600; color: var(--text)">Ask the hub</div>
