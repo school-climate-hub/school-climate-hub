@@ -12,6 +12,12 @@ name = "school-climate-hub-chat"
 main = "src/index.ts"
 compatibility_date = "2026-05-01"
 
+# NOTE: Cannot bind chat.schoolclimatehub.org via `routes` here because the
+# zone lives on a different Cloudflare account (Sulman's) than this Worker
+# (Reza's). For the UNICEF prototype the dashboard uses the workers.dev URL
+# directly. To enable the vanity domain later, either move the zone to this
+# account or have the zone owner add a Worker Route from their dashboard.
+
 # Free observability — Worker logs visible via `wrangler tail` + dashboard.
 [observability]
 enabled = true

@@ -1974,7 +1974,7 @@ window.askChat = askChat;
 // Live chat endpoint — falls back to scripted if unreachable.
 // Override via ?chat=<url> in the URL for testing alternative deploys.
 const CHAT_WORKER_URL = (new URLSearchParams(location.search).get('chat'))
-  || 'https://chat.schoolclimatehub.org/api/chat';
+  || 'https://school-climate-hub-chat.beaconhouse-tech.workers.dev/api/chat';
 const CHAT_WORKER_FALLBACK = 'https://school-climate-hub-chat.beaconhouse-tech.workers.dev/api/chat';
 
 async function streamFromWorker(messages, assistantMsg) {
