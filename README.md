@@ -61,6 +61,8 @@ school-climate-hub/
 ## Documentation
 
 - [PRD](./docs/PRD.md) — what the product does and why (concise, v0.1)
+- [Requirements](./docs/REQUIREMENTS.md) — build-ready functional + non-functional spec
+- [Roadmap](./docs/ROADMAP.md) — phased plan v0.1 → v0.5
 - [Architecture](./docs/architecture.md) — system design
 - [Open dataset schema](./open_data_layer/schema.md) — CC BY 4.0 data layer
 
