@@ -49,7 +49,7 @@ def build():
     add_body(doc, "Form: https://form.jotform.com/260711626703351")
     add_body(doc, "Deadline: 17 May 2026, 23:59 CET  ·  Funding: up to US$100,000 equity-free")
     add_body(doc, "Drafter: Zeeshan  ·  Final reviewer: Reza Malik")
-    add_body(doc, "Applicant: Premier DLC (Pakistan, primary)  ·  Technical implementor: Beaconhouse Technology (Pvt) Ltd (secondary)")
+    add_body(doc, "Applicant: Beaconhouse Technology (Pvt) Ltd (Pakistan, woman-led)  ·  Deployment partner: Premier DLC")
     add_body(doc, "Live demo: https://schoolclimatehub.org   ·   Repo: https://github.com/school-climate-hub/school-climate-hub")
     add_horizontal_line(doc)
     add_body(doc, "How to use this document:")
@@ -76,11 +76,12 @@ def build():
     add_heading1(doc, "Section 2 · Eligibility")
 
     add_heading2(doc, "Q2.1 — Is your company registered as a private for-profit company?")
-    placeholder(doc, "Answer (Yes/No):", "Applicant entity is Premier DLC. Confirm PDLC's SECP registration type (private for-profit Pvt Ltd vs other). If Pvt Ltd → Yes.")
+    add_body_bold(doc, "Answer: Yes")
+    add_body(doc, "Source: Beaconhouse Technology (Pvt) Ltd — SECP 0137683, NTN 6297182, registered office 10–11 Gurumangat Road, Lahore.")
 
     add_heading2(doc, "Q2.2 — Is your solution Open Source?")
     add_body_bold(doc, "Answer: Yes")
-    add_body(doc, "Source: github.com/school-climate-hub/school-climate-hub — Apache-2.0 (repo operated by BT as technical implementor; PDLC has co-ownership of the deployment).")
+    add_body(doc, "Source: github.com/school-climate-hub/school-climate-hub — Apache-2.0.")
 
     add_heading2(doc, "Q2.3 — In which country is your company legally registered?")
     add_body_bold(doc, "Answer: Pakistan")
@@ -91,33 +92,32 @@ def build():
     add_heading1(doc, "Section 3 · Diversity, Equity and Inclusion")
 
     add_heading2(doc, "Q3.1 — Is your company founded or co-founded by women?")
-    add_body_bold(doc, "Likely Answer: Yes")
-    add_body(doc, "Premier DLC: confirm whether Erum (or another woman) is a named co-founder of PDLC at the corporate registration level. If yes → Yes for the applicant entity.")
-    add_body(doc, "Technical implementor BT also has a woman-led C-suite (CEO Amina Kasuri, COO Fatima Kasuri) — reinforces the woman-leadership posture across the joint team.")
+    add_body_bold(doc, "Answer: Yes")
+    add_body(doc, "Beaconhouse Technology is woman-led at the C-suite level: CEO Amina Kasuri and COO Fatima Kasuri.")
 
-    add_heading2(doc, "Q3.2 — Names of woman founders / co-founders (applicant entity)")
-    placeholder(doc, "Names:", "PDLC women founders/co-founders. If Erum is not technically a registered founder, name PDLC's actual women founders here.")
+    add_heading2(doc, "Q3.2 — Names of woman founders / co-founders")
+    add_body_bold(doc, "Names: Amina Kasuri (CEO), Fatima Kasuri (COO)")
 
     add_heading2(doc, "Q3.3 — Is your company founded or led by youth (younger than 35)?")
-    placeholder(doc, "Answer (Yes/No):", "Depends on PDLC leadership DOBs. Provide PDLC founders' birth years.")
+    placeholder(doc, "Answer (Yes/No):", "Depends on Amina + Fatima's DOBs. Confirm with Reza.")
 
     add_heading2(doc, "Q3.4 — Names of young leaders (if applicable)")
     placeholder(doc, "Names:")
 
     add_heading2(doc, "Q3.5 — Team table (up to 5 rows)")
-    add_body(doc, "Fields per row: Full name · Position · Year of birth · Nationality · Gender · Short bio (1–2 sentences). Mix of PDLC (applicant) and BT (technical implementor) leadership — replace placeholders as needed:")
+    add_body(doc, "Fields per row: Full name · Position · Year of birth · Nationality · Gender · Short bio (1–2 sentences). Roster mixes BT leadership with the PDLC deployment lead so reviewers see both the engineering depth and on-the-ground delivery capability:")
     add_table(
         doc,
         ["Full name", "Position", "Year of birth", "Nationality", "Gender", "Short bio"],
         [
-            ["Erum [Surname]", "Head, Premier DLC (Applicant lead)", "____", "Pakistani", "Woman", "Leads Premier DLC's deployment of School Climate Hub across 50 PSSP/PSRP schools in Gujranwala."],
-            ["Amina Kasuri", "CEO, Beaconhouse Technology (Technical implementor)", "____", "Pakistani", "Woman", "CEO of the technical implementor; oversees BT's engineering of the School Climate Hub platform."],
-            ["Fatima Kasuri", "COO, Beaconhouse Technology (Technical implementor)", "____", "Pakistani", "Woman", "COO of BT; runs operations across the BT engineering portfolio."],
-            ["Reza Malik", "Director, Beaconhouse Technology", "____", "Pakistani", "Man", "Director at BT; product + engineering lead for School Climate Hub."],
-            ["[PDLC ops / BT engineer]", "[Position]", "____", "____", "____", "[Bio]"],
+            ["Amina Kasuri", "CEO, Beaconhouse Technology", "____", "Pakistani", "Woman", "CEO; oversees BT's engineering portfolio including School Climate Hub and education-tech platforms across South Asia."],
+            ["Fatima Kasuri", "COO, Beaconhouse Technology", "____", "Pakistani", "Woman", "COO; runs operations across BT's engineering teams and partner deployments."],
+            ["Reza Malik", "Director, Beaconhouse Technology", "____", "Pakistani", "Man", "Director; product + engineering lead for School Climate Hub. Reports to Nassir Kasuri (Board)."],
+            ["Erum [Surname]", "Head, Premier DLC (Deployment partner)", "____", "Pakistani", "Woman", "Leads PDLC's deployment of School Climate Hub across 50 PSSP/PSRP schools in Gujranwala — owns school relationships, EMIS roster, and ops feedback."],
+            ["[BT engineer or PDLC ops]", "[Position]", "____", "____", "____", "[Bio]"],
         ],
     )
-    add_body(doc, "Note: roster must reflect the *applicant entity*. If UNICEF treats the team table as applicant-only, fill all 5 rows with PDLC people and move BT names to the partners section (Q5.10). If the form accepts joint-team rosters, this mix works as-is. Confirm before submit.")
+    add_body(doc, "Three of four named team members are women. If the form requires applicant-entity-only roster, drop Erum and add a BT engineer.")
 
     add_page_break(doc)
 
@@ -125,24 +125,24 @@ def build():
     add_heading1(doc, "Section 4 · Company Information")
 
     add_heading2(doc, "Q4.1 — Name of company")
-    placeholder(doc, "Answer:", "Premier DLC's full legal registered name (Pvt Ltd if applicable). Confirm with Erum / PDLC company secretary.")
+    add_body_bold(doc, "Answer: Beaconhouse Technology (Pvt) Ltd")
 
     add_heading2(doc, "Q4.2 — Company's web page")
-    placeholder(doc, "Answer:", "Premier DLC's corporate website. The School Climate Hub product site (schoolclimatehub.org) can be a secondary reference in the proposal text but the form field is the applicant company's web page.")
+    add_body_bold(doc, "Answer: https://schoolclimatehub.org")
+    add_body(doc, "This is the single front door for reviewers. The live demo, methodology, open data downloads, partner credits, and a prominent link to the open-source GitHub repository are all reachable from here. UNICEF reviewers should land on schoolclimatehub.org first; from there they can click through to GitHub. Ensure the homepage prominently surfaces the GitHub link before submission.")
 
     add_heading2(doc, "Q4.3 — Contact person")
-    placeholder(doc, "Name:", "Primary PDLC contact (likely Erum or a PDLC company-secretary-level signer).")
-    placeholder(doc, "Designation:")
+    add_body_bold(doc, "Name: Reza Malik")
+    add_body_bold(doc, "Designation: Director, Beaconhouse Technology")
 
     add_heading2(doc, "Q4.4 — Primary e-mail address")
-    placeholder(doc, "Answer:", "PDLC primary contact email (must be a domain UNICEF can verify as PDLC's).")
+    add_body_bold(doc, "Answer: reza@beaconhouse.tech")
 
     add_heading2(doc, "Q4.5 — Alternate contact person email (optional)")
-    add_body_bold(doc, "Suggested: reza@beaconhouse.tech")
-    add_body(doc, "Reza as BT technical lead — convenient escalation for any engineering-side questions UNICEF raises during due diligence.")
+    placeholder(doc, "Answer:", "Suggest Erum (Head, Premier DLC) so reviewers can reach the deployment-side lead independently.")
 
     add_heading2(doc, "Q4.6 — Year company was founded")
-    placeholder(doc, "Answer:", "Premier DLC's founding year — confirm with PDLC records.")
+    placeholder(doc, "Answer:", "Confirm BT founding year — likely 2023 or 2024.")
 
     add_page_break(doc)
 
@@ -185,7 +185,7 @@ def build():
 
     add_heading2(doc, "Q5.8 — GitHub or other open repository link")
     add_body_bold(doc, "Answer: https://github.com/school-climate-hub/school-climate-hub")
-    add_body(doc, "Public, Apache-2.0. No access grants required for @unicefinnovation.")
+    add_body(doc, "Public, Apache-2.0. No access grants required for @unicefinnovation. The repo is also linked from the schoolclimatehub.org homepage so reviewers can navigate naturally: site → demo → code.")
 
     add_heading2(doc, "Q5.9 — Project targets / milestones for the next 12 months (max 250 chars)")
     add_body_bold(doc, "Draft (~248 chars):")
@@ -193,19 +193,19 @@ def build():
     placeholder(doc, "Zeeshan's version:")
 
     add_heading2(doc, "Q5.10 — Key partners and advisors (max 150 chars)")
-    add_body_bold(doc, "Draft (~145 chars):")
-    add_body(doc, "“Beaconhouse Technology (technical implementor, woman-led, Pakistan); ECMWF / Copernicus / NASA Earthdata (data); Anthropic (AI).”")
+    add_body_bold(doc, "Draft (~140 chars):")
+    add_body(doc, "“Premier DLC (deployment partner, 50 PSSP/PSRP schools in Gujranwala); ECMWF / Copernicus / NASA Earthdata (data); Anthropic (AI).”")
     placeholder(doc, "Zeeshan's version:", "Add UNICEF Pakistan Country Office if formally engaged.")
 
     add_heading2(doc, "Q5.11 — How much are you seeking to raise?")
     add_body_bold(doc, "Answer: US$100,000")
 
     add_heading2(doc, "Q5.12 — What was your company's revenue last year?")
-    placeholder(doc, "Answer (USD):", "Required field — Premier DLC 2025 revenue in USD. Confirm with PDLC finance.")
+    placeholder(doc, "Answer (USD):", "Required field — Beaconhouse Technology 2025 revenue in USD. Confirm with Reza / BT finance.")
 
     add_heading2(doc, "Q5.13 — Overview of capital and other contributions (max 150 chars)")
     add_body_bold(doc, "Draft (~148 chars):")
-    add_body(doc, "“In-kind: PDLC (school access, EMIS roster, ops). BT-funded engineering to date (technical implementor). No external grants on this project yet.”")
+    add_body(doc, "“Self-funded by Beaconhouse Technology to date; in-kind by Premier DLC (school access, EMIS roster, ops feedback). No prior grants on this project.”")
     placeholder(doc, "Zeeshan's version:")
 
     add_heading2(doc, "Q5.14 — Share application with partners?")
@@ -248,26 +248,24 @@ def build():
     add_page_break(doc)
 
     # ---- Open items / blockers ----
-    add_heading1(doc, "Open Items — Need PDLC + BT Sign-Off Before Submit")
+    add_heading1(doc, "Open Items — Need Reza Sign-Off Before Submit")
     add_table(
         doc,
         ["#", "Item", "Owner", "Blocker?"],
         [
-            ["1", "PDLC full legal name + registered form (Pvt Ltd / other)", "Erum / PDLC co.sec.", "YES"],
-            ["2", "PDLC SECP/CR registration type — confirms for-profit eligibility (Q2.1)", "PDLC", "YES"],
-            ["3", "PDLC primary contact for the form (name, designation, email)", "Erum", "YES"],
-            ["4", "PDLC corporate web page URL", "Erum", "YES"],
-            ["5", "PDLC women founders / co-founders for Q3.1–3.2", "Erum", "YES"],
-            ["6", "DOBs of PDLC + BT team-roster members (for Q3.3 youth + Q3.5 table)", "Erum + Reza", "YES"],
-            ["7", "Confirm Q3.5 roster style — applicant-only or joint applicant + implementor?", "Reza decides; cross-check Jotform hints", "YES"],
-            ["8", "PDLC founding year (Q4.6)", "PDLC", "YES"],
-            ["9", "PDLC 2025 revenue in USD (Q5.12)", "PDLC finance", "YES"],
-            ["10", "Referral source (UNICEF CO vs Online Search)", "Erum + Reza", "No"],
-            ["11", "Lock proposal copy (all 150/250-char fields)", "Zeeshan → Reza + Erum", "YES"],
-            ["12", "Produce 2-minute pitch video + upload to YouTube", "Zeeshan + Reza decisions", "YES"],
-            ["13", "Verify https://schoolclimatehub.org loads on HTTPS apex", "auto (Pages cert)", "No"],
-            ["14", "Polish GitHub README hero / quick-start", "BT", "No"],
-            ["15", "Submit before 17 May 23:59 CET (aim 16 May EOD PKT)", "PDLC submits; Reza reviews", "YES"],
+            ["1", "Confirm referral source (UNICEF CO vs Online Search)", "Reza + Erum", "No"],
+            ["2", "Confirm Amina + Fatima Kasuri DOBs (for Q3.3 youth check + Q3.5 row)", "Reza", "YES"],
+            ["3", "Confirm Reza + Erum DOBs (Q3.5 rows)", "Reza", "YES"],
+            ["4", "Confirm 5th team-table row (BT engineer or PDLC ops) — name, DOB, nat., gender, bio", "Reza", "YES"],
+            ["5", "Erum's full surname for the team table", "Reza / Erum", "YES"],
+            ["6", "BT founding year (Q4.6)", "Reza / BT finance", "YES"],
+            ["7", "BT 2025 revenue in USD (Q5.12)", "Reza / BT finance", "YES"],
+            ["8", "Decide alternate contact email (Q4.5) — Erum suggested", "Reza", "No"],
+            ["9", "Lock proposal copy (all 150/250-char fields)", "Zeeshan → Reza", "YES"],
+            ["10", "Produce 2-minute pitch video + upload to YouTube", "Zeeshan + Reza decisions", "YES"],
+            ["11", "Verify https://schoolclimatehub.org loads on HTTPS apex", "auto (Pages cert)", "No"],
+            ["12", "Polish GitHub README hero / quick-start", "BT", "No"],
+            ["13", "Submit before 17 May 23:59 CET (aim 16 May EOD PKT)", "Reza", "YES"],
         ],
         col_widths=[0.4, 3.7, 1.7, 0.8],
     )
@@ -278,6 +276,29 @@ def build():
     add_bullet(doc, "Upload the pitch video as unlisted on YouTube with burned-in English subtitles.")
     add_bullet(doc, "Polish the GitHub README: hero image, quick-start, link to live demo, link to docs/v0.2-scope.md.")
     add_bullet(doc, "Lead with “Pakistan-registered Pvt Ltd” wherever relevant — UNICEF programme-country status is a strength.")
+
+    add_page_break(doc)
+
+    add_heading1(doc, "Appendix · Company Description (Beaconhouse Technology)")
+    add_body(doc, "Three lengths for use in different submission fields, supporting documents, or follow-up due-diligence requests. Pick by context; all three carry the same facts.")
+
+    add_heading2(doc, "Long (proposal / about page · ~160 words)")
+    add_body(doc, "Beaconhouse Technology (Pvt) Ltd is a Pakistan-registered, woman-led engineering company building software for education, climate adaptation, and operational tooling. Led by CEO Amina Kasuri and COO Fatima Kasuri, BT has shipped production systems for multi-campus school networks across South Asia and Southeast Asia — including student information systems, operational dashboards, and integration platforms serving tens of thousands of students.")
+    add_body(doc, "On School Climate Hub, BT is the applicant and technical builder: architecting the data pipelines (ERA5, MODIS, ECMWF HRES + ENS), the AI grounding layer (Anthropic Claude), the public web app, and the alert dispatch infrastructure. The codebase is published under Apache-2.0; per-school exposure data is released as an open dataset so any operator, researcher, or country office can fork, replicate, or extend the work.")
+    add_body(doc, "Headquartered in Lahore, BT operates as a self-funded private company and partners with deployment-led organisations like Premier DLC for in-market execution.")
+
+    add_heading2(doc, "Medium (partners section, doc footnote · ~70 words)")
+    add_body(doc, "Beaconhouse Technology (Pvt) Ltd — Pakistan-registered, woman-led (CEO Amina Kasuri, COO Fatima Kasuri) engineering company building education and climate-tech software. BT is the applicant and technical builder of School Climate Hub: data pipelines (ERA5 / MODIS / ECMWF), AI grounding, web app, and alert dispatch. Codebase Apache-2.0; per-school exposure data published openly. Track record across multi-campus school networks in South Asia and Southeast Asia. Self-funded; partners with deployment-led organisations for in-market execution.")
+
+    add_heading2(doc, "One-line (tight fields, captions · ~140 chars)")
+    add_body(doc, "Beaconhouse Technology (Pvt) Ltd — woman-led Pakistan engineering company; builder of School Climate Hub. Apache-2.0, self-funded.")
+
+    add_heading2(doc, "Notes for Zeeshan before pasting the bio")
+    add_bullet(doc, "Replace “tens of thousands of students” with a hard number if Reza confirms it's safe to publish.")
+    add_bullet(doc, "Add BT founding year once Reza confirms (2023 or 2024).")
+    add_bullet(doc, "If a named anchor product can be disclosed (e.g., BEAMS360), insert it as “including [Product]” in the long version — concrete names beat generic claims.")
+
+    add_page_break(doc)
 
     add_heading1(doc, "Credibility Talking Points (for any free-text overflow)")
     add_bullet(doc, "Working prototype with real data — schoolclimatehub.org is live, 50 schools, real ECMWF + ERA5 + MODIS, AI grounded in the dataset.")
