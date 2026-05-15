@@ -169,8 +169,8 @@ def build():
     add_body_bold(doc, "Other (clarify): Open climate data ingestion (ECMWF HRES + ENS, ERA5, MODIS)")
 
     add_heading2(doc, "Q5.5 — How are you using the technologies? (max 150 chars)")
-    add_body_bold(doc, "Draft (~140 chars):")
-    add_body(doc, "“Claude 4.5 grounds answers in per-school open data; ECMWF ENS adds 15-day probabilistic forecasts; PWA delivers free parent push alerts.”")
+    add_body_bold(doc, "Draft (148 chars):")
+    add_body(doc, "“Anthropic Claude grounds answers in our open per-school dataset; ECMWF HRES+ENS power 10/15-day forecasts; PWA + Web Push deliver free parent alerts.”")
     placeholder(doc, "Zeeshan's version:")
 
     add_heading2(doc, "Q5.6 — Current technical status / what's needed for pilot (max 150 chars)")
