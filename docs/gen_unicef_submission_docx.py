@@ -17,7 +17,7 @@ from contract_styles import (
 
 OUT = Path.home() / (
     "Library/CloudStorage/GoogleDrive-reza@beaconhouse.tech/My Drive/_Claude/"
-    "Eng/PDLC/UNICEF-VF-Submission-Brief-Zeeshan-260515v1.docx"
+    "Eng/PDLC/UNICEF-VF-Submission-Brief-260515v1.1.docx"
 )
 
 
@@ -45,10 +45,11 @@ def build():
 
     # ---- Cover ----
     add_title(doc, "UNICEF Venture Fund 2026 — Climate Tech")
-    add_subtitle(doc, "Submission Brief · for Zeeshan to complete")
+    add_subtitle(doc, "Submission Brief")
     add_body(doc, "Form: https://form.jotform.com/260711626703351")
     add_body(doc, "Deadline: 17 May 2026, 23:59 CET  ·  Funding: up to US$100,000 equity-free")
     add_body(doc, "Drafter: Zeeshan  ·  Final reviewer: Reza Malik")
+    add_body(doc, "Applicant: Premier DLC (Pakistan, primary)  ·  Technical implementor: Beaconhouse Technology (Pvt) Ltd (secondary)")
     add_body(doc, "Live demo: https://schoolclimatehub.org   ·   Repo: https://github.com/school-climate-hub/school-climate-hub")
     add_horizontal_line(doc)
     add_body(doc, "How to use this document:")
@@ -75,12 +76,11 @@ def build():
     add_heading1(doc, "Section 2 · Eligibility")
 
     add_heading2(doc, "Q2.1 — Is your company registered as a private for-profit company?")
-    add_body_bold(doc, "Answer: Yes")
-    add_body(doc, "Source: Beaconhouse Technology (Pvt) Ltd — SECP registration 0137683.")
+    placeholder(doc, "Answer (Yes/No):", "Applicant entity is Premier DLC. Confirm PDLC's SECP registration type (private for-profit Pvt Ltd vs other). If Pvt Ltd → Yes.")
 
     add_heading2(doc, "Q2.2 — Is your solution Open Source?")
     add_body_bold(doc, "Answer: Yes")
-    add_body(doc, "Source: github.com/school-climate-hub/school-climate-hub — Apache-2.0.")
+    add_body(doc, "Source: github.com/school-climate-hub/school-climate-hub — Apache-2.0 (repo operated by BT as technical implementor; PDLC has co-ownership of the deployment).")
 
     add_heading2(doc, "Q2.3 — In which country is your company legally registered?")
     add_body_bold(doc, "Answer: Pakistan")
@@ -91,30 +91,33 @@ def build():
     add_heading1(doc, "Section 3 · Diversity, Equity and Inclusion")
 
     add_heading2(doc, "Q3.1 — Is your company founded or co-founded by women?")
-    placeholder(doc, "Answer (Yes/No):", "Is Erum (or any other woman) a named co-founder of Beaconhouse Technology at the corporate level (vs Head of Premier DLC, which is a partner org)? If yes → list names below.")
+    add_body_bold(doc, "Likely Answer: Yes")
+    add_body(doc, "Premier DLC: confirm whether Erum (or another woman) is a named co-founder of PDLC at the corporate registration level. If yes → Yes for the applicant entity.")
+    add_body(doc, "Technical implementor BT also has a woman-led C-suite (CEO Amina Kasuri, COO Fatima Kasuri) — reinforces the woman-leadership posture across the joint team.")
 
-    add_heading2(doc, "Q3.2 — Names of woman founders (if applicable)")
-    placeholder(doc, "Names:")
+    add_heading2(doc, "Q3.2 — Names of woman founders / co-founders (applicant entity)")
+    placeholder(doc, "Names:", "PDLC women founders/co-founders. If Erum is not technically a registered founder, name PDLC's actual women founders here.")
 
     add_heading2(doc, "Q3.3 — Is your company founded or led by youth (younger than 35)?")
-    placeholder(doc, "Answer (Yes/No):", "Provide DOBs of co-founders to determine.")
+    placeholder(doc, "Answer (Yes/No):", "Depends on PDLC leadership DOBs. Provide PDLC founders' birth years.")
 
     add_heading2(doc, "Q3.4 — Names of young leaders (if applicable)")
     placeholder(doc, "Names:")
 
     add_heading2(doc, "Q3.5 — Team table (up to 5 rows)")
-    add_body(doc, "Fields per row: Full name · Position · Year of birth · Nationality · Gender · Short bio (1–2 sentences). Suggested roster (replace any row):")
+    add_body(doc, "Fields per row: Full name · Position · Year of birth · Nationality · Gender · Short bio (1–2 sentences). Mix of PDLC (applicant) and BT (technical implementor) leadership — replace placeholders as needed:")
     add_table(
         doc,
         ["Full name", "Position", "Year of birth", "Nationality", "Gender", "Short bio"],
         [
-            ["Reza Malik", "Director", "____", "Pakistani", "Man", "Founder; product + strategy lead across BT and TEY."],
-            ["[Name]", "[Position]", "____", "____", "____", "____"],
-            ["[Name]", "[Position]", "____", "____", "____", "____"],
-            ["[Name]", "[Position]", "____", "____", "____", "____"],
-            ["[Name]", "[Position]", "____", "____", "____", "____"],
+            ["Erum [Surname]", "Head, Premier DLC (Applicant lead)", "____", "Pakistani", "Woman", "Leads Premier DLC's deployment of School Climate Hub across 50 PSSP/PSRP schools in Gujranwala."],
+            ["Amina Kasuri", "CEO, Beaconhouse Technology (Technical implementor)", "____", "Pakistani", "Woman", "CEO of the technical implementor; oversees BT's engineering of the School Climate Hub platform."],
+            ["Fatima Kasuri", "COO, Beaconhouse Technology (Technical implementor)", "____", "Pakistani", "Woman", "COO of BT; runs operations across the BT engineering portfolio."],
+            ["Reza Malik", "Director, Beaconhouse Technology", "____", "Pakistani", "Man", "Director at BT; product + engineering lead for School Climate Hub."],
+            ["[PDLC ops / BT engineer]", "[Position]", "____", "____", "____", "[Bio]"],
         ],
     )
+    add_body(doc, "Note: roster must reflect the *applicant entity*. If UNICEF treats the team table as applicant-only, fill all 5 rows with PDLC people and move BT names to the partners section (Q5.10). If the form accepts joint-team rosters, this mix works as-is. Confirm before submit.")
 
     add_page_break(doc)
 
@@ -122,24 +125,24 @@ def build():
     add_heading1(doc, "Section 4 · Company Information")
 
     add_heading2(doc, "Q4.1 — Name of company")
-    add_body_bold(doc, "Answer: Beaconhouse Technology (Pvt) Ltd")
+    placeholder(doc, "Answer:", "Premier DLC's full legal registered name (Pvt Ltd if applicable). Confirm with Erum / PDLC company secretary.")
 
     add_heading2(doc, "Q4.2 — Company's web page")
-    add_body_bold(doc, "Answer: https://schoolclimatehub.org")
-    add_body(doc, "(The product site; BT's corporate site can be substituted if preferred — confirm with Reza.)")
+    placeholder(doc, "Answer:", "Premier DLC's corporate website. The School Climate Hub product site (schoolclimatehub.org) can be a secondary reference in the proposal text but the form field is the applicant company's web page.")
 
     add_heading2(doc, "Q4.3 — Contact person")
-    add_body_bold(doc, "Name: Reza Malik")
-    add_body_bold(doc, "Designation: Director")
+    placeholder(doc, "Name:", "Primary PDLC contact (likely Erum or a PDLC company-secretary-level signer).")
+    placeholder(doc, "Designation:")
 
     add_heading2(doc, "Q4.4 — Primary e-mail address")
-    add_body_bold(doc, "Answer: reza@beaconhouse.tech")
+    placeholder(doc, "Answer:", "PDLC primary contact email (must be a domain UNICEF can verify as PDLC's).")
 
     add_heading2(doc, "Q4.5 — Alternate contact person email (optional)")
-    placeholder(doc, "Answer:", "Suggest Zeeshan or Erum as alternate contact.")
+    add_body_bold(doc, "Suggested: reza@beaconhouse.tech")
+    add_body(doc, "Reza as BT technical lead — convenient escalation for any engineering-side questions UNICEF raises during due diligence.")
 
     add_heading2(doc, "Q4.6 — Year company was founded")
-    placeholder(doc, "Answer:", "Confirm with Reza — current best guess: 2024.")
+    placeholder(doc, "Answer:", "Premier DLC's founding year — confirm with PDLC records.")
 
     add_page_break(doc)
 
@@ -190,19 +193,19 @@ def build():
     placeholder(doc, "Zeeshan's version:")
 
     add_heading2(doc, "Q5.10 — Key partners and advisors (max 150 chars)")
-    add_body_bold(doc, "Draft (~120 chars, room to add):")
-    add_body(doc, "“Premier DLC (Pakistan, deployment partner, 50 schools); ECMWF / Copernicus / NASA Earthdata (data); Anthropic (AI).”")
+    add_body_bold(doc, "Draft (~145 chars):")
+    add_body(doc, "“Beaconhouse Technology (technical implementor, woman-led, Pakistan); ECMWF / Copernicus / NASA Earthdata (data); Anthropic (AI).”")
     placeholder(doc, "Zeeshan's version:", "Add UNICEF Pakistan Country Office if formally engaged.")
 
     add_heading2(doc, "Q5.11 — How much are you seeking to raise?")
     add_body_bold(doc, "Answer: US$100,000")
 
     add_heading2(doc, "Q5.12 — What was your company's revenue last year?")
-    placeholder(doc, "Answer (USD):", "Required field. Confirm with Reza — BT 2025 revenue in USD.")
+    placeholder(doc, "Answer (USD):", "Required field — Premier DLC 2025 revenue in USD. Confirm with PDLC finance.")
 
     add_heading2(doc, "Q5.13 — Overview of capital and other contributions (max 150 chars)")
-    add_body_bold(doc, "Draft (~150 chars):")
-    add_body(doc, "“Self-funded by Beaconhouse Technology to date; in-kind by Premier DLC (school access, EMIS roster, ops feedback). No prior grants on this project.”")
+    add_body_bold(doc, "Draft (~148 chars):")
+    add_body(doc, "“In-kind: PDLC (school access, EMIS roster, ops). BT-funded engineering to date (technical implementor). No external grants on this project yet.”")
     placeholder(doc, "Zeeshan's version:")
 
     add_heading2(doc, "Q5.14 — Share application with partners?")
@@ -245,22 +248,28 @@ def build():
     add_page_break(doc)
 
     # ---- Open items / blockers ----
-    add_heading1(doc, "Open Items — Need Reza Sign-Off Before Submit")
+    add_heading1(doc, "Open Items — Need PDLC + BT Sign-Off Before Submit")
     add_table(
         doc,
         ["#", "Item", "Owner", "Blocker?"],
         [
-            ["1", "Confirm referral source (UNICEF CO vs Online Search)", "Reza + Erum", "No"],
-            ["2", "Confirm 5-person team roster (name, DOB, nationality, gender, bio)", "Reza", "YES"],
-            ["3", "Confirm BT founding year", "Reza", "No"],
-            ["4", "Confirm BT 2025 revenue in USD", "Reza", "YES"],
-            ["5", "Lock proposal copy (all 150/250-char fields)", "Zeeshan → Reza", "YES"],
-            ["6", "Produce 2-minute pitch video + upload to YouTube", "Zeeshan + Reza decisions", "YES"],
-            ["7", "Verify https://schoolclimatehub.org loads on HTTPS apex", "auto (Pages cert)", "No"],
-            ["8", "Polish GitHub README hero / quick-start", "BT", "No"],
-            ["9", "Submit before 17 May 23:59 CET (aim 16 May EOD PKT)", "Reza", "YES"],
+            ["1", "PDLC full legal name + registered form (Pvt Ltd / other)", "Erum / PDLC co.sec.", "YES"],
+            ["2", "PDLC SECP/CR registration type — confirms for-profit eligibility (Q2.1)", "PDLC", "YES"],
+            ["3", "PDLC primary contact for the form (name, designation, email)", "Erum", "YES"],
+            ["4", "PDLC corporate web page URL", "Erum", "YES"],
+            ["5", "PDLC women founders / co-founders for Q3.1–3.2", "Erum", "YES"],
+            ["6", "DOBs of PDLC + BT team-roster members (for Q3.3 youth + Q3.5 table)", "Erum + Reza", "YES"],
+            ["7", "Confirm Q3.5 roster style — applicant-only or joint applicant + implementor?", "Reza decides; cross-check Jotform hints", "YES"],
+            ["8", "PDLC founding year (Q4.6)", "PDLC", "YES"],
+            ["9", "PDLC 2025 revenue in USD (Q5.12)", "PDLC finance", "YES"],
+            ["10", "Referral source (UNICEF CO vs Online Search)", "Erum + Reza", "No"],
+            ["11", "Lock proposal copy (all 150/250-char fields)", "Zeeshan → Reza + Erum", "YES"],
+            ["12", "Produce 2-minute pitch video + upload to YouTube", "Zeeshan + Reza decisions", "YES"],
+            ["13", "Verify https://schoolclimatehub.org loads on HTTPS apex", "auto (Pages cert)", "No"],
+            ["14", "Polish GitHub README hero / quick-start", "BT", "No"],
+            ["15", "Submit before 17 May 23:59 CET (aim 16 May EOD PKT)", "PDLC submits; Reza reviews", "YES"],
         ],
-        col_widths=[0.4, 4.0, 1.4, 0.8],
+        col_widths=[0.4, 3.7, 1.7, 0.8],
     )
 
     add_heading1(doc, "Submission Strategy")
