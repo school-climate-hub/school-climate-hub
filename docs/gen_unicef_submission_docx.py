@@ -15,7 +15,10 @@ from contract_styles import (
     add_footer, add_page_break, add_horizontal_line,
 )
 
-OUT = Path.home() / "Repo/school-climate-hub/docs/UNICEF-VF-Submission-Brief-Zeeshan-260515v1.docx"
+OUT = Path.home() / (
+    "Library/CloudStorage/GoogleDrive-reza@beaconhouse.tech/My Drive/_Claude/"
+    "Eng/PDLC/UNICEF-VF-Submission-Brief-Zeeshan-260515v1.docx"
+)
 
 
 def placeholder(doc, label, hint=None, multiline=False):
