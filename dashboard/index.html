@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://unpkg.com" crossorigin />
 <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 <script src="https://cdn.tailwindcss.com"></script>
@@ -496,6 +496,9 @@
   @keyframes blink { 0%,49%{opacity:1} 50%,100%{opacity:0} }
 
   kbd { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; }
+
+  /* About view uses the app's existing card/tag/chip/gradient-mesh system —
+     no custom CSS needed beyond what the dashboard already ships. */
 </style>
 </head>
 <body class="min-h-screen">
@@ -530,6 +533,10 @@
       <a class="nav-item" href="#data" data-view="data">
         <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><ellipse cx="8" cy="3.5" rx="6" ry="2"/><path d="M2 3.5v9c0 1.1 2.7 2 6 2s6-.9 6-2v-9" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M2 8c0 1.1 2.7 2 6 2s6-.9 6-2" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
         Open Data
+      </a>
+      <a class="nav-item" href="#about" data-view="about">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><path d="M8 11V7M8 5v.01"/></svg>
+        About
       </a>
 
       <div class="nav-section">Configuration</div>
@@ -745,6 +752,129 @@
             <div class="text-xs leading-relaxed" style="color:var(--text-3)">All ingestion code is Apache-2.0 in the repo. Drop in your own school roster (EMIS + coords + enrolment), run <span class="mono px-1 py-0.5 rounded" style="background: var(--bar-bg)">make ingest</span>, get the same outputs.</div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ============== VIEW: ABOUT ============== -->
+    <section class="view flex-1 overflow-y-auto scroll" id="v-about" style="background: var(--bg)">
+      <div class="px-6 py-5 space-y-4">
+
+        <!-- Hero (mirrors Open Data hero card) -->
+        <div class="card p-6 gradient-mesh">
+          <div class="flex items-start justify-between gap-6">
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <h2 class="text-xl font-semibold" style="color:var(--text)">School Climate Hub</h2>
+                <span class="chip brand">Prototype · UNICEF VF 2026</span>
+                <span class="chip live">Apache-2.0</span>
+              </div>
+              <p class="text-sm leading-relaxed max-w-2xl" style="color:var(--text-2)">
+                Open infrastructure for school-level climate exposure data, and operational tools to act on it for children's health. Founding deployment: <span style="color:var(--text)">50 PSSP/PSRP schools, ~12,000 students</span> with <a href="https://www.premierdlc.com" target="_blank" rel="noopener" style="color:var(--brand)">Premier DLC</a> in Gujranwala, Pakistan.
+              </p>
+            </div>
+            <div class="flex flex-col gap-2 shrink-0">
+              <a class="btn primary" href="https://github.com/school-climate-hub/school-climate-hub" target="_blank" rel="noopener"><span aria-hidden="true">↗</span> View source on GitHub</a>
+              <a class="btn btn-sm" href="https://github.com/school-climate-hub/school-climate-hub/blob/main/docs/PRD.md" target="_blank" rel="noopener">Read the PRD</a>
+            </div>
+          </div>
+          <div class="grid grid-cols-4 gap-3 mt-5 pt-5 border-t border-[color:var(--border)]">
+            <div><div class="tag">Schools</div><div class="text-2xl font-semibold mt-1 num" style="color:var(--text)">50</div></div>
+            <div><div class="tag">Students</div><div class="text-2xl font-semibold mt-1 num" style="color:var(--text)">~12,000</div></div>
+            <div><div class="tag">Attendance Δ 2023→2025</div><div class="text-2xl font-semibold mt-1 num" style="color:var(--brand)" id="about-bignum">—</div></div>
+            <div><div class="tag">Lost child-school-days</div><div class="text-2xl font-semibold mt-1 num" style="color:var(--text)" id="about-lost">—</div></div>
+          </div>
+        </div>
+
+        <!-- Capability tiles (3-up, mirrors Open Data meta row) -->
+        <div class="grid grid-cols-3 gap-4">
+          <div class="card p-5">
+            <div class="tag mb-1.5">Vulnerability dashboard</div>
+            <div class="text-sm" style="color:var(--text-2)">Per-school heat, air-quality, flood, and rainfall scores from open satellite + reanalysis data — ERA5, MODIS, Sentinel-5P, CAMS, GloFAS. EMIS-keyed.</div>
+          </div>
+          <div class="card p-5">
+            <div class="tag mb-1.5">Multilingual advisories</div>
+            <div class="text-sm" style="color:var(--text-2)">Auto-drafted parent advisories in English, Urdu, and Punjabi (Shahmukhi). Operator approves; dispatch via existing SMS / WhatsApp / school PA channels.</div>
+          </div>
+          <div class="card p-5">
+            <div class="tag mb-1.5">Open data layer</div>
+            <div class="text-sm" style="color:var(--text-2)">A clean, school-level, EMIS-keyed climate exposure dataset other operators can build on. CC BY 4.0. Daily refresh. Mirrors planned to HDX + Zenodo.</div>
+          </div>
+        </div>
+
+        <!-- Partnership (2-up, mirrors Open Data dataset cards) -->
+        <div class="grid grid-cols-2 gap-4">
+          <div class="card p-5">
+            <div class="flex items-center justify-between mb-2">
+              <div class="text-sm font-medium" style="color:var(--text)">Beaconhouse Technology (Pvt) Ltd</div>
+              <span class="chip brand">Builder</span>
+            </div>
+            <div class="text-xs mb-3" style="color:var(--text-3)">Technical implementor.</div>
+            <div class="text-sm leading-relaxed" style="color:var(--text-2)">Data pipelines, AI grounding, web platform, alert dispatch infrastructure. Woman-led at the C-suite (CEO Amina Kasuri, COO Fatima Kasuri). Registered in Pakistan. Codebase Apache-2.0.</div>
+          </div>
+          <div class="card p-5">
+            <div class="flex items-center justify-between mb-2">
+              <div class="text-sm font-medium" style="color:var(--text)">Premier DLC</div>
+              <span class="chip">Deployment</span>
+            </div>
+            <div class="text-xs mb-3" style="color:var(--text-3)">Deployment partner.</div>
+            <div class="text-sm leading-relaxed" style="color:var(--text-2)">Owns the relationship across the 50 PSSP/PSRP schools in Gujranwala, the EMIS roster, the three-year historical attendance baseline, and on-the-ground operator feedback.</div>
+          </div>
+        </div>
+
+        <!-- Sources & methods (4-up, mirrors Open Data datasheet code blocks) -->
+        <div class="grid grid-cols-2 gap-4">
+          <div class="card p-5">
+            <div class="flex items-center justify-between mb-2">
+              <div class="text-sm font-medium mono" style="color:var(--text)">Climate</div>
+              <span class="tag">01</span>
+            </div>
+            <div class="text-xs mb-3" style="color:var(--text-3)">Open satellite + reanalysis providers.</div>
+            <div class="text-sm leading-relaxed" style="color:var(--text-2)"><span class="mono" style="color:var(--text)">ECMWF</span> HRES (10-day deterministic) and <span class="mono" style="color:var(--text)">ENS</span> (15-day probabilistic) via the open-data S3 mirror. <span class="mono" style="color:var(--text)">Copernicus ERA5</span> reanalysis. <span class="mono" style="color:var(--text)">NASA MODIS</span> land-surface temperature. Sentinel-5P NO₂ + GloFAS flood planned for v0.2.</div>
+          </div>
+          <div class="card p-5">
+            <div class="flex items-center justify-between mb-2">
+              <div class="text-sm font-medium mono" style="color:var(--text)">Attendance</div>
+              <span class="tag">02</span>
+            </div>
+            <div class="text-xs mb-3" style="color:var(--text-3)">Measured outcome — voluntary tenant data.</div>
+            <div class="text-sm leading-relaxed" style="color:var(--text-2)"><span class="mono" style="color:var(--text)">Premier DLC</span> monthly School Attendance Report, 2023–2025, all 50 pilot schools. School-aggregate only — no student-identifying data is ever ingested. Anonymised school IDs by default; named publication requires documented partner consent.</div>
+          </div>
+          <div class="card p-5">
+            <div class="flex items-center justify-between mb-2">
+              <div class="text-sm font-medium mono" style="color:var(--text)">AI grounding</div>
+              <span class="tag">03</span>
+            </div>
+            <div class="text-xs mb-3" style="color:var(--text-3)">Strictly dataset-grounded answers.</div>
+            <div class="text-sm leading-relaxed" style="color:var(--text-2)"><span class="mono" style="color:var(--text)">Anthropic Claude</span> with the per-school dataset injected as system context. The model is constrained to refuse questions it cannot ground in the data — eliminates hallucination on the operator-facing path.</div>
+          </div>
+          <div class="card p-5">
+            <div class="flex items-center justify-between mb-2">
+              <div class="text-sm font-medium mono" style="color:var(--text)">Causation framing</div>
+              <span class="tag">04</span>
+            </div>
+            <div class="text-xs mb-3" style="color:var(--text-3)">Honest about what we can and cannot claim.</div>
+            <div class="text-sm leading-relaxed" style="color:var(--text-2)">Attendance is presented as a <span style="color:var(--text)">correlated outcome</span>, not a climate-caused decline. The 2023–2025 fall reflects post-COVID, economic, and management drivers too. A controlled panel regression is a v0.2 deliverable.</div>
+          </div>
+        </div>
+
+        <!-- Read further (3-up meta strip, mirrors Open Data citation row) -->
+        <div class="grid grid-cols-3 gap-4">
+          <div class="card p-5">
+            <div class="tag mb-1.5">Methodology &amp; risk</div>
+            <div class="text-sm" style="color:var(--text)"><a style="color:var(--text)" href="https://github.com/school-climate-hub/school-climate-hub/blob/main/docs/methodology-attendance.md" target="_blank" rel="noopener">Attendance methodology ↗</a></div>
+            <div class="text-xs mt-1" style="color:var(--text-3)"><a style="color:var(--text-3)" href="https://github.com/school-climate-hub/school-climate-hub/blob/main/docs/DISCLAIMER.md" target="_blank" rel="noopener">Disclaimer &amp; risk framework ↗</a></div>
+          </div>
+          <div class="card p-5">
+            <div class="tag mb-1.5">Build</div>
+            <div class="text-xs leading-relaxed" style="color:var(--text-3)">Codebase under Apache-2.0. <a style="color:var(--text)" href="https://github.com/school-climate-hub/school-climate-hub/blob/main/docs/architecture.md" target="_blank" rel="noopener">Architecture ↗</a> · <a style="color:var(--text)" href="https://github.com/school-climate-hub/school-climate-hub/blob/main/docs/REQUIREMENTS.md" target="_blank" rel="noopener">Requirements ↗</a>. Drop in your own EMIS roster, run <span class="mono px-1 py-0.5 rounded" style="background: var(--bar-bg)">make ingest</span>, get the same outputs.</div>
+          </div>
+          <div class="card p-5">
+            <div class="tag mb-1.5">Open data</div>
+            <div class="text-sm" style="color:var(--text)"><a style="color:var(--text)" href="#data" onclick="goView('data'); return false;">View the Open Data Layer →</a></div>
+            <div class="text-xs mt-1" style="color:var(--text-3)">CC BY 4.0 · daily refresh · school-level only.</div>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -1029,6 +1159,8 @@ const VIEW_META = {
               narr: 'Every school × every hazard. Sortable, filterable, exportable.' },
   data:     { title: 'Open Data Layer', sub: 'CC BY 4.0 · daily refresh',
               narr: 'The headline open-source artefact — anyone can download and build on it.' },
+  about:    { title: 'About', sub: 'Project · partners · methodology',
+              narr: 'What this is, who it serves, and where the data comes from.' },
   settings: { title: 'Settings', sub: 'Thresholds · channels · templates',
               narr: 'Operator config. Thresholds, languages, channels, advisory templates, approval policy.' },
 };
@@ -1118,6 +1250,117 @@ function burden(s) {
   return Math.round(s.students * (h*0.5 + a*0.4 + f*0.1));
 }
 
+// Modeled-burden roll-up across all 50 schools (used as the demoted caption
+// under the measured-attendance hero). Sum of per-school annual burden_days.
+function totalModeledBurden() {
+  let sum = 0;
+  for (const s of SCHOOLS) sum += burden(s);
+  return sum;
+}
+
+// Look up a school's measured-attendance record by EMIS code. Returns null if
+// attendance.json hasn't loaded yet OR the school isn't in the dataset.
+function attendanceForEmis(emis) {
+  if (!REAL_ATTENDANCE || !REAL_ATTENDANCE.schools) return null;
+  const map = REAL_ATTENDANCE.meta && REAL_ATTENDANCE.meta.emis_to_id;
+  const pubId = map ? map[String(emis)] : String(emis);
+  if (!pubId) return null;
+  return REAL_ATTENDANCE.schools[pubId] || null;
+}
+
+// School-detail attendance card. Drives the operator's case for the school:
+// observed annual means, decline, May anomaly. Falls back gracefully if the
+// dataset hasn't loaded or this school is one of the 2 that joined in 2025.
+function schoolAttendanceCardHTML(s) {
+  if (!REAL_ATTENDANCE) return '';  // hide entirely until data lands
+  const rec = attendanceForEmis(s.emis_code);
+  if (!rec) {
+    return `
+      <div class="rounded-lg p-4" style="background:var(--bg); border:1px solid var(--border)">
+        <div class="tag mb-2">Attendance · 2023 → 2025</div>
+        <div class="text-xs" style="color:var(--text-3)">No attendance record matched for this EMIS in the PDLC SAR.</div>
+      </div>`;
+  }
+  const ann = rec.annual_mean || {};
+  const dPP = rec.pp_change_2023_2025;
+  const mayAnom = rec.may_anomaly_2025_vs_3yr;
+  const fmtPct = v => (v == null || isNaN(v)) ? '—' : (v * 100).toFixed(1) + '%';
+  const dPPDisplay = (dPP == null) ? '—' : `${dPP > 0 ? '+' : ''}${dPP} pp`;
+  const dPPColor = (dPP == null) ? 'var(--text-3)' : (dPP < 0 ? 'var(--red)' : 'var(--green)');
+  const missingYears = ['2023', '2024'].filter(y => ann[y] == null);
+  const missingNote = missingYears.length
+    ? `<div class="text-[11px] mt-2" style="color:var(--text-3)">Joined PDLC SAR in 2025 — ${missingYears.join(', ')} not on record.</div>`
+    : '';
+  const anomNote = (mayAnom != null)
+    ? `<div class="text-[11px] mt-2" style="color:var(--text-3)">May 2025: ${mayAnom > 0 ? '+' : ''}${mayAnom} pp vs 3-yr May mean.</div>`
+    : '';
+  return `
+    <div class="rounded-lg p-4 space-y-2" style="background:var(--bg); border:1px solid var(--border)">
+      <div class="flex items-center justify-between">
+        <div class="tag">Attendance · 2023 → 2025</div>
+        <div class="mono num text-sm font-semibold" style="color:${dPPColor}">${dPPDisplay}</div>
+      </div>
+      <div class="grid grid-cols-3 gap-2 pt-2">
+        ${['2023','2024','2025'].map(y => `
+          <div>
+            <div class="text-[10px] uppercase tracking-wider" style="color:var(--text-3)">${y}</div>
+            <div class="mono num text-sm font-semibold" style="color:var(--text)">${fmtPct(ann[y])}</div>
+          </div>`).join('')}
+      </div>
+      ${anomNote}
+      ${missingNote}
+      <div class="text-[10px] pt-2" style="border-top: 1px solid var(--border); color:var(--text-3)">
+        Source: PDLC monthly registers. Correlated outcome — not a climate-causation claim. See <a href="https://github.com/school-climate-hub/school-climate-hub/blob/main/docs/methodology-attendance.md" target="_blank" rel="noopener" style="color:var(--brand)">methodology</a>.
+      </div>
+    </div>
+  `;
+}
+
+function attendanceHeroHTML() {
+  // First-paint fallback: defaultDetail() runs synchronously at view init,
+  // before loadAttendance() resolves, so this branch is reachable on cold load.
+  if (!REAL_ATTENDANCE || !REAL_ATTENDANCE.aggregates) {
+    const modeled = totalModeledBurden();
+    return `
+      <div class="card p-5 gradient-mesh">
+        <div class="tag" style="color:var(--brand); font-weight:600">Modeled child-burden · ${new Date().getFullYear()}</div>
+        <div class="num font-bold mt-1" style="font-size: 38px; line-height: 1.05; letter-spacing: -0.02em; color:var(--text)">${modeled.toLocaleString()}</div>
+        <div class="text-xs mt-1" style="color:var(--text-2)">
+          student-days × hazard exposure ·
+          <span style="color:var(--text-3)">measured attendance data loading…</span>
+        </div>
+      </div>
+    `;
+  }
+  const agg = REAL_ATTENDANCE.aggregates;
+  const dPP = agg.pp_change_2023_2025;
+  const lost = agg.lost_child_school_days_2023_baseline;
+  const ann = agg.annual_mean || {};
+  const fmtPct = v => (v == null || isNaN(v)) ? '—' : (v * 100).toFixed(1) + '%';
+  // dPP sign convention (mirrors ingestion lost_days): negative pp = decline = harm.
+  // Render the number as-is; the lost-child-school-days line carries the framing.
+  const dPPDisplay = (dPP == null) ? '—' : `${dPP > 0 ? '+' : ''}${dPP} pp`;
+  const modeled = totalModeledBurden();
+  return `
+    <div class="card p-5 gradient-mesh">
+      <div class="tag" style="color:var(--brand); font-weight:600">Measured attendance · 2023 → 2025</div>
+      <div class="num font-bold mt-1" style="font-size: 38px; line-height: 1.05; letter-spacing: -0.02em; color:var(--text)">${dPPDisplay}</div>
+      <div class="text-xs mt-1" style="color:var(--text-2)">
+        ≈ ${lost != null ? lost.toLocaleString() : '—'} lost child-school-days vs 2023 baseline ·
+        <span style="color:var(--text-3)">PDLC monthly registers, 50 schools</span>
+      </div>
+      <div class="grid grid-cols-3 gap-2 mt-4 pt-3" style="border-top: 1px solid var(--border)">
+        ${['2023','2024','2025'].map(y => `
+          <div><div class="text-[10px] uppercase tracking-wider" style="color:var(--text-3)">${y}</div><div class="num text-sm font-semibold">${fmtPct(ann[y])}</div></div>
+        `).join('')}
+      </div>
+      <div class="text-[10px] mt-3 pt-2" style="border-top: 1px solid var(--border); color:var(--text-3)">
+        Modeled exposure (legacy): ${modeled.toLocaleString()} child-hazard-days/yr
+      </div>
+    </div>
+  `;
+}
+
 // Fetch scores.json on load. Populates REAL_SCORES so subsequent mockScore()
 // calls return live values. Re-renders any view that depends on scores.
 async function loadRealScores() {
@@ -1135,6 +1378,37 @@ async function loadRealScores() {
     if (CURRENT_VIEW === 'schools' && typeof renderRagTable === 'function') renderRagTable();
   } catch (e) {
     console.warn('[scores] live data unavailable — using deterministic fallback:', e.message);
+  }
+}
+
+// Measured attendance data from Premier DLC (2023–2025). Loaded in parallel
+// with scores. Dashboard degrades silently if absent (e.g. before xlsx is
+// re-published) — the modeled burden remains as fallback hero.
+let REAL_ATTENDANCE = null;  // full payload from dashboard/attendance.json
+async function loadAttendance() {
+  try {
+    const r = await fetch('attendance.json');
+    if (!r.ok) throw new Error('attendance.json HTTP ' + r.status);
+    REAL_ATTENDANCE = await r.json();
+    console.log(`[attendance] loaded · Δ ${REAL_ATTENDANCE.aggregates.pp_change_2023_2025} pp · ${REAL_ATTENDANCE.aggregates.lost_child_school_days_2023_baseline.toLocaleString()} lost child-school-days`);
+    // About-page hero stat strip: filled live so the page doesn't ship with placeholders
+    const agg = REAL_ATTENDANCE.aggregates;
+    const bn = document.getElementById('about-bignum');
+    if (bn) bn.textContent = `${agg.pp_change_2023_2025 > 0 ? '+' : ''}${agg.pp_change_2023_2025} pp`;
+    const lo = document.getElementById('about-lost');
+    if (lo) lo.textContent = `~${agg.lost_child_school_days_2023_baseline.toLocaleString()}`;
+    if (CURRENT_VIEW === 'overview' && typeof defaultDetail === 'function') defaultDetail();
+    // If a school drawer is open, re-render so the attendance card lands without a manual re-click.
+    const openDrawer = document.getElementById('school-drawer');
+    if (openDrawer && openDrawer.classList.contains('open')) {
+      const drawerHeader = openDrawer.querySelector('.school-drawer-header');
+      const titleAttr = drawerHeader && drawerHeader.querySelector('[title]');
+      const name = titleAttr ? titleAttr.getAttribute('title') : null;
+      const s = name ? SCHOOLS.find(x => x.school_name === name) : null;
+      if (s) showSchool(s);
+    }
+  } catch (e) {
+    console.warn('[attendance] data unavailable — modeled burden remains as fallback:', e.message);
   }
 }
 
@@ -1279,20 +1553,8 @@ function defaultDetail() {
   document.getElementById('detail-panel').innerHTML = `
     <div class="p-5 space-y-4">
 
-      <!-- HERO: child-burden -->
-      <div class="card p-5 gradient-mesh">
-        <div class="tag" style="color:var(--brand); font-weight:600">Child-burden · 2025</div>
-        <div class="num font-bold mt-1" style="font-size: 38px; line-height: 1.05; letter-spacing: -0.02em; color:var(--text)">566,598</div>
-        <div class="text-xs mt-1" style="color:var(--text-2)">
-          student-days × hazard exposure ·
-          <span style="color:var(--text-3)">≈ 47 days/child/yr</span>
-        </div>
-        <div class="grid grid-cols-3 gap-2 mt-4 pt-3" style="border-top: 1px solid var(--border)">
-          <div><div class="text-[10px] uppercase tracking-wider" style="color:var(--text-3)">Red</div><div class="num text-sm font-semibold" style="color:var(--red)">4 schools</div></div>
-          <div><div class="text-[10px] uppercase tracking-wider" style="color:var(--text-3)">Amber</div><div class="num text-sm font-semibold" style="color:var(--amber)">12</div></div>
-          <div><div class="text-[10px] uppercase tracking-wider" style="color:var(--text-3)">Green</div><div class="num text-sm font-semibold" style="color:var(--green)">34</div></div>
-        </div>
-      </div>
+      <!-- HERO: measured attendance impact -->
+      ${attendanceHeroHTML()}
 
       <!-- AI insight -->
       ${aiInsightHTML()}
@@ -1392,9 +1654,10 @@ function showSchool(s) {
       </div>
       <div class="rounded-lg p-4 space-y-2" style="background:var(--bg); border:1px solid var(--border)">
         <div class="flex justify-between"><span class="text-xs" style="color:var(--text-3)">Overall score</span><span class="mono num" style="color:var(--text)">${overall}/100</span></div>
-        <div class="flex justify-between"><span class="text-xs" style="color:var(--text-3)">Child-burden days/yr</span><span class="mono num font-semibold" style="color:var(--brand)">${b.toLocaleString()}</span></div>
         <div class="flex justify-between"><span class="text-xs" style="color:var(--text-3)">RAG status</span><span class="rag ${ragClass(overall)}">${ragClass(overall).toUpperCase()}</span></div>
+        <div class="flex justify-between text-[11px] pt-1" style="border-top: 1px dashed var(--border); color:var(--text-3)" title="Modeled estimate from current hazard exposure × students × 365 — superseded by measured attendance below."><span>Modeled exposure (legacy)</span><span class="mono num">${b.toLocaleString()} days/yr</span></div>
       </div>
+      ${schoolAttendanceCardHTML(s)}
       <!-- Why this score? AI explainability -->
       <details class="rounded-lg p-3" style="background: var(--brand-50); border: 1px solid var(--brand-100)">
         <summary class="flex items-center justify-between">
@@ -1841,8 +2104,9 @@ fetch('schools.json').then(r => r.json()).then(rows => {
   defaultDetail();
   const initial = (location.hash || '#overview').slice(1);
   goView(VIEW_META[initial] ? initial : 'overview');
-  // Then load real scores; this re-paints if the mock was shown first
+  // Then load real scores + measured attendance in parallel; both re-paint when ready
   loadRealScores();
+  loadAttendance();
 });
 
 window.addEventListener('hashchange', () => {

@@ -1,6 +1,6 @@
 # Requirements — School Climate Hub
 
-**Status:** Draft v0.1 · 2026-05-15
+**Status:** Draft v0.1.1 · 2026-05-15 (attendance-correlation surface added; hero metric switched to measured attendance)
 **Owners:** Reza Malik (BT) · Erum Rabbani (PDLC)
 **Source of truth:** distills [PRD.md](./PRD.md) into a build-ready spec. PRD governs intent; this file governs acceptance.
 
@@ -16,8 +16,9 @@ In scope for v0.1 (UNICEF VF submission, 2026-05-17):
 - Multilingual advisory engine (EN / UR / Punjabi-Shahmukhi) with operator approval before dispatch.
 - Open School-Climate Data Layer — schema + daily refresh artefact (CC BY 4.0).
 - Public demo site + open dataset release.
+- **Measured-attendance correlation surface**: PDLC monthly attendance aggregates (2023–2025, school-level only, anonymised by default) shown alongside modeled exposure to ground the hazard story in observed outcomes. See [methodology-attendance.md](./methodology-attendance.md) and [DISCLAIMER.md §Tenant data](./DISCLAIMER.md).
 
-Out of scope for v0.1 — deferred to phases below: live LLM chat, real SMS/WhatsApp dispatch, climate–attendance ML, Sindh/KPK expansion, IoT sensors, multi-tenant SaaS. Autonomous school closure is permanently out of scope — the system never closes a school.
+Out of scope for v0.1 — deferred to phases below: live LLM chat (now in v0.1 as auth-less prototype), real SMS/WhatsApp dispatch, climate–attendance ML / counterfactual modeling, Sindh/KPK expansion, IoT sensors, multi-tenant SaaS. Autonomous school closure is permanently out of scope — the system never closes a school.
 
 ## 2. Stakeholders & primary jobs
 
@@ -40,7 +41,7 @@ Out of scope for v0.1 — deferred to phases below: live LLM chat, real SMS/What
 ### 3.2 Ingest & scoring
 - **FR-4** Daily cron-driven ingest pipeline per upstream source; failures logged, last-success timestamp surfaced.
 - **FR-5** Per-school hazard scores (heat, AQ, flood, overall) on a 0–100 scale, refreshed each ingest cycle.
-- **FR-6** Child-burden estimator = students × hazard-days, shown as hero metric on Overview.
+- **FR-6** Overview hero metric prefers **measured attendance** (PDLC SAR 2023–2025): percentage-point change 2023 → 2025 + lost child-school-days vs the 2023 baseline. The modeled child-burden estimate (students × hazard-days) is retained as a demoted "legacy" caption beneath the hero and continues to power the per-school Burden column on the matrix. If `attendance.json` is unavailable at load time, the dashboard falls back to the modeled hero.
 - **FR-7** Score explainability surface ("Why this score?") showing top contributing features.
 
 ### 3.3 Alerts & dispatch
@@ -89,7 +90,7 @@ Out of scope for v0.1 — deferred to phases below: live LLM chat, real SMS/What
 - **Upstream sources** (all open / free): ERA5, MODIS LST, Sentinel-5P, CAMS, GloFAS, WorldPop. Licence + attribution preserved in every derived artefact.
 - **Roster key:** EMIS code is canonical; lat/lon validated against district boundaries on import.
 - **Refusal list** (we deliberately do not hold): parent contacts, student-identifying attendance, health incidents tied to individuals. See [`docs/ACCESS-CONTROL.md`](./ACCESS-CONTROL.md).
-- **Voluntary tenant data** (attendance, infrastructure, health incidents) is opt-in only, stripped of student PII before ingest, k-anonymised for cross-tenant aggregates — v0.2+.
+- **Voluntary tenant data** (attendance, infrastructure, health incidents) is opt-in only, stripped of student PII before ingest, k-anonymised for cross-tenant aggregates. Cross-tenant k-anonymity stays a v0.2+ goal. In v0.1 we make one narrow exception: PDLC monthly school-level attendance aggregates for the 50 pilot schools, ingested under explicit PDLC consent and published with anonymised IDs by default. See [methodology-attendance.md](./methodology-attendance.md) and [DISCLAIMER.md §Tenant data](./DISCLAIMER.md).
 
 ## 6. Access & trust tiers (preview; full spec in ONBOARDING.md)
 

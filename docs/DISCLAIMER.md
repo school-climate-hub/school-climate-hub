@@ -121,6 +121,19 @@ The CC BY 4.0 license already includes a similar disclaimer for the dataset.
 
 ---
 
+## Tenant data — current posture
+
+As of v0.1 (UNICEF VF submission, 2026-05-17), the platform ingests one category of voluntary tenant data: **monthly school-level attendance aggregates** shared by Premier DLC for the 50 pilot schools, 2023–2025.
+
+- No student-identifying records are ingested. Each cell is a school-month mean.
+- School IDs are **anonymised** by default in all public artefacts (`school_id_01..50`). Named publication requires documented PDLC consent and a corresponding flag in [`methodology-attendance.md`](./methodology-attendance.md).
+- Attendance is presented as a **correlated outcome**, not as a predictor. Causation language is prohibited in product copy, AI assistant responses, and submission materials.
+- Public dataset releases include only the anonymised version. The PDLC source workbook itself is not republished; only its SHA-256 is recorded for reproducibility.
+
+This posture supersedes the earlier "no tenant data in v0.1" stance from REQUIREMENTS §5, narrowly and only for school-level aggregates with explicit partner consent.
+
+---
+
 ## What we promise (the positive side)
 
 Disclaimers are necessary but not the whole story. Things we DO commit to:
