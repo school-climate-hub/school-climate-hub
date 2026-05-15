@@ -106,9 +106,10 @@ Outputs language-tagged plain-text advisories. The SMS/WhatsApp sink is
 stubbed — operators plug in their own messaging gateway and parent contact
 list. The engine itself never sees parent PII.
 
-### Dashboard (`dashboard/`)
-Next.js front-end. Map of schools coloured by current vulnerability, filter
-sidebar, school detail panel, child-burden headline numbers, advisory preview.
+### Dashboard (root `index.html`)
+Single-file static HTML in v0.1 (Next.js rewrite is a v0.2 deliverable). Map of
+schools coloured by current vulnerability, filter sidebar, school detail panel,
+measured-attendance headline, advisory preview.
 
 Deploys to Vercel/Netlify. Read-only over the JSON API. No auth in v1
 (the data is public); v2 adds per-operator login for editing rosters.

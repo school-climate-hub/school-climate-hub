@@ -1,13 +1,13 @@
 """Premier DLC attendance ingestion.
 
 Parses the SAR (School Attendance Report) workbook and emits
-`dashboard/attendance.json` — a per-school monthly attendance dataset plus
+`attendance.json` — a per-school monthly attendance dataset plus
 precomputed aggregates so the dashboard does zero math at render time.
 
 Usage:
     python -m ingestion.attendance \\
       --xlsx "/path/to/SAR 2023 - 2025.xlsx" \\
-      --out  dashboard/attendance.json
+      --out  attendance.json
 
 The script is deterministic and idempotent: same xlsx in → identical JSON out.
 The xlsx is *not* committed to the public repo; we store only its sha256 in
@@ -40,7 +40,7 @@ import openpyxl
 
 ROOT = Path(__file__).resolve().parent.parent
 SCHOOLS_CSV = ROOT / "data" / "schools" / "pssp_psrp_50.csv"
-DEFAULT_OUT = ROOT / "dashboard" / "attendance.json"
+DEFAULT_OUT = ROOT / "attendance.json"
 
 YEARS = ("2023", "2024", "2025")
 SCHOOL_DAYS_PER_MONTH = 20  # working-day estimate; see methodology note

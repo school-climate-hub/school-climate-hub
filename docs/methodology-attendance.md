@@ -2,7 +2,7 @@
 
 **Status:** v0.1 draft, 2026-05-15
 **Source dataset:** Premier DLC School Attendance Report (SAR), 2023 / 2024 / 2025
-**Output artefact:** [`dashboard/attendance.json`](../dashboard/attendance.json)
+**Output artefact:** [`attendance.json`](../attendance.json)
 **Generator:** [`ingestion/attendance.py`](../ingestion/attendance.py)
 
 This note documents how we derive the measured-attendance figures shown on the dashboard and in the AI assistant. Read it before citing any of these numbers in external materials.
@@ -85,7 +85,7 @@ A controlled analysis (panel regression with school fixed effects, cluster fixed
 ```bash
 python -m ingestion.attendance \
   --xlsx "/path/to/SAR 2023 - 2025.xlsx" \
-  --out  dashboard/attendance.json
+  --out  attendance.json
 ```
 
 Add `--reveal-emis` only when PDLC consent is documented.
