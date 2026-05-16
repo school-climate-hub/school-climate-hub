@@ -61,7 +61,7 @@ school-climate-hub/
 
 ## Documentation
 
-- [PRD](./docs/PRD.md) — what the product does and why (concise, v0.1)
+- [PRD](./docs/PRD.md) — what the product does and why (v0.2)
 - [Requirements](./docs/REQUIREMENTS.md) — build-ready functional + non-functional spec
 - [Roadmap](./docs/ROADMAP.md) — phased plan v0.1 → v0.5
 - [Architecture](./docs/architecture.md) — system design
