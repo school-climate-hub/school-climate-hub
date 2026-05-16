@@ -95,16 +95,14 @@ async function loadAttendanceDigest(): Promise<string> {
   return JSON.stringify({ note: "attendance dataset unavailable" });
 }
 
-function buildSystemPrompt(scoresJson: string, attendanceJson: string): string {
-  return `You are the School Climate Hub assistant, helping a school operator review climate-hazard data for 50 schools in Gujranwala, Pakistan.
+// System prompt structured as three cache-control blocks so Anthropic can reuse
+// the static prefix across requests. Cache TTL is ~5 min; we expect operator
+// chat to hit the same prefix many times within that window during a session.
+// Token economics: ~85% input-token discount on cached prefix on cache-hit.
+// Reference: https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching
+type SystemBlock = { type: "text"; text: string; cache_control?: { type: "ephemeral" } };
 
-CURRENT DATASET — hazard scores + forecasts (refreshed periodically; treat as the only source of truth):
-${scoresJson}
-
-MEASURED ATTENDANCE — Premier DLC monthly School Attendance Report, 2023–2025 (correlated outcome, NOT a predictor; framing rules below):
-${attendanceJson}
-
-RULES:
+const RULES_BODY = `RULES:
 - Answer ONLY from the two datasets above. If the user asks about anything not in those datasets (e.g. specific historical events, schools not in the list, broader policy questions), respond: "I can only answer questions about the 50 schools in the current dataset." Exception: when discussing the 2023→2025 attendance decline you may briefly acknowledge that non-climate factors (post-COVID, economic, school-management changes) also contribute, since this acknowledgement is required by the methodology and prevents false-causation claims — do not elaborate beyond a clause.
 - Cite school names exactly as they appear in 'school_name'.
 - Never invent numbers. If you compute something (e.g. averages, comparisons), derive it from the dataset.
@@ -119,6 +117,30 @@ RULES:
 - Never give medical, legal, or operational advice as instructions — only as suggestions for the operator's consideration.
 
 Keep your tone professional, calm, and operator-facing. You are a tool, not a personality.`;
+
+function buildSystemPrompt(scoresJson: string, attendanceJson: string): SystemBlock[] {
+  // Three breakpoints (Anthropic allows up to 4). All marked ephemeral for ~5 min cache.
+  // Static block (role + rules) almost always hits; dataset blocks miss only when
+  // upstream JSON changes (every ~5 min ingestion refresh).
+  return [
+    {
+      type: "text",
+      text:
+        `You are the School Climate Hub assistant, helping a school operator review climate-hazard data for 50 schools in Gujranwala, Pakistan.\n\n` +
+        RULES_BODY,
+      cache_control: { type: "ephemeral" },
+    },
+    {
+      type: "text",
+      text: `CURRENT DATASET — hazard scores + forecasts (refreshed periodically; treat as the only source of truth):\n${scoresJson}`,
+      cache_control: { type: "ephemeral" },
+    },
+    {
+      type: "text",
+      text: `MEASURED ATTENDANCE — Premier DLC monthly School Attendance Report, 2023–2025 (correlated outcome, NOT a predictor; framing rules below):\n${attendanceJson}`,
+      cache_control: { type: "ephemeral" },
+    },
+  ];
 }
 
 async function handleChat(request: Request, env: Env): Promise<Response> {

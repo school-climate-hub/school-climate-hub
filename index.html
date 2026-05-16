@@ -681,14 +681,14 @@
               </p>
             </div>
             <div class="flex flex-col gap-2 shrink-0">
-              <button class="btn primary"><span aria-hidden="true">⤓</span> Download full dataset (.zip)</button>
-              <button class="btn btn-sm">View on GitHub</button>
+              <a class="btn primary" href="/downloads/scs-v0.1.zip" download><span aria-hidden="true">⤓</span> Download full bundle (.zip)</a>
+              <a class="btn btn-sm" href="https://github.com/school-climate-hub/school-climate-hub" target="_blank" rel="noopener">View on GitHub ↗</a>
             </div>
           </div>
           <div class="grid grid-cols-4 gap-3 mt-5 pt-5 border-t border-[color:var(--border)]">
             <div><div class="tag">Schools</div><div class="text-2xl font-semibold mt-1 num" style="color:var(--text)">50</div></div>
-            <div><div class="tag">Date range</div><div class="text-2xl font-semibold mt-1 num" style="color:var(--text)">2015→</div></div>
-            <div><div class="tag">Daily rows</div><div class="text-2xl font-semibold mt-1 num" style="color:var(--text)">~3.6M</div></div>
+            <div><div class="tag">Years (attendance)</div><div class="text-2xl font-semibold mt-1 num" style="color:var(--text)">2023→25</div></div>
+            <div><div class="tag">Forecast horizon</div><div class="text-2xl font-semibold mt-1 num" style="color:var(--text)">15d</div></div>
             <div><div class="tag">License</div><div class="text-2xl font-semibold mt-1" style="color:var(--text)">CC BY 4.0</div></div>
           </div>
         </div>
@@ -696,44 +696,56 @@
         <div class="grid grid-cols-2 gap-4">
           <div class="card p-5">
             <div class="flex items-center justify-between mb-2">
-              <div class="text-sm font-medium mono" style="color:var(--text)">schools.csv</div>
-              <button class="btn btn-sm"><span aria-hidden="true">⤓</span> 8 KB</button>
+              <div class="text-sm font-medium mono" style="color:var(--text)">schools.json</div>
+              <a class="btn btn-sm" href="/schools.json" download><span aria-hidden="true">⤓</span> JSON</a>
             </div>
-            <div class="text-xs mb-3" style="color:var(--text-3)">School roster — primary reference table.</div>
-            <div class="code">emis_code,school_name,country,admin1,admin2,operator,...
-34110214,GPS Kot Bhano Shah,PAK,Punjab,Gujranwala,PDLC,...
-34110621,GGPS Iftikhar Colony,PAK,Punjab,Gujranwala,PDLC,...</div>
+            <div class="text-xs mb-3" style="color:var(--text-3)">50-school roster: EMIS, cluster, students, lat/lon, tehsil.</div>
+            <div class="code">{
+  "emis_code": 34110214,
+  "school_name": "GPS Kot Bhano Shah",
+  "cluster": "C-1", "tehsil": "Gujranwala",
+  "students": 739, "lat": 32.13, "lon": 74.07
+}</div>
+            <div class="mt-2"><a class="btn btn-sm" href="/downloads/schools.csv" download><span aria-hidden="true">⤓</span> schools.csv</a></div>
           </div>
           <div class="card p-5">
             <div class="flex items-center justify-between mb-2">
-              <div class="text-sm font-medium mono" style="color:var(--text)">exposure_daily.parquet</div>
-              <button class="btn btn-sm"><span aria-hidden="true">⤓</span> 42 MB</button>
+              <div class="text-sm font-medium mono" style="color:var(--text)">scores.json</div>
+              <a class="btn btn-sm" href="/scores.json" download><span aria-hidden="true">⤓</span> JSON</a>
             </div>
-            <div class="text-xs mb-3" style="color:var(--text-3)">Daily long-format climate metrics, partitioned by year.</div>
-            <div class="code">emis_code | date       | source     | metric    | value
-34110214  | 2025-06-12 | era5       | t2m_max   | 44.2
-34110214  | 2025-06-12 | modis_lst  | lst_day   | 47.8
-34110214  | 2025-06-12 | sentinel5p | no2_col   | 1.4e-4</div>
+            <div class="text-xs mb-3" style="color:var(--text-3)">Live per-school hazard scores + 10-day HRES + 15-day ENS forecast.</div>
+            <div class="code">"emis_code": 34110214,
+"scores": { "heat": 44, "aq": 0, "flood": 0, "overall": 22 },
+"raw":    { "t2m_max_c": 36.4, "precip_24h_mm_max": 0.0 },
+"forecast":     [ {"date":"2026-05-13","t2m_max_c":35.6,...}, ... ],
+"forecast_ens": [ {"date":"2026-05-14","t2m_p50":35.5,"p_red":0,...}, ... ]</div>
+            <div class="mt-2"><a class="btn btn-sm" href="/downloads/scores.csv" download><span aria-hidden="true">⤓</span> scores.csv (current snapshot)</a></div>
           </div>
           <div class="card p-5">
             <div class="flex items-center justify-between mb-2">
-              <div class="text-sm font-medium mono" style="color:var(--text)">exposure_school_year.parquet</div>
-              <button class="btn btn-sm"><span aria-hidden="true">⤓</span> 1.1 MB</button>
+              <div class="text-sm font-medium mono" style="color:var(--text)">attendance.json</div>
+              <a class="btn btn-sm" href="/attendance.json" download><span aria-hidden="true">⤓</span> JSON</a>
             </div>
-            <div class="text-xs mb-3" style="color:var(--text-3)">Pre-aggregated annual summaries — fast for dashboards.</div>
-            <div class="code">emis_code | year | metric            | agg   | value
-34110214  | 2025 | heat_stress_days  | count | 47
-34110214  | 2025 | smog_days         | count | 31</div>
+            <div class="text-xs mb-3" style="color:var(--text-3)">PDLC monthly attendance 2023–2025 · anonymised school IDs by default.</div>
+            <div class="code">"aggregates": {
+  "annual_mean": { "2023": 0.93, "2024": 0.91, "2025": 0.89 },
+  "pp_change_2023_2025": -3.7,
+  "lost_child_school_days_2023_baseline": 93427
+}</div>
+            <div class="mt-2"><a class="btn btn-sm" href="/downloads/attendance_aggregates.csv" download><span aria-hidden="true">⤓</span> attendance_aggregates.csv</a></div>
           </div>
           <div class="card p-5">
             <div class="flex items-center justify-between mb-2">
-              <div class="text-sm font-medium mono" style="color:var(--text)">vulnerability_scores.csv</div>
-              <button class="btn btn-sm"><span aria-hidden="true">⤓</span> 6 KB</button>
+              <div class="text-sm font-medium mono" style="color:var(--text)">methodology-attendance.md</div>
+              <a class="btn btn-sm" href="/downloads/methodology-attendance.md" download><span aria-hidden="true">⤓</span> MD</a>
             </div>
-            <div class="text-xs mb-3" style="color:var(--text-3)">Latest 0–100 scores per school per hazard.</div>
-            <div class="code">emis_code,heat,aq,flood,overall,burden_yr
-34110214,92,71,34,85,11186
-34110621,87,68,28,76,13640</div>
+            <div class="text-xs mb-3" style="color:var(--text-3)">Source, collection method, coverage, causation framing, privacy posture.</div>
+            <div class="code"># Methodology — Attendance Data
+
+**Source:** Premier DLC SAR (School Attendance Report)
+**Collection:** manual monthly register (not biometric)
+**Causation framing:** correlated outcome, NOT a climate-caused decline.</div>
+            <div class="mt-2"><a class="btn btn-sm" href="https://github.com/school-climate-hub/school-climate-hub/blob/main/docs/methodology-attendance.md" target="_blank" rel="noopener">Read in repo ↗</a></div>
           </div>
         </div>
 
@@ -1271,6 +1283,100 @@ function attendanceForEmis(emis) {
 // School-detail attendance card. Drives the operator's case for the school:
 // observed annual means, decline, May anomaly. Falls back gracefully if the
 // dataset hasn't loaded or this school is one of the 2 that joined in 2025.
+// Per-school 15-day forecast sparkline. Hand-rolled SVG (no library).
+// Merges HRES (10-day deterministic) with ENS (15-day probabilistic) by date.
+// Plots ENS p10–p90 band, HRES line for days 1–10, ENS p50 dashed for days 11–15,
+// the heat-red threshold reference, and P(red) markers per day.
+function schoolForecastSparklineHTML(s) {
+  if (!REAL_SCORES || !REAL_SCORES[s.emis_code]) return '';
+  const rec = REAL_SCORES[s.emis_code];
+  const hres = Array.isArray(rec.forecast) ? rec.forecast : [];
+  const ens = Array.isArray(rec.forecast_ens) ? rec.forecast_ens : [];
+  if (hres.length === 0 && ens.length === 0) return '';
+
+  // Merge by date
+  const byDate = new Map();
+  for (const d of hres) byDate.set(d.date, { date: d.date, hres: d.t2m_max_c });
+  for (const d of ens) {
+    const row = byDate.get(d.date) || { date: d.date };
+    row.p10 = d.t2m_p10; row.p50 = d.t2m_p50; row.p90 = d.t2m_p90; row.p_red = d.p_red;
+    byDate.set(d.date, row);
+  }
+  const days = [...byDate.values()].sort((a, b) => a.date.localeCompare(b.date));
+
+  // Plot geometry
+  const W = 320, H = 130, L = 28, R = 8, T = 18, B = 24;
+  const plotW = W - L - R;
+  const plotH = H - T - B;
+
+  // Y scale clamped to a sensible range
+  const yMin = 25, yMax = Math.max(50, THRESHOLDS.heatRedC + 4);
+  const y = t => T + plotH * (1 - (t - yMin) / (yMax - yMin));
+  const x = i => days.length > 1 ? L + plotW * (i / (days.length - 1)) : L + plotW / 2;
+
+  // ENS band path (p90 across, then p10 back)
+  const top = [], bot = [];
+  let ensLine = '', hresLine = '';
+  const dots = [];
+  days.forEach((d, i) => {
+    const px = x(i);
+    if (d.p90 != null) top.push(`${px},${y(d.p90)}`);
+    if (d.p10 != null) bot.push(`${px},${y(d.p10)}`);
+    if (d.p50 != null) ensLine += (ensLine ? ' L ' : 'M ') + `${px},${y(d.p50)}`;
+    if (d.hres != null) hresLine += (hresLine ? ' L ' : 'M ') + `${px},${y(d.hres)}`;
+    if (d.p_red != null && d.p_red > 0) {
+      dots.push({ px, p: d.p_red });
+    }
+  });
+  const bandPath = (top.length && bot.length)
+    ? `M ${top.join(' L ')} L ${bot.reverse().join(' L ')} Z`
+    : '';
+
+  // Day labels every 3rd day
+  let dayLabels = '';
+  days.forEach((d, i) => {
+    if (i === 0 || i % 3 === 2 || i === days.length - 1) {
+      const dt = new Date(d.date);
+      const lbl = dt.toLocaleDateString('en-PK', { day: 'numeric', month: 'short' });
+      dayLabels += `<text x="${x(i)}" y="${H-6}" text-anchor="middle" font-size="9" fill="var(--text-3)">${lbl}</text>`;
+    }
+  });
+
+  const redY = y(THRESHOLDS.heatRedC);
+  const amberY = y(THRESHOLDS.heatAmberC);
+
+  const pRedDots = dots.map(({ px, p }) =>
+    `<circle cx="${px}" cy="${T+4}" r="3" fill="var(--red)" fill-opacity="${Math.min(1, p).toFixed(2)}"><title>P(red) = ${(p*100).toFixed(0)}%</title></circle>`
+  ).join('');
+
+  return `
+    <div class="rounded-lg p-3" style="background:var(--bg); border:1px solid var(--border)">
+      <div class="flex items-center justify-between mb-1">
+        <div class="tag">15-day forecast</div>
+        <div class="text-[10px] mono" style="color:var(--text-3)">ECMWF HRES + ENS</div>
+      </div>
+      <svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" style="display:block" role="img" aria-label="15-day temperature forecast with deterministic line and ensemble uncertainty band">
+        <text x="${L-4}" y="${y(40)+3}" text-anchor="end" font-size="9" fill="var(--text-3)">40°</text>
+        <text x="${L-4}" y="${y(30)+3}" text-anchor="end" font-size="9" fill="var(--text-3)">30°</text>
+        <line x1="${L}" y1="${amberY}" x2="${W-R}" y2="${amberY}" stroke="var(--amber)" stroke-width="1" stroke-dasharray="2,3" opacity="0.4"/>
+        <line x1="${L}" y1="${redY}" x2="${W-R}" y2="${redY}" stroke="var(--red)" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+        <text x="${W-R-2}" y="${redY-3}" text-anchor="end" font-size="9" fill="var(--red)">red ${THRESHOLDS.heatRedC}°</text>
+        ${bandPath ? `<path d="${bandPath}" fill="var(--brand)" fill-opacity="0.10" stroke="none"/>` : ''}
+        ${ensLine ? `<path d="${ensLine}" fill="none" stroke="var(--brand)" stroke-width="1" stroke-dasharray="3,2" opacity="0.55"/>` : ''}
+        ${hresLine ? `<path d="${hresLine}" fill="none" stroke="var(--brand)" stroke-width="1.6"/>` : ''}
+        ${pRedDots}
+        ${dayLabels}
+      </svg>
+      <div class="flex flex-wrap gap-3 text-[10px] mt-1" style="color:var(--text-3)">
+        <span><span style="display:inline-block;width:10px;height:2px;background:var(--brand);vertical-align:middle"></span> HRES 10-day</span>
+        <span><span style="display:inline-block;width:10px;height:2px;background:var(--brand);opacity:0.55;vertical-align:middle;border-top:1px dashed var(--brand)"></span> ENS p50</span>
+        <span><span style="display:inline-block;width:10px;height:6px;background:var(--brand);opacity:0.2;vertical-align:middle"></span> p10–p90 band</span>
+        <span><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--red);vertical-align:middle"></span> P(red) per day</span>
+      </div>
+    </div>
+  `;
+}
+
 function schoolAttendanceCardHTML(s) {
   if (!REAL_ATTENDANCE) return '';  // hide entirely until data lands
   const rec = attendanceForEmis(s.emis_code);
@@ -1658,6 +1764,7 @@ function showSchool(s) {
         <div class="flex justify-between text-[11px] pt-1" style="border-top: 1px dashed var(--border); color:var(--text-3)" title="Modeled estimate from current hazard exposure × students × 365 — superseded by measured attendance below."><span>Modeled exposure (legacy)</span><span class="mono num">${b.toLocaleString()} days/yr</span></div>
       </div>
       ${schoolAttendanceCardHTML(s)}
+      ${schoolForecastSparklineHTML(s)}
       <!-- Why this score? AI explainability -->
       <details class="rounded-lg p-3" style="background: var(--brand-50); border: 1px solid var(--brand-100)">
         <summary class="flex items-center justify-between">
