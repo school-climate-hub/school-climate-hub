@@ -6,7 +6,7 @@ PRD updates regenerate by re-running the script.
 
 Outputs:
   - docs/PRD.docx  (in-repo copy)
-  - _Claude/Eng/PDLC/BT-Eng-School-Climate-Hub-PRD-260516v2.0.docx  (Drive)
+  - _Claude/Eng/PDLC/BT-Eng-School-Climate-Hub-PRD-260517v2.1.docx  (Drive)
 
 Supported markdown subset:
   - # / ## / ### headings
@@ -41,7 +41,7 @@ PRD_MD = ROOT / "docs" / "PRD.md"
 PRD_DOCX = ROOT / "docs" / "PRD.docx"
 DRIVE_COPY = Path(
     "/Users/rezamalik/Library/CloudStorage/GoogleDrive-reza@beaconhouse.tech/"
-    "My Drive/_Claude/Eng/PDLC/BT-Eng-School-Climate-Hub-PRD-260516v2.0.docx"
+    "My Drive/_Claude/Eng/PDLC/BT-Eng-School-Climate-Hub-PRD-260517v2.1.docx"
 )
 
 
