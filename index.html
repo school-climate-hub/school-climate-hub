@@ -537,6 +537,11 @@
   /* Flip the arrow to the bottom-left of the chip when chip sits in the schools table — avoids overlap with the row above */
   #rag-tbody .acc-tip { bottom: auto; top: calc(100% + 10px); }
   #rag-tbody .acc-tip-arrow { top: -7px; bottom: auto; transform: translateX(-50%) rotate(-135deg); }
+  /* Inside the school drawer, the drawer-body has overflow-y:auto which clips
+     absolutely-positioned tooltips. Suppress chip tooltips here — the drawer
+     already renders the full accreditation card with inline summaries below. */
+  .school-drawer .acc-tip { display: none !important; }
+  .school-drawer .acc-chip-wrap { cursor: default; }
 
   /* About view uses the app's existing card/tag/chip/gradient-mesh system —
      no custom CSS needed beyond what the dashboard already ships. */
