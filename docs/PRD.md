@@ -15,6 +15,7 @@
 - Measured outcome: PDLC monthly attendance 2023–2025 — currently shows **−3.7 pp** decline across the pilot 50 (≈ 93,427 lost child-school-days vs the 2023 baseline)
 - AI grounding via Anthropic Claude, refusing anything it cannot ground in the dataset
 - Views: Overview · Schools · School detail · Open Data · About · Settings
+- **Accreditations surface**: green-school programme status (Punjab Green School / EPCCD, WWF-Pakistan, UNESCO GEP, Eco-Schools, PSSF) rendered on each school via verified-only chips on the Schools matrix and a full card with inline summaries in the school drawer. Verification pipeline (partner-attested) lands in v0.3; v0.1 ships with curated verified records only.
 - Open-source: Apache-2.0 code; CC BY 4.0 dataset; per-school exposure data anonymised by default
 
 ---
@@ -102,6 +103,15 @@ Carries forward all v0.1 FR. New + changed:
 | FR-N23 | Chat is auth-gated (operator-only); 30 queries/user/day in KV |
 | FR-N24 | Anthropic prompt caching via `cache_control` on the dataset prefix; ~85% input-token cost reduction |
 | FR-N25 | Chat content not logged by default (metadata only: caller, latency, token counts) |
+
+### Accreditations
+| # | Requirement |
+|---|---|
+| FR-N26 | Only records with `state = 'verified'` render on public surfaces (Schools matrix column, Overview rail, school drawer). Operator-declared records persist in the data layer but stay hidden until partner verification. |
+| FR-N27 | Verification is a partner-attested operation in v0.3 (EPCCD Punjab, WWF-Pakistan, UNESCO GEP). v0.2 ships a 2× admin "Mark verified" override with full audit-log entry + attached evidence URL. |
+| FR-N28 | Drawer renders the full label, source authority, year, and inline summary per accreditation. Compact chips on the Schools matrix surface `<TYPE> · <YEAR>` with a hover tooltip carrying the same body. Tooltips are suppressed inside the school drawer (overflow-clipped); the inline card carries the body instead. |
+| FR-N29 | Accreditation badge palette is colour-coded per authority and consistent across surfaces (Schools matrix, Overview rail, drawer, About explainer card). |
+| FR-N30 | Accreditations are exposed in the Open Data Layer as `accreditations.csv` (verified-only); operator-declared records do **not** export until verified. |
 
 ### Data-subject rights (DSR)
 | # | Requirement |

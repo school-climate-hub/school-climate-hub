@@ -65,6 +65,22 @@ Latest scores. Refreshed nightly.
 | `child_burden_days_yr` | int | Annual student-hazard-days. |
 | `computed_at` | timestamp | Score timestamp. |
 
+### `accreditations.csv`
+Verified-only green-school programme records. Operator-declared records remain
+internal until partner-attested (see v0.3 verification pipeline in ROADMAP.md).
+
+| Column | Type | Description |
+|---|---|---|
+| `emis_code` | int | FK → `schools.emis_code`. |
+| `type` | string | Programme code: `PGS`, `WWF`, `UGEP`, `ECO`, `PSSF`. |
+| `label` | string | Human-readable programme name. |
+| `source` | string | Issuing authority (e.g. `EPCCD Punjab`, `WWF-Pakistan`, `UNESCO GEP`). |
+| `tier` | string | Programme tier where applicable (e.g. `Bronze`, `Silver`, `Gold`, `Green Flag`). `—` if none. |
+| `year` | int | Year of accreditation / latest renewal. |
+| `state` | string | Always `verified` in this file. |
+| `evidence_url` | string | URL to public attestation (where available). |
+| `verified_at` | timestamp | When the verification was recorded in our system. |
+
 ## Conventions
 
 - Time zone: all dates are in UTC.

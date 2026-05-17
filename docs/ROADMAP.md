@@ -34,6 +34,7 @@ This roadmap is the time-phased plan behind [REQUIREMENTS.md](./REQUIREMENTS.md)
 
 ### Deliverables
 - Operator Console (50-school single tenant), Open Data Layer schema + first release, advisory engine with mock content in 3 languages.
+- **Accreditations surface** — curated verified records for PGS, WWF, UGEP, ECO, PSSF rendered as chips on the Schools matrix + Overview rail, and as a full inline card in the school drawer. Explainer card in About.
 - Docs: README, PRD, REQUIREMENTS, ROADMAP, architecture, ONBOARDING, ACCESS-CONTROL, DISCLAIMER.
 - Demo video + UNICEF submission package PDF.
 
@@ -72,6 +73,7 @@ All [REQUIREMENTS §7](./REQUIREMENTS.md) acceptance checks tick. Submission ack
 - **Parent / student PWA** — phone-OTP subscriptions; any school, any tenant; no identity verification.
 - **Channels** — web push + SMS + WhatsApp; multilingual auto-detect.
 - **Voluntary tenant data ingest** — opt-in attendance, infrastructure status, health-incident counts; student PII stripped pre-ingest; k-anonymised cross-tenant aggregates.
+- **Accreditations verification pipeline** — partner-attested verification flow (EPCCD Punjab, WWF-Pakistan, UNESCO GEP). Operator-declared records become eligible for public surfacing once a partner authority confirms. Bulk import of historical accreditation rosters from each authority.
 - **Trust & safety** — abuse reporting, rate limits on advisory subscriptions, transparent data-use page.
 
 ### Exit criteria

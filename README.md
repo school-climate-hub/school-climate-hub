@@ -15,6 +15,7 @@ Three modules, each independently useful, designed to work together:
 | **Climate Vulnerability Dashboard** | Per-school heat, air-quality, flood, and rainfall exposure scores using open satellite + reanalysis data. EMIS-keyed. | Prototype |
 | **Parent Advisory Engine** | Template-driven, multilingual (English / Urdu / Punjabi) advisory text generator triggered by daily forecasts. Stubbed SMS/WhatsApp sink. | Prototype |
 | **Open School-Climate Data Layer** | The headline open-source artefact: a clean, school-level, EMIS-keyed climate exposure dataset other operators can build models against. Daily refresh. | Schema |
+| **Accreditations Surface** | Verified green-school programme records (Punjab Green School / EPCCD, WWF-Pakistan, UNESCO GEP, Eco-Schools, PSSF) attached to each school. Shown as chips on the Schools matrix and as an inline card in the school drawer. | Prototype (verification pipeline v0.3) |
 
 ## Why this exists
 

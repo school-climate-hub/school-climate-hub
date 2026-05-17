@@ -53,8 +53,9 @@ Out of scope for v0.1 — deferred to phases below: live LLM chat (now in v0.1 a
 - **FR-13** Every dispatch and decision is audit-logged with operator ID, timestamp, channels, template version.
 
 ### 3.4 Schools matrix & drawer
-- **FR-14** Sortable RAG matrix of all 50 schools; columns include scores, enrolment, last-alert timestamp.
-- **FR-15** School detail drawer opens over any view; shows scores, raw exposure, explainability, recent alerts.
+- **FR-14** Sortable RAG matrix of all 50 schools; columns include scores, enrolment, last-alert timestamp, and verified accreditations.
+- **FR-15** School detail drawer opens over any view; shows scores, raw exposure, explainability, recent alerts, and an Accreditations card (full label, source authority, year, summary, learn-more link).
+- **FR-15a** Accreditations render verified-only on public surfaces. Compact chips (`<TYPE> · <YEAR>`) appear in the Schools matrix and Overview rail; the drawer shows a non-compact card with inline summary. Tooltips are suppressed inside the drawer because the inline card already carries the body.
 
 ### 3.5 Open Data Layer
 - **FR-16** Daily-refreshed dataset published per the schema in [`open_data_layer/schema.md`](../open_data_layer/schema.md).
@@ -90,6 +91,7 @@ Out of scope for v0.1 — deferred to phases below: live LLM chat (now in v0.1 a
 - **Upstream sources** (all open / free): ERA5, MODIS LST, Sentinel-5P, CAMS, GloFAS, WorldPop. Licence + attribution preserved in every derived artefact.
 - **Roster key:** EMIS code is canonical; lat/lon validated against district boundaries on import.
 - **Refusal list** (we deliberately do not hold): parent contacts, student-identifying attendance, health incidents tied to individuals. See [`docs/ACCESS-CONTROL.md`](./ACCESS-CONTROL.md).
+- **Accreditations**: per-school green-school programme records (Punjab Green School / EPCCD, WWF-Pakistan, UNESCO GEP, Eco-Schools, PSSF). Each record carries `type`, `tier`, `year`, `state ∈ {declared, verified}`. Only `state = verified` exports publicly (`accreditations.csv` in the Open Data Layer); declared records are operator-owned data until partner verification.
 - **Voluntary tenant data** (attendance, infrastructure, health incidents) is opt-in only, stripped of student PII before ingest, k-anonymised for cross-tenant aggregates. Cross-tenant k-anonymity stays a v0.2+ goal. In v0.1 we make one narrow exception: PDLC monthly school-level attendance aggregates for the 50 pilot schools, ingested under explicit PDLC consent and published with anonymised IDs by default. See [methodology-attendance.md](./methodology-attendance.md) and [DISCLAIMER.md §Tenant data](./DISCLAIMER.md).
 
 ## 6. Access & trust tiers (preview; full spec in ONBOARDING.md)
