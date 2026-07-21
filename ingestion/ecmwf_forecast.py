@@ -23,9 +23,9 @@ from __future__ import annotations
 import json
 import shutil
 import time
-from datetime import datetime, timedelta, timezone
+from collections.abc import Iterable
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
-from typing import Iterable
 
 import requests
 from requests.adapters import HTTPAdapter
@@ -69,7 +69,7 @@ def _cycle_published(cycle: str, stream: str = "oper") -> bool:
 
 def latest_cycle() -> str:
     """Most recent published 00z/12z cycle (skip 06z/18z — only 90h horizon)."""
-    now = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0)
+    now = datetime.now(UTC).replace(minute=0, second=0, microsecond=0)
     # Snap to nearest 12h boundary
     now = now.replace(hour=(now.hour // 12) * 12)
     for back in range(0, 10):
