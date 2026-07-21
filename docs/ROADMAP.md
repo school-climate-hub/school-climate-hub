@@ -50,7 +50,7 @@ All [REQUIREMENTS §7](./REQUIREMENTS.md) acceptance checks tick. Submission ack
 **Goal:** turn the pilot into a multi-tenant hosted product at `schoolclimatehub.org`, plus a self-host distribution. Conditional on UNICEF VF Phase 1 funding.
 
 ### Workstreams
-- **Multi-tenant rewrite** — tenant model, Postgres RLS, ABAC, per-tenant ingest config.
+- **Multi-operator support — instances first** — early external operators are served as separate instances (self-host or hosted-per-operator); the true multi-tenant rewrite (tenant model, Postgres RLS, ABAC, per-tenant ingest config) proceeds once a committed second operator justifies it.
 - **Self-service operator onboarding** — T2 verification workflow (see [ONBOARDING.md](./ONBOARDING.md)), including conflict resolution for overlapping operator claims.
 - **Hosted free SaaS** — `schoolclimatehub.org`; static front-end + stateless API + cron ingest.
 - **Self-host distribution** — Docker Compose bundle; `make up` brings up ingest + API + dashboard.
