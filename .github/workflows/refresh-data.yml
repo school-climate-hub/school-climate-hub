@@ -1,0 +1,85 @@
+# Daily data refresh — issue #3.
+#
+# Runs the full pipeline (ERA5 → ECMWF HRES/ENS → scoring) and publishes the
+# refreshed scores.json to the unprotected `data` branch, which the dashboard
+# and the chat Worker read first (with the bundled snapshot as fallback).
+# `main` stays protected; this workflow never touches it.
+#
+# Secrets required: CDSAPI_URL, CDSAPI_KEY (Copernicus CDS account).
+
+name: Refresh data
+
+on:
+  schedule:
+    - cron: "30 2 * * *"   # daily 02:30 UTC (07:30 PKT)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install package
+        run: pip install -e .
+
+      - name: Fetch ERA5 (last 7 available days)
+        env:
+          CDSAPI_URL: ${{ secrets.CDSAPI_URL }}
+          CDSAPI_KEY: ${{ secrets.CDSAPI_KEY }}
+          ERA5_END_LAG_DAYS: "6"   # ERA5 publishes with ~5-day lag
+        run: python -m ingestion.era5
+
+      - name: Fetch ECMWF forecasts (HRES 10-day + ENS 15-day)
+        run: python -m ingestion.ecmwf_forecast
+
+      - name: Compute per-school scores
+        run: python -m scoring.vulnerability
+
+      - name: Publish scores.json to data branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          PUB=$(mktemp -d)
+          REMOTE="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          # Keep refresh history: commit on top of the existing data branch.
+          if git clone --quiet --depth 1 --branch data "$REMOTE" "$PUB"; then
+            :
+          else
+            git -C "$PUB" init --quiet -b data
+            git -C "$PUB" remote add origin "$REMOTE"
+          fi
+          cp scores.json "$PUB/scores.json"
+          cd "$PUB"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scores.json
+          if git diff --cached --quiet; then
+            echo "No data change — nothing to publish."
+            exit 0
+          fi
+          git commit --quiet -m "data: refresh scores.json ($(date -u +%Y-%m-%dT%H:%MZ))"
+          git push --quiet origin data
+
+      - name: Alert on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue comment 3 --repo "$GITHUB_REPOSITORY" --body \
+            "⚠️ Scheduled data refresh **failed** — [run $GITHUB_RUN_ID]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID). The site is serving the last successful refresh from the \`data\` branch."

@@ -562,6 +562,7 @@
         <div>
           <div class="text-sm font-semibold leading-tight" style="color:var(--text)">School Climate Hub</div>
           <div class="text-[11px]" style="color:var(--text-3)">Prototype · v0.1</div>
+          <div class="text-[11px]" id="data-freshness" style="color:var(--text-3)"></div>
         </div>
       </a>
     </div>
@@ -760,7 +761,7 @@
           <div class="card p-5">
             <div class="flex items-center justify-between mb-2">
               <div class="text-sm font-medium mono" style="color:var(--text)">scores.json</div>
-              <a class="btn btn-sm" href="/scores.json" download><span aria-hidden="true">⤓</span> JSON</a>
+              <a class="btn btn-sm" href="https://raw.githubusercontent.com/school-climate-hub/school-climate-hub/data/scores.json" target="_blank" rel="noopener"><span aria-hidden="true">⤓</span> JSON</a>
             </div>
             <div class="text-xs mb-3" style="color:var(--text-3)">Live per-school hazard scores + 10-day HRES + 15-day ENS forecast.</div>
             <div class="code">"emis_code": 34110214,
@@ -1549,22 +1550,38 @@ function attendanceHeroHTML() {
 
 // Fetch scores.json on load. Populates REAL_SCORES so subsequent mockScore()
 // calls return live values. Re-renders any view that depends on scores.
+// Sources in priority order: the `data` branch (refreshed daily by the
+// scheduled pipeline) first, then the snapshot bundled with the site.
+const SCORES_SOURCES = [
+  'https://raw.githubusercontent.com/school-climate-hub/school-climate-hub/data/scores.json',
+  'scores.json',
+];
 async function loadRealScores() {
-  try {
-    const r = await fetch('scores.json', { cache: 'no-cache' });
-    if (!r.ok) throw new Error('scores.json HTTP ' + r.status);
-    const data = await r.json();
-    REAL_SCORES = {};
-    for (const s of data.schools) REAL_SCORES[s.emis_code] = s;
-    SCORES_GENERATED_AT = data.generated_at;
-    console.log(`[scores] loaded ${data.schools.length} schools · generated ${SCORES_GENERATED_AT}`);
-    // Re-paint anything that's already rendered
-    if (typeof paintMarkers === 'function') paintMarkers();
-    if (CURRENT_VIEW === 'overview' && typeof defaultDetail === 'function') defaultDetail();
-    if (CURRENT_VIEW === 'schools' && typeof renderRagTable === 'function') renderRagTable();
-  } catch (e) {
-    console.warn('[scores] live data unavailable — using deterministic fallback:', e.message);
+  let data = null;
+  for (const src of SCORES_SOURCES) {
+    try {
+      const r = await fetch(src, { cache: 'no-cache' });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      data = await r.json();
+      break;
+    } catch (e) {
+      console.warn(`[scores] ${src} unavailable:`, e.message);
+    }
   }
+  if (!data) {
+    console.warn('[scores] no live source available — using deterministic fallback');
+    return;
+  }
+  REAL_SCORES = {};
+  for (const s of data.schools) REAL_SCORES[s.emis_code] = s;
+  SCORES_GENERATED_AT = data.generated_at;
+  console.log(`[scores] loaded ${data.schools.length} schools · generated ${SCORES_GENERATED_AT}`);
+  const freshEl = document.getElementById('data-freshness');
+  if (freshEl && SCORES_GENERATED_AT) freshEl.textContent = 'Data refreshed ' + SCORES_GENERATED_AT.slice(0, 10);
+  // Re-paint anything that's already rendered
+  if (typeof paintMarkers === 'function') paintMarkers();
+  if (CURRENT_VIEW === 'overview' && typeof defaultDetail === 'function') defaultDetail();
+  if (CURRENT_VIEW === 'schools' && typeof renderRagTable === 'function') renderRagTable();
 }
 
 // Measured attendance data from Premier DLC (2023–2025). Loaded in parallel
