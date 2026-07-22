@@ -6,7 +6,7 @@ Credentials: ~/Repo/.bt-creds/earthdata.env (EARTHDATA_TOKEN, EARTHDATA_USERNAME
 from __future__ import annotations
 
 import os
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -28,7 +28,7 @@ def _login():
         os.environ["EDL_TOKEN"] = token
 
     import earthaccess
-    auth = earthaccess.login(strategy="environment", persist=False)
+    earthaccess.login(strategy="environment", persist=False)
     # earthaccess sometimes returns authenticated=False even when search works;
     # we proceed regardless and let actual download surface real failures
     return earthaccess.__name__ and earthaccess
@@ -50,7 +50,7 @@ def download_recent(days: int = 7) -> list[Path]:
     """Download last `days` of MOD11A1 granules to data/raw/modis/.
     Returns list of local file paths."""
     ea = _login()
-    end = datetime.now(timezone.utc).date() - timedelta(days=2)  # MODIS L3 lags ~1 day
+    end = datetime.now(UTC).date() - timedelta(days=2)  # MODIS L3 lags ~1 day
     start = end - timedelta(days=days - 1)
 
     print(f"[modis] searching {start} → {end} · bbox={BBOX_LON_LAT}")

@@ -34,7 +34,6 @@ import statistics
 import sys
 from collections import defaultdict
 from pathlib import Path
-from typing import Optional
 
 import openpyxl
 
@@ -127,7 +126,7 @@ def _find_year_sheet(wb, year: str):
     raise KeyError(f"No sheet for year {year}; available: {wb.sheetnames}")
 
 
-def _annual_mean(monthly: Optional[dict[str, float]]) -> Optional[float]:
+def _annual_mean(monthly: dict[str, float] | None) -> float | None:
     if not monthly:
         return None
     return statistics.mean(monthly.values())
@@ -159,8 +158,8 @@ def build_payload(xlsx_path: Path, reveal_emis: bool = False) -> dict:
         public_id = emis if reveal_emis else anon_map[emis]
         schools_meta_pairs.append((emis, public_id))
 
-        monthly_by_year: dict[str, Optional[dict[str, float]]] = {}
-        annual_means: dict[str, Optional[float]] = {}
+        monthly_by_year: dict[str, dict[str, float] | None] = {}
+        annual_means: dict[str, float | None] = {}
         for y in YEARS:
             mo = by_year[y].get(emis)
             if mo:
@@ -217,7 +216,7 @@ def build_payload(xlsx_path: Path, reveal_emis: bool = False) -> dict:
     # Lost child-school-days: Σ over (school × month present in both 2023 and 2025)
     # of students × (att_2023 - att_2025) × SCHOOL_DAYS_PER_MONTH
     lost_days = 0.0
-    for emis, public_id in schools_meta_pairs:
+    for _emis, public_id in schools_meta_pairs:
         rec = schools_block[str(public_id)]
         m23 = rec["monthly"].get("2023") or {}
         m25 = rec["monthly"].get("2025") or {}
@@ -270,7 +269,10 @@ def build_payload(xlsx_path: Path, reveal_emis: bool = False) -> dict:
             "source_sha256": _sha256(xlsx_path),
             "retrieved_at": dt.date.today().isoformat(),
             "provider": "Premier DLC",
-            "license": "CC BY 4.0 (with PDLC consent for school-level aggregates; named publication requires --reveal-emis)",
+            "license": (
+                "CC BY 4.0 (with PDLC consent for school-level aggregates; "
+                "named publication requires --reveal-emis)"
+            ),
             "methodology_url": "docs/methodology-attendance.md",
             "school_id_anonymised": not reveal_emis,
             "school_days_per_month": SCHOOL_DAYS_PER_MONTH,

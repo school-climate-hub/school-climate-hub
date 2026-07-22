@@ -20,6 +20,7 @@ dependencies = [
     "uvicorn[standard]>=0.30",
     "pydantic>=2.7",
     "python-dotenv>=1.0",
+    "openpyxl>=3.1",
 ]
 
 [project.optional-dependencies]
@@ -36,6 +37,17 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.setuptools]
+# Repo root is a flat layout with several non-package top-level dirs
+# (data/, worker/, dashboard/, docs/, downloads/, scripts/, advisory/,
+# open_data_layer/). Setuptools' automatic package discovery can't
+# disambiguate that, so the importable packages are listed explicitly.
+packages = ["scoring", "ingestion"]
 
 [build-system]
 requires = ["setuptools>=68", "wheel"]

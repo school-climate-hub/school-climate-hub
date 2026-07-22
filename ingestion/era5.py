@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import os
 import zipfile
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import cdsapi
@@ -46,7 +46,7 @@ def submit_recent(days: int = 7) -> Path:
     url, key = load_credentials()
     client = cdsapi.Client(url=url, key=key, quiet=False)
 
-    end = datetime.now(timezone.utc).date() - timedelta(days=1)  # ERA5 lags by ~5 days but try recent
+    end = datetime.now(UTC).date() - timedelta(days=1)  # ERA5 lags by ~5 days but try recent
     start = end - timedelta(days=days - 1)
     dates = [start + timedelta(days=i) for i in range(days)]
 
