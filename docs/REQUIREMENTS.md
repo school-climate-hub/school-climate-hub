@@ -1,6 +1,6 @@
 # Requirements — School Climate Hub
 
-**Status:** Draft v0.1.1 · 2026-05-15 (attendance-correlation surface added; hero metric switched to measured attendance)
+**Status:** Draft v0.1.2 · 2026-07-21 (data-source status aligned with the shipped implementation: live vs planned marked explicitly)
 **Owners:** Reza Malik (BT) · Erum Rabbani (PDLC)
 **Source of truth:** distills [PRD.md](./PRD.md) into a build-ready spec. PRD governs intent; this file governs acceptance.
 
@@ -11,8 +11,8 @@
 In scope for v0.1 (UNICEF VF submission, 2026-05-17):
 
 - Operator Console for 50 PSSP/PSRP schools in Gujranwala (PDLC tenant).
-- Daily climate ingest from open sources (ERA5, MODIS LST, Sentinel-5P, CAMS, GloFAS, WorldPop).
-- Per-school hazard scoring (heat, air quality, flood, overall) + child-burden estimator.
+- Climate ingest from open sources — **live in v0.1:** ERA5 reanalysis + ECMWF HRES (10-day) / ENS (15-day) forecasts. **Planned (stubs/scaffolds in place):** MODIS LST, Sentinel-5P, CAMS, GloFAS, WorldPop — see [ROADMAP.md](./ROADMAP.md).
+- Per-school hazard scoring + child-burden estimator — **heat is live** (ERA5-derived); the air-quality score is a placeholder pending Sentinel-5P/CAMS ingest, and flood currently uses a rainfall proxy pending GloFAS.
 - Multilingual advisory engine (EN / UR / Punjabi-Shahmukhi) with operator approval before dispatch.
 - Open School-Climate Data Layer — schema + daily refresh artefact (CC BY 4.0).
 - Public demo site + open dataset release.
@@ -88,7 +88,7 @@ Out of scope for v0.1 — deferred to phases below: live LLM chat (now in v0.1 a
 
 ## 5. Data requirements
 
-- **Upstream sources** (all open / free): ERA5, MODIS LST, Sentinel-5P, CAMS, GloFAS, WorldPop. Licence + attribution preserved in every derived artefact.
+- **Upstream sources** (all open / free): **live** — ERA5, ECMWF HRES/ENS; **planned** — MODIS LST, Sentinel-5P, CAMS, GloFAS, WorldPop. Licence + attribution preserved in every derived artefact.
 - **Roster key:** EMIS code is canonical; lat/lon validated against district boundaries on import.
 - **Refusal list** (we deliberately do not hold): parent contacts, student-identifying attendance, health incidents tied to individuals. See [`docs/ACCESS-CONTROL.md`](./ACCESS-CONTROL.md).
 - **Accreditations**: per-school green-school programme records (Punjab Green School / EPCCD, WWF-Pakistan, UNESCO GEP, Eco-Schools, PSSF). Each record carries `type`, `tier`, `year`, `state ∈ {declared, verified}`. Only `state = verified` exports publicly (`accreditations.csv` in the Open Data Layer); declared records are operator-owned data until partner verification.

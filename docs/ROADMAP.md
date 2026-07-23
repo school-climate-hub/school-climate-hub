@@ -1,9 +1,11 @@
 # Roadmap — School Climate Hub
 
-**Status:** Draft v0.1 · 2026-05-15
+**Status:** Draft v0.2 · 2026-07-21
 **Owners:** Reza Malik (BT) · Erum Rabbani (PDLC)
 
 This roadmap is the time-phased plan behind [REQUIREMENTS.md](./REQUIREMENTS.md). It expands [PRD §10](./PRD.md) with concrete milestones, exit criteria, and dependencies. Dates beyond v0.1 are directional and assume UNICEF VF funding.
+
+> **Grant year-1 slice:** the UNICEF Venture Fund proposal (RFPS-NYH-2026-503931) carries a quarterly Project Design Statement covering the first 12 funded months. That plan is the year-1 slice of this roadmap; where dates differ, the funded plan governs the grant year and this document governs the longer horizon. Scale is tracked as two distinct metrics: **coverage** (schools scored on the open dataset) and **operated** (schools with an accountable operator dispatching advisories) — operated scale grows operator-by-operator (PSSP/PEF network), not school-by-school.
 
 ---
 
@@ -48,12 +50,12 @@ All [REQUIREMENTS §7](./REQUIREMENTS.md) acceptance checks tick. Submission ack
 **Goal:** turn the pilot into a multi-tenant hosted product at `schoolclimatehub.org`, plus a self-host distribution. Conditional on UNICEF VF Phase 1 funding.
 
 ### Workstreams
-- **Multi-tenant rewrite** — tenant model, Postgres RLS, ABAC, per-tenant ingest config.
+- **Multi-operator support — instances first** — early external operators are served as separate instances (self-host or hosted-per-operator); the true multi-tenant rewrite (tenant model, Postgres RLS, ABAC, per-tenant ingest config) proceeds once a committed second operator justifies it.
 - **Self-service operator onboarding** — T2 verification workflow (see [ONBOARDING.md](./ONBOARDING.md)), including conflict resolution for overlapping operator claims.
 - **Hosted free SaaS** — `schoolclimatehub.org`; static front-end + stateless API + cron ingest.
 - **Self-host distribution** — Docker Compose bundle; `make up` brings up ingest + API + dashboard.
 - **Live LLM chat** — Claude tool-use against real tenant data; citation-grounded.
-- **Real dispatch** — SMS / WhatsApp / school PA gateway integrations, behind operator approval.
+- **Advisory hand-off (BYOC)** — operators dispatch through their **own** SMS / WhatsApp Business / school-PA channels; the hub composes the advisory, runs the approval workflow, and records the audit trail. We do not build or operate messaging gateways — channel, contact data, and dispatch liability remain with the operator.
 - **Audit-log persistence** — durable storage, export to operator on demand.
 - **Operations** — observability, SLOs (ingest freshness, dashboard LCP, dispatch latency), runbooks.
 
@@ -111,7 +113,7 @@ All [REQUIREMENTS §7](./REQUIREMENTS.md) acceptance checks tick. Submission ack
 
 - **Documentation** — every phase updates README, REQUIREMENTS, ROADMAP, architecture, schema docs. No silent feature additions.
 - **Security & privacy** — annual review of access-control and refusal list; pen-test before v0.2 launch.
-- **Open dataset cadence** — daily refresh from v0.1 onward; SLA tightens at each phase.
+- **Open dataset cadence** — v0.1 shipped a static snapshot; automated daily refresh is a v0.2 Q1 deliverable, with the SLA tightening at each phase.
 - **Community** — public roadmap issue tracker from v0.2; quarterly stakeholder digest from v0.3.
 
 ## Risks & dependencies
@@ -123,6 +125,7 @@ All [REQUIREMENTS §7](./REQUIREMENTS.md) acceptance checks tick. Submission ack
 | Operator claim conflicts (two operators, same school) | Resolution workflow per [ONBOARDING.md](./ONBOARDING.md) |
 | Misuse of advisories as closure orders | Disclaimer + UI copy enforce "information not advice"; operator owns the decision |
 | Dataset misattribution | Provenance + licence headers embedded in every artefact |
+| Single-maintainer bus factor | Named engineering team ramps in grant Q1; `main` is branch-protected — every change lands via reviewed PR + passing CI |
 
 ---
 
