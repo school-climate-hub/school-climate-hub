@@ -1577,7 +1577,7 @@ async function loadRealScores() {
   SCORES_GENERATED_AT = data.generated_at;
   console.log(`[scores] loaded ${data.schools.length} schools · generated ${SCORES_GENERATED_AT}`);
   const freshEl = document.getElementById('data-freshness');
-  if (freshEl && SCORES_GENERATED_AT) freshEl.textContent = 'Data refreshed ' + SCORES_GENERATED_AT.slice(0, 10);
+  if (freshEl && typeof SCORES_GENERATED_AT === 'string') freshEl.textContent = 'Data refreshed ' + SCORES_GENERATED_AT.slice(0, 10);
   // Re-paint anything that's already rendered
   if (typeof paintMarkers === 'function') paintMarkers();
   if (CURRENT_VIEW === 'overview' && typeof defaultDetail === 'function') defaultDetail();
