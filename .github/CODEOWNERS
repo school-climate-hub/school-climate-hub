@@ -1,2 +1,4 @@
-# Default reviewer for all changes. Auto-requests review on every PR.
-* @usman-ismail-96
+# Default reviewers — all are auto-requested on every PR.
+# Branch protection requires ONE approval: whichever reviewer responds first
+# unblocks the PR, and the approver (or author, once approved) merges.
+* @usman-ismail-96 @zaeemmohzar @hammad-bt
