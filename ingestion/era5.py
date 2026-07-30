@@ -40,13 +40,16 @@ def load_credentials() -> tuple[str, str]:
     return url, key
 
 
-def submit_recent(days: int = 7) -> Path:
+def submit_recent(days: int = 7, end_lag_days: int = 1) -> Path:
     """Submit a CDS request for the last `days` of hourly ERA5 over the school bbox.
-    Returns the destination path; blocks until CDS delivers the file."""
+    Returns the destination path; blocks until CDS delivers the file.
+
+    ERA5 publishes with a ~5-day lag; unattended runs (cron) should pass
+    end_lag_days >= 6 so every requested day is actually available."""
     url, key = load_credentials()
     client = cdsapi.Client(url=url, key=key, quiet=False)
 
-    end = datetime.now(UTC).date() - timedelta(days=1)  # ERA5 lags by ~5 days but try recent
+    end = datetime.now(UTC).date() - timedelta(days=end_lag_days)
     start = end - timedelta(days=days - 1)
     dates = [start + timedelta(days=i) for i in range(days)]
 
@@ -82,5 +85,6 @@ def submit_recent(days: int = 7) -> Path:
 
 
 if __name__ == "__main__":
-    out = submit_recent(days=7)
+    lag = int(os.environ.get("ERA5_END_LAG_DAYS", "1"))
+    out = submit_recent(days=7, end_lag_days=lag)
     print(f"\nSuccess: {out}")

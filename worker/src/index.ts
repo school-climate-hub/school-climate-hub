@@ -26,10 +26,11 @@ interface ChatMessage {
   content: string;
 }
 
-const SCORES_URL = "https://schoolclimatehub.org/scores.json";
+// Primary: the `data` branch, refreshed daily by the scheduled pipeline.
+const SCORES_URL = "https://raw.githubusercontent.com/school-climate-hub/school-climate-hub/data/scores.json";
 const ATTENDANCE_URL = "https://schoolclimatehub.org/attendance.json";
-// Fallback while the custom domain is provisioning:
-const SCORES_URL_FALLBACK = "https://school-climate-hub.github.io/school-climate-hub/scores.json";
+// Fallback: the snapshot bundled with the site.
+const SCORES_URL_FALLBACK = "https://schoolclimatehub.org/scores.json";
 const ATTENDANCE_URL_FALLBACK = "https://school-climate-hub.github.io/school-climate-hub/attendance.json";
 
 const MODEL = "claude-haiku-4-5";
