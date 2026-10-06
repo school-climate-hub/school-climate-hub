@@ -31,6 +31,7 @@ We're building it. Starting with 50 schools. Designed to scale.
 - [CAMS Atmosphere](https://atmosphere.copernicus.eu/) — PM2.5 / air-quality reanalysis (Copernicus)
 - [GloFAS](https://www.globalfloods.eu/) — flood risk and return periods (Copernicus)
 - [WorldPop](https://www.worldpop.org/) — population reference layer
+- [CARTO Basemaps](https://carto.com/basemaps) — map background tiles (Voyager / Dark Matter), © OpenStreetMap contributors, © CARTO. Used under the free non-commercial tier (up to 5M requests/month), which requires an API key — see [Map tiles](#map-tiles).
 
 ## Quickstart (planned)
 
@@ -44,6 +45,16 @@ make dashboard       # starts the dashboard locally
 ```
 
 > **Note:** the Make targets above are aspirational — the scaffold is in place but the implementations are still being written. See `docs/architecture.md`.
+
+Until then, serve the operator console as a static site from the repo root:
+
+```bash
+python3 -m http.server 8000   # then open http://localhost:8000/
+```
+
+### Map tiles
+
+The basemap key in `index.html` is restricted to `schoolclimatehub.org`, so a local copy shows a blank map until you use your own key. Request a free key at <https://carto.com/basemaps/apikey>, allow `localhost` on it in the CARTO dashboard, and replace the `?key=` value in the `TILES` config in `index.html`. Forks deploying elsewhere need their own key — CARTO's terms don't allow sharing one across unrelated projects.
 
 ## Repository layout
 
@@ -74,6 +85,7 @@ school-climate-hub/
 
 [Apache-2.0](./LICENSE).
 The open dataset is published under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — see `open_data_layer/`.
+Map tiles are not covered by either licence: they are provided under the [CARTO Basemaps Terms](https://carto.com/basemaps/apikey) (version of 29 September 2026), with map data from [OpenStreetMap](https://www.openstreetmap.org/copyright) under the ODbL.
 
 ## Acknowledgements
 
