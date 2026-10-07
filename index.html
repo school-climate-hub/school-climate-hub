@@ -1766,10 +1766,10 @@ window.applyThresholds = applyThresholds;
 
 // ---- Theme-aware Leaflet basemap ----
 const TILES = {
-  light: { url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-            attribution: '© OpenStreetMap, © CARTO' },
-  dark:  { url: 'https://{s}.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png',
-            attribution: '© OpenStreetMap, © CARTO' },
+  light: { url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=cb1_4c4m_1_60078e864f3067dd64461426',
+            attribution: '© OpenStreetMap contributors, © CARTO' },
+  dark:  { url: 'https://{s}.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png?key=cb1_4c4m_1_60078e864f3067dd64461426',
+            attribution: '© OpenStreetMap contributors, © CARTO' },
 };
 const map = L.map('map', { zoomControl: true, attributionControl: true }).setView([32.13, 74.15], 11);
 let tileLayer;
